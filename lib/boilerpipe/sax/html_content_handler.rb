@@ -11,6 +11,9 @@ module Boilerpipe::SAX
     @lastEvent
     @tag_level = 0
 
+    @token_buffer = StringIO.new
+    @text_buffer = StringIO.new
+
     def start_element(name, attrs = [])
       @labels << nil
 
@@ -29,10 +32,6 @@ module Boilerpipe::SAX
       @last_start_tag = name
     end
 
-    def characters(string)
-      # Any characters between the start and end element expected as a string
-    end
-
     def end_element(name)
       tag_action = @tag_actions[name]
       if tag_action
@@ -48,7 +47,42 @@ module Boilerpipe::SAX
       @labels.pop
     end
 
+    def characters(text)
+      @text_element_index += 1
+      flush_block if @flush
+
+      return if in_ignorable_element != 0
+      return if text.empty?
+
+      # make all whitespace spaces and trim
+      text.gsub!(/\s+/, ' ').strip!
+
+      if text.empty?
+        unless sbLastWasWhitespace
+          @textBuffer.append ' '
+          @tokenBuffer.append ' '
+        end
+        @last_event = :event_whitespace
+        return
+      end
+
+      # add leading space if started with a space
+
+     if @block_tag_level == -1
+        @block_tag_level =  @tag_level
+     end
+
+      @text_buffer.append text
+      @token_buffer.append text
+
+      # add trailing space if trailed with a space
+
+      @last_event = :event_characters
+      #currentContainedTextElements.set(textElementIdx)
+    end
+
     def flush_block
+      @flush = false
       puts 'flush block'
     end
 
@@ -61,8 +95,6 @@ class BoilerpipeHTMLContentHandler
   ANCHOR_TEXT_START = "$\ue00a<"
   ANCHOR_TEXT_END = ">\ue00a$"
 
-  @token_buffer = StringIO.new
-  @text_buffer = StringIO.new
 
   @in_body = 0
   @in_anchor = 0
@@ -92,7 +124,7 @@ class BoilerpipeHTMLContentHandler
     @sb_last_was_whitespace = false
     @text_element_idx = 0
 
-    textBlocks.clear();
+    @textBlocks.clear();
 
     @lastStartTag = nil
     @lastEndTag = nil
@@ -104,6 +136,5 @@ class BoilerpipeHTMLContentHandler
     @flush = false
     @inAnchorText = false
   end
-
 
 end
