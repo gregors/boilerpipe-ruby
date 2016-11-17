@@ -1,6 +1,7 @@
+# encoding: utf-8
 module Boilerpipe::Filters
   class TerminatingBlocksFinder
-    def process(doc)
+    def self.process(doc)
       changes = false
       doc.text_blocks.each do |text_block|
         if text_block.num_words < 15
@@ -9,7 +10,7 @@ module Boilerpipe::Filters
             text_block.labels << :INDICATES_END_OF_TEXT if finds_match?(text)
             #seems weird that only this block sets changes to true - bug???
             changes = true
-          elsif tb.link_density == 1.0
+          elsif text_block.link_density == 1.0
             text_block.labels << :INDICATES_END_OF_TEXT if text == 'comment'
           end
         end
@@ -17,7 +18,7 @@ module Boilerpipe::Filters
       changes
     end
 
-    def finds_match?(text)
+    def self.finds_match?(text)
        text.start_with?('comments') ||
        text =~ /^\d+ (comments|users responded in)/ || # starts with number
        text.start_with?('© reuters') ||
