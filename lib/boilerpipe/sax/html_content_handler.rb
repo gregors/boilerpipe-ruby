@@ -11,6 +11,17 @@ module Boilerpipe::SAX
     @lastEvent
     @tag_level = 0
 
+    @title
+
+    ANCHOR_TEXT_START = "$\ue00a<"
+    ANCHOR_TEXT_END = ">\ue00a$"
+
+    @in_body = 0
+    @in_anchor = 0
+    @in_ignorable_element = 0
+
+    @block_tag_level = -1
+
     @token_buffer = StringIO.new
     @text_buffer = StringIO.new
 
@@ -22,7 +33,7 @@ module Boilerpipe::SAX
         if tag_action.changes_tag_level?
           @tag_level += 1
         end
-        @flush = tag-action.start(self, name, attrs) | @flush
+        @flush = tag_action.start(self, name, attrs) | @flush
       else
         @tag_level += 1
         @flush = true
@@ -68,9 +79,7 @@ module Boilerpipe::SAX
 
       # add leading space if started with a space
 
-     if @block_tag_level == -1
-        @block_tag_level =  @tag_level
-     end
+      @block_tag_level = @tag_level if @block_tag_level == -1
 
       @text_buffer.append text
       @token_buffer.append text
@@ -90,17 +99,6 @@ module Boilerpipe::SAX
 end
 
 class BoilerpipeHTMLContentHandler
-  @title
-
-  ANCHOR_TEXT_START = "$\ue00a<"
-  ANCHOR_TEXT_END = ">\ue00a$"
-
-
-  @in_body = 0
-  @in_anchor = 0
-  @in_ignorable_element = 0
-
-  @block_tag_level = -1
 
   @sb_last_was_whitespace = false
   @textElementIdx = 0;
@@ -116,7 +114,7 @@ class BoilerpipeHTMLContentHandler
 
   def recycle
     @token_buffer.setLength(0);
-    textBuffer.setLength(0);
+    @text_buffer.setLength(0);
 
     @in_body = 0
     @in_anchor = 0
