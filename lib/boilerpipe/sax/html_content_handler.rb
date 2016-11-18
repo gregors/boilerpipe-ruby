@@ -1,6 +1,8 @@
 #parser = Nokogiri::XML::SAX::Parser.new(HTMLContextHandler.new)
 #parser.parse_file('fixtures/articles.html')
 
+require 'Nokogiri'
+
 module Boilerpipe::SAX
   class HTMLContentHandler < Nokogiri::XML::SAX::Document
     @tag_actions = {}
@@ -106,7 +108,6 @@ class BoilerpipeHTMLContentHandler
   @text_blocks = []
 
   @offsetBlocks = 0;
-  private BitSet currentContainedTextElements = new BitSet();
 
   @in_anchor_text = false
 
