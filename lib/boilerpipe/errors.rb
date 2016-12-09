@@ -1,0 +1,1 @@
+class BoilerPipeProcessingError < StandardError; end

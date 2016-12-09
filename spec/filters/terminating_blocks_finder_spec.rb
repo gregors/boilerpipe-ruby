@@ -5,7 +5,9 @@ module Boilerpipe::Filters
     describe '#process' do
       it 'requires a text document'
       context 'the text is ending text' do
-        it 'returns true'
+        it 'returns true' do
+         doc = double('document') 
+        end
         it 'sets a label on the document'
       end
 
