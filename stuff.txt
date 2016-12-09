@@ -1,0 +1,4 @@
+1. self closing tags mess the sax parser up - like img tags which aren't self closing - maybe look at using cyberneko to balance and fix up html???
+
+get rid of
+img, br, pre, 
