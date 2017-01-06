@@ -8,5 +8,9 @@ puts file
 noko = Nokogiri::HTML::SAX::Parser.new(Parser.new)
 puts noko
 
-puts noko.parse(file)
+#works
+puts noko.parse(file.read)
+
+#does not work
+# puts noko.parse(file
 
