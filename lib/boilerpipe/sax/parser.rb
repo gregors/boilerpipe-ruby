@@ -1,3 +1,5 @@
+require 'nokogiri'
+
 class Parser < Nokogiri::XML::SAX::Document
 
   def initialize
