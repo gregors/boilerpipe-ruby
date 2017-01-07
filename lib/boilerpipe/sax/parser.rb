@@ -86,7 +86,83 @@ class Parser < Nokogiri::XML::SAX::Document
   end
 
   def flush_block
+    if in_body == 0
+      title = @token_buff.strip if 'TITLE'.casecmp?(@last_start_tag)
+      @token_buff.clear
+      @text_buff.clear
+      return
+    end
+
+    length = @token_buff.size
+    case length
+    when 0
+      return
+    when 1
+      if @sb_last_was_whitespace
+        @token_buff.clear
+        @text_buff.clear
+      end
+      return
+    end
+
+    tokens = UnicodeTokenizer.tokenize(@token_buff)
+    tokens.each do |token|
+      if ANCHOR_TEXT_START == token
+        @in_anchor_text = true
+      elsif ANCHOR_TEXT_END == token
+        @in_anchor_text = false
+      elsif is_word?(token)
+        num_tokens += 1
+        num_words += 1
+        num_words_current_line += 1
+        num_linked_words += 1 if @in_anchor_text
+        token_length = token.size
+        current_line_length += token_length + 1
+        if current_line_length > max_line_length
+          num_wrapped_lines += 1
+          current_line_length = token_length
+          num_words_current_line = 1
+        end
+      else
+        num_tokens += 1
+      end
+    end
+
+    return if num_tokens == 0
+
+    num_words_in_wrapped_lines = 0
+    if num_wrapped_lines == 0
+      num_words_in_wrapped_lines = num_words
+      num_wrapped_lines = 1
+    else
+      num_words_in_wrapped_lines = num_words - num_words_current_line
+    end
+
+    text_block = TextBlock.new(@text_buff,
+                               current_contained_text_elements,
+                               num_words,
+                               num_linked_words,
+                               num_words_in_wrapped_lines,
+                               num_wrapped_lines, offsetBlocks)
+
+   current_contained_text_elements = Set.new # bitset?
+   offset_blocks += 1
+   @token_buff.clear
+   @text_buff.clear
+   text_block.set_tag_level(block_tag_level)
+   add_text_block(text_block)
+   @block_tag_level -= 1
   end
+
+#public void flushBlock() {
+#    int numWords = 0;
+#    int numLinkedWords = 0;
+#    int numWrappedLines = 0;
+#    int currentLineLength = -1; // don't count the first space
+#    final int maxLineLength = 80;
+#    int numTokens = 0;
+#    int numWordsCurrentLine = 0;
+#}
 
   private
 
