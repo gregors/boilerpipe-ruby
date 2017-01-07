@@ -18,7 +18,7 @@ class Parser < Nokogiri::XML::SAX::Document
       @flush = true
 		else
 			@tag_level += 1 if ta.changes_tag_level
-      @flush = ta.start(self, name, name, attrs) | flush
+      @flush = ta.start(self, name, name, attrs) | @flush
 		end
 
     @last_event = :START_TAG
@@ -30,5 +30,22 @@ class Parser < Nokogiri::XML::SAX::Document
 
   def end_element(name)
     puts "end element #{name}"
+    ta = @tag_actions[name]
+
+    if ta.nil?
+      @flush = true
+    else
+      @flush = ta.end(self, name) | @flush
+    end
+
+    @tag_level -= 1if ta || ta.changes_tag_level
+    flush_block if @flush
+
+    @last_event = :END_TAG
+    @last_end_tag = name
+    @label.pop
+  end
+
+  def flush_block
   end
 end
