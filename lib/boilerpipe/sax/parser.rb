@@ -51,20 +51,16 @@ class Parser < Nokogiri::XML::SAX::Document
 
     #  add a single space if the block was only whitespace
     if string.size == 0
-      append_space if started_with_whitespace || ended_with_whitespace
+      append_space
       @last_event = :WHITESPACE
       return
     end
 
-    append_space if started_with_whitespace
-
     # set block levels
     @block_tag_level = @tag_level if @block_tag_level == -1
 
-    # add characters
-    append_to_buffers(string)
-
-    # add trailing space
+    append_space if started_with_whitespace
+    append_text(string)
     append_space if ended_with_whitespace
 
     @last_event = :CHARACTERS
@@ -103,7 +99,7 @@ class Parser < Nokogiri::XML::SAX::Document
     @token_buff << ' '
   end
 
-  def append_to_buffers(string)
+  def append_text(string)
     @sb_last_was_whitespace = false
     @text_buff << string
     @token_buff <<  string
