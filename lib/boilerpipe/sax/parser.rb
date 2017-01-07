@@ -11,6 +11,7 @@ class Parser < Nokogiri::XML::SAX::Document
     @current_contained_text_elements = Set.new
     @text_buff = ''
     @token_buff = ''
+    @text_element_idx = 0
 	end
 
   def start_element(name, attrs = [])
@@ -37,47 +38,35 @@ class Parser < Nokogiri::XML::SAX::Document
       @flush = false
     end
 
-    return if @in_ignoreable_element != 0
+    return if @in_ignorable_element != 0
     return if string.length == 0
-
-    start_whitespace = false
-    end_whitespace = false
 
     # replace all whitespace with simple space
     string = string.gsub(/\s+/, ' ')
 
     # trim whitespace
-    start_whitespace = string  =~ /^\s/
-    end_whitespace = string  =~ /\s$/
+    started_with_whitespace = string  =~ /^\s/
+    ended_with_whitespace = string  =~ /\s$/
     string = string.strip
 
-    #  append leading whitespace if previous wasn't already one
+    #  add a single space if the block was only whitespace
     if string.size == 0
-      if start_whitespace || end_whitespace
-        add_trailing_space if ! @sb_last_was_whitespace
-        @sb_last_was_whitespace = true
-      else
-        @sb_last_was_whitespace = false
-      end
+      append_space if started_with_whitespace || ended_with_whitespace
       @last_event = :WHITESPACE
       return
     end
 
-    if start_whitespace
-      add_trailing_space if ! @sb_last_was_whitespace
-    end
+    append_space if started_with_whitespace
 
     # set block levels
     @block_tag_level = @tag_level if @block_tag_level == -1
 
     # add characters
-    @text_buff << string
-    @token_buff <<  string
+    append_to_buffers(string)
 
     # add trailing space
-    add_trailing_space if end_whitespace
+    append_space if ended_with_whitespace
 
-    @sb_last_was_whitespace = end_whitespace
     @last_event = :CHARACTERS
     @current_contained_text_elements << text_element_idx
   end
@@ -105,8 +94,18 @@ class Parser < Nokogiri::XML::SAX::Document
 
   private
 
-  def add_trailing_space
+  # append space if last character wasn't already one
+  def append_space
+    return if @sb_last_was_whitespace
+    @sb_last_was_whitespace = true
+
     @text_buff << ' '
     @token_buff << ' '
+  end
+
+  def append_to_buffers(string)
+    @sb_last_was_whitespace = false
+    @text_buff << string
+    @token_buff <<  string
   end
 end
