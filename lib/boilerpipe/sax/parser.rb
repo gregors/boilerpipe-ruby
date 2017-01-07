@@ -41,7 +41,7 @@ class Parser < Nokogiri::XML::SAX::Document
     return if string.length == 0
 
     start_whitespace = false
-    endt_whitespace = false
+    end_whitespace = false
 
     # replace all whitespace with simple space
     string = string.gsub(/\s+/, ' ')
@@ -53,11 +53,8 @@ class Parser < Nokogiri::XML::SAX::Document
 
     #  append leading whitespace if previous wasn't already one
     if string.size == 0
-      if startWhitespace || endWhitespace
-        if ! @sb_last_was_whitespace
-          @text_buff << ' '
-          @token_buff << ' '
-        end
+      if start_whitespace || end_whitespace
+        add_trailing_space if ! @sb_last_was_whitespace
         @sb_last_was_whitespace = true
       else
         @sb_last_was_whitespace = false
@@ -67,22 +64,18 @@ class Parser < Nokogiri::XML::SAX::Document
     end
 
     if start_whitespace
-      if ! @sb_last_was_whitespace
-        @text_buff << ' '
-        @token_buff << ' '
-      end
+      add_trailing_space if ! @sb_last_was_whitespace
     end
 
     # set block levels
     @block_tag_level = @tag_level if @block_tag_level == -1
+
+    # add characters
     @text_buff << string
     @token_buff <<  string
 
     # add trailing space
-    if end_whitespace
-      @text_buff << ' '
-      @token_buff << ' '
-    end
+    add_trailing_space if end_whitespace
 
     @sb_last_was_whitespace = end_whitespace
     @last_event = :CHARACTERS
@@ -108,5 +101,12 @@ class Parser < Nokogiri::XML::SAX::Document
   end
 
   def flush_block
+  end
+
+  private
+
+  def add_trailing_space
+    @text_buff << ' '
+    @token_buff << ' '
   end
 end
