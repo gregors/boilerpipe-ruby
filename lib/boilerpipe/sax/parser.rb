@@ -88,19 +88,18 @@ class Parser < Nokogiri::XML::SAX::Document
   def flush_block
     if in_body == 0
       title = @token_buff.strip if 'TITLE'.casecmp?(@last_start_tag)
-      @token_buff.clear
-      @text_buff.clear
+      clear_buffers
       return
     end
 
+    # clear out if empty  or just a space
     length = @token_buff.size
     case length
     when 0
       return
     when 1
       if @sb_last_was_whitespace
-        @token_buff.clear
-        @text_buff.clear
+        clear_buffers
       end
       return
     end
@@ -147,8 +146,7 @@ class Parser < Nokogiri::XML::SAX::Document
 
    current_contained_text_elements = Set.new # bitset?
    offset_blocks += 1
-   @token_buff.clear
-   @text_buff.clear
+   clear_buffers
    text_block.set_tag_level(block_tag_level)
    add_text_block(text_block)
    @block_tag_level -= 1
@@ -179,5 +177,10 @@ class Parser < Nokogiri::XML::SAX::Document
     @sb_last_was_whitespace = false
     @text_buff << string
     @token_buff <<  string
+  end
+
+  def clear_buffers
+   @token_buff.clear
+   @text_buff.clear
   end
 end
