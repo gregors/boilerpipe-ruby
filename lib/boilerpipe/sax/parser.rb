@@ -35,7 +35,6 @@ class Parser < Nokogiri::XML::SAX::Document
     @text_element_idx += 1
     if @flush
       flush_block
-      @flush = false
     end
 
     return if @in_ignorable_element != 0
@@ -86,6 +85,7 @@ class Parser < Nokogiri::XML::SAX::Document
   end
 
   def flush_block
+    @flush = false
     if in_body == 0
       title = @token_buff.strip if 'TITLE'.casecmp?(@last_start_tag)
       clear_buffers
