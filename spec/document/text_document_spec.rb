@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Boilerpipe
-  describe Document::Text do
+  describe Document::TextDocument do
     it 'Creates a new Text document with given TextBlocks, and no title'
     it 'Creates a new Text document with given TextBlocks and given title'
     it 'Returns the TextBlocks of this document'

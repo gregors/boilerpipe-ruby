@@ -1,6 +1,6 @@
 module Boilerpipe
   module Document
-    class Text
+    class TextDocument
     end
   end
 end
