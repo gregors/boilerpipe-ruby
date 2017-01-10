@@ -11,5 +11,10 @@ module Boilerpipe::Filters
     end
 
     describe '#potential_titles'
+
+
+    # these are private but let's start with testing to get parity
+    describe '#potential_titles = '
+    describe '#longest_part'
   end
 end
