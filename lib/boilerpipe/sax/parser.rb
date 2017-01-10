@@ -2,6 +2,8 @@ require 'nokogiri'
 require 'set'
 
 class Parser < Nokogiri::XML::SAX::Document
+  ANCHOR_TEXT_START = "$\ue00a<"
+  ANCHOR_TEXT_END = ">\ue00a$"
 
   def initialize
     @label = []
