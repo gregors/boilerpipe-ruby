@@ -1,17 +1,11 @@
-class BoilerpipeHTMLParser
- # this is the class which extends abstract sax parser in java
-  def initialize
-    @handler = BoilerpipeHTMLContentHandler.new
-  end
-
-  def parse
-     # this must be in the base abstract class 
-  end
-
- #* Returns a {@link TextDocument} containing the extracted {@link TextBlock} s. NOTE: Only call
- #  * this after {@link #parse(org.xml.sax.InputSource)}.
- #  * 
-  def text_document
-    @handler.text_document
+require 'nokogiri'
+module Boilerpipe::SAX
+  class BoilerpipeHTMLParser
+    def self.parse(text)
+      handler = BoilerpipeHTMLContentHandler.new
+      noko_parser = Nokogiri::HTML::SAX::Parser.new(@handler)
+      noko_parser.parse(text)
+      handler.text_document
+    end
   end
 end
