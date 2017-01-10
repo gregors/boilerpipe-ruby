@@ -1,6 +1,3 @@
-#parser = Nokogiri::XML::SAX::Parser.new(HTMLContextHandler.new)
-#parser.parse_file('fixtures/articles.html')
-
 module Boilerpipe::SAX
   class HTMLContentHandler < Nokogiri::XML::SAX::Document
     @tag_actions = {}
