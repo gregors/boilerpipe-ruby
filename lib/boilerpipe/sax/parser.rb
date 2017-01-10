@@ -20,14 +20,14 @@ class Parser < Nokogiri::XML::SAX::Document
   def start_element(name, attrs = [])
     puts "start element #{name}"
     @label << nil
-    ta = @tag_actions[name]
 
-    if ta.nil?
+    tag_action = @tag_actions[name]
+    if tag_action
+			@tag_level += 1 if tag_action.changes_tag_level?
+      @flush = tag_action.start(self, name, attrs) | @flush
+		else
       @tag_level += 1
       @flush = true
-		else
-			@tag_level += 1 if ta.changes_tag_level
-      @flush = ta.start(self, name, name, attrs) | @flush
 		end
 
     @last_event = :START_TAG
@@ -71,15 +71,14 @@ class Parser < Nokogiri::XML::SAX::Document
 
   def end_element(name)
     puts "end element #{name}"
-    ta = @tag_actions[name]
-
-    if ta.nil?
-      @flush = true
+    tag_action = @tag_actions[name]
+    if tag_action
+      @flush = tag_action.end(self, name) | @flush
     else
-      @flush = ta.end(self, name) | @flush
+      @flush = true
     end
 
-    @tag_level -= 1 if ta || ta.changes_tag_level
+    @tag_level -= 1 if tag_action.nil? || tag_action.changes_tag_level?
     flush_block if @flush
 
     @last_event = :END_TAG
