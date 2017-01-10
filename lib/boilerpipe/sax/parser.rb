@@ -12,6 +12,7 @@ class Parser < Nokogiri::XML::SAX::Document
     @text_buff = ''
     @token_buff = ''
     @text_element_idx = 0
+    @offsetBlocks = 0
 	end
 
   def start_element(name, attrs = [])
@@ -63,7 +64,7 @@ class Parser < Nokogiri::XML::SAX::Document
     append_space if ended_with_whitespace
 
     @last_event = :CHARACTERS
-    @current_contained_text_elements << text_element_idx
+    @current_contained_text_elements << @text_element_idx
   end
 
   def end_element(name)
@@ -138,14 +139,14 @@ class Parser < Nokogiri::XML::SAX::Document
     end
 
     text_block = TextBlock.new(@text_buff,
-                               current_contained_text_elements,
+                               @current_contained_text_elements,
                                num_words,
                                num_linked_words,
                                num_words_in_wrapped_lines,
-                               num_wrapped_lines, offsetBlocks)
+                               num_wrapped_lines, @offsetBlocks)
 
-   current_contained_text_elements = Set.new # bitset?
-   offset_blocks += 1
+   @current_contained_text_elements = Set.new
+   @offset_blocks += 1
    clear_buffers
    text_block.set_tag_level(block_tag_level)
    add_text_block(text_block)
