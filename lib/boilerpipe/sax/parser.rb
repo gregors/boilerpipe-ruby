@@ -34,25 +34,25 @@ class Parser < Nokogiri::XML::SAX::Document
     @last_start_tag = name
   end
 
-  def characters(string)
+  def characters(text)
     @text_element_idx += 1
     if @flush
       flush_block
     end
 
     return if @in_ignorable_element != 0
-    return if string.empty?
+    return if text.empty?
 
     # replace all whitespace with simple space
-    string = string.gsub(/\s+/, ' ')
+    text = text.gsub(/\s+/, ' ')
 
     # trim whitespace
-    started_with_whitespace = string  =~ /^\s/
-    ended_with_whitespace = string  =~ /\s$/
-    string = string.strip
+    started_with_whitespace = text  =~ /^\s/
+    ended_with_whitespace = text  =~ /\s$/
+    text = text.strip
 
     #  add a single space if the block was only whitespace
-    if string.empty?
+    if text.empty?
       append_space
       @last_event = :WHITESPACE
       return
@@ -62,7 +62,7 @@ class Parser < Nokogiri::XML::SAX::Document
     @block_tag_level = @tag_level if @block_tag_level == -1
 
     append_space if started_with_whitespace
-    append_text(string)
+    append_text(text)
     append_space if ended_with_whitespace
 
     @last_event = :CHARACTERS
@@ -178,10 +178,10 @@ class Parser < Nokogiri::XML::SAX::Document
     @token_buffer << ' '
   end
 
-  def append_text(string)
+  def append_text(text)
     @sb_last_was_whitespace = false
-    @text_buffer << string
-    @token_buffer <<  string
+    @text_buffer << text
+    @token_buffer <<  text
   end
 
   def clear_buffers
