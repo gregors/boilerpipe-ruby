@@ -11,8 +11,8 @@ class Parser < Nokogiri::XML::SAX::Document
     @tag_level = 0
     @sb_last_was_whitespace = false
     @current_contained_text_elements = Set.new
-    @text_buff = ''
-    @token_buff = ''
+    @text_buffer = ''
+    @token_buffer = ''
     @text_element_idx = 0
     @offsetBlocks = 0
 	end
@@ -90,13 +90,13 @@ class Parser < Nokogiri::XML::SAX::Document
   def flush_block
     @flush = false
     if in_body == 0
-      title = @token_buff.strip if 'TITLE'.casecmp?(@last_start_tag)
+      title = @token_buffer.strip if 'TITLE'.casecmp?(@last_start_tag)
       clear_buffers
       return
     end
 
     # clear out if empty  or just a space
-    length = @token_buff.size
+    length = @token_buffer.size
     case length
     when 0
       return
@@ -107,7 +107,7 @@ class Parser < Nokogiri::XML::SAX::Document
       return
     end
 
-    tokens = UnicodeTokenizer.tokenize(@token_buff)
+    tokens = UnicodeTokenizer.tokenize(@token_buffer)
     tokens.each do |token|
       if ANCHOR_TEXT_START == token
         @in_anchor_text = true
@@ -140,7 +140,7 @@ class Parser < Nokogiri::XML::SAX::Document
       num_words_in_wrapped_lines = num_words - num_words_current_line
     end
 
-    text_block = TextBlock.new(@text_buff,
+    text_block = TextBlock.new(@text_buffer,
                                @current_contained_text_elements,
                                num_words,
                                num_linked_words,
@@ -175,18 +175,18 @@ class Parser < Nokogiri::XML::SAX::Document
     return if @sb_last_was_whitespace
     @sb_last_was_whitespace = true
 
-    @text_buff << ' '
-    @token_buff << ' '
+    @text_buffer << ' '
+    @token_buffer << ' '
   end
 
   def append_text(string)
     @sb_last_was_whitespace = false
-    @text_buff << string
-    @token_buff <<  string
+    @text_buffer << string
+    @token_buffer <<  string
   end
 
   def clear_buffers
-   @token_buff.clear
-   @text_buff.clear
+   @token_buffer.clear
+   @text_buffer.clear
   end
 end
