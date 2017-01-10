@@ -36,9 +36,7 @@ class Parser < Nokogiri::XML::SAX::Document
 
   def characters(text)
     @text_element_idx += 1
-    if @flush
-      flush_block
-    end
+    flush_block if @flush
 
     return if @in_ignorable_element != 0
     return if text.empty?
