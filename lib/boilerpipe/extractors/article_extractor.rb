@@ -1,5 +1,7 @@
-class ArticleExtractor < ExtractorBase
-  def process(doc)
-    raise NotImplementedError
+module Boilerpipe::Extractors
+  class ArticleExtractor
+    def process(doc)
+      raise NotImplementedError
+    end
   end
 end
