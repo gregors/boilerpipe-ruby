@@ -164,6 +164,9 @@ class Parser < Nokogiri::XML::SAX::Document
 
   private
 
+  def add_text_block(text_block)
+  end
+
   # append space if last character wasn't already one
   def append_space
     return if @sb_last_was_whitespace
