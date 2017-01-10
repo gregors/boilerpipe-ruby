@@ -6,7 +6,7 @@ class Parser < Nokogiri::XML::SAX::Document
   ANCHOR_TEXT_END = ">\ue00a$"
 
   def initialize
-    @label = []
+    @label_stacks = []
     @tag_actions = {}
     @tag_level = 0
     @sb_last_was_whitespace = false
@@ -19,7 +19,7 @@ class Parser < Nokogiri::XML::SAX::Document
 
   def start_element(name, attrs = [])
     puts "start element #{name}"
-    @label << nil
+    @label_stacks << nil
 
     tag_action = @tag_actions[name]
     if tag_action
@@ -81,7 +81,7 @@ class Parser < Nokogiri::XML::SAX::Document
 
     @last_event = :END_TAG
     @last_end_tag = name
-    @label.pop
+    @label_stacks.pop
   end
 
   def flush_block
