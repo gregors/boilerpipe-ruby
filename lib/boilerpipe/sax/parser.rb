@@ -39,7 +39,7 @@ class Parser < Nokogiri::XML::SAX::Document
     end
 
     return if @in_ignorable_element != 0
-    return if string.length == 0
+    return if string.empty?
 
     # replace all whitespace with simple space
     string = string.gsub(/\s+/, ' ')
@@ -50,7 +50,7 @@ class Parser < Nokogiri::XML::SAX::Document
     string = string.strip
 
     #  add a single space if the block was only whitespace
-    if string.size == 0
+    if string.empty?
       append_space
       @last_event = :WHITESPACE
       return
