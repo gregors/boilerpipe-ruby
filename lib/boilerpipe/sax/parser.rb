@@ -76,7 +76,7 @@ class Parser < Nokogiri::XML::SAX::Document
       @flush = ta.end(self, name) | @flush
     end
 
-    @tag_level -= 1if ta || ta.changes_tag_level
+    @tag_level -= 1 if ta || ta.changes_tag_level
     flush_block if @flush
 
     @last_event = :END_TAG
