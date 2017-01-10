@@ -44,12 +44,12 @@ class Parser < Nokogiri::XML::SAX::Document
     return if text.empty?
 
     # replace all whitespace with simple space
-    text = text.gsub(/\s+/, ' ')
+    text.gsub!(/\s+/, ' ')
 
     # trim whitespace
     started_with_whitespace = text  =~ /^\s/
     ended_with_whitespace = text  =~ /\s$/
-    text = text.strip
+    text.strip!
 
     #  add a single space if the block was only whitespace
     if text.empty?
