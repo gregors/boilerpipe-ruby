@@ -17,6 +17,7 @@ module Boilerpipe
         @offset_blocks_start = offset_blocks
         @offset_blocks_end = offset_blocks
         @is_content = true
+        @tag_level = 0
         init_densities
       end
 
@@ -75,7 +76,7 @@ module Boilerpipe
 
       def to_s
         #"[" + offsetBlocksStart + "-" + offsetBlocksEnd + ";tl=" + tagLevel + "; nw=" + numWords + ";nwl=" + numWrappedLines + ";ld=" + linkDensity + "]\t" + (isContent ? "CONTENT" : "boilerplate") + "," + labels + "\n" + getText();
-        "[#{@offset_blocks_start}]-#{@offset_blocks_end};tl=#{@tag_level}; nw=#{@num_words};nwl=#{@num_wrapped_lines};ld#{@link_density}]\t#{is_content? ? 'CONTENT' : 'boilerplate'},#{@labels}\n#{text}"
+        "[#{@offset_blocks_start}-#{@offset_blocks_end};tl=#{@tag_level}; nw=#{@num_words};nwl=#{@num_wrapped_lines};ld=#{@link_density}]\t#{is_content? ? 'CONTENT' : 'boilerplate'},#{@labels}\n#{text}"
       end
 
       def clone
@@ -88,7 +89,7 @@ module Boilerpipe
           @num_wrapped_lines = 1
         end
         @text_density = @num_words_in_wrapped_lines / @num_wrapped_lines.to_f
-        @link_density = @num_words == 0 ? 0 : @num_words_in_anchor_text / @num_words.to_f
+        @link_density = @num_words == 0 ? 0.0 : @num_words_in_anchor_text / @num_words.to_f
       end
     end
   end
