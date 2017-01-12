@@ -4,7 +4,8 @@ module Boilerpipe
   module Document
     class TextBlock
       attr_reader :text, :num_words, :num_words_in_wrapped_lines, :num_words_in_anchor_text,
-                  :num_wrapped_lines, :offset_blocks_start, :offset_blocks_end, :text_density, :link_density, :labels
+                  :num_wrapped_lines, :offset_blocks_start, :offset_blocks_end, :text_density, :link_density, :labels,
+                  :content
 
       def initialize(text, contained_text_elements=nil, num_words=0, num_words_in_anchor_text=0, num_words_in_wrapped_lines=0, num_wrapped_lines=0, offset_blocks=0)
         @labels = Set.new
@@ -16,13 +17,14 @@ module Boilerpipe
         @num_wrapped_lines = num_wrapped_lines
         @offset_blocks_start = offset_blocks
         @offset_blocks_end = offset_blocks
-        @is_content = true
+        @content = false
         @tag_level = 0
+
         init_densities
       end
 
       def is_content?
-        @is_content
+        @content
       end
 
       def is_noncontent?
