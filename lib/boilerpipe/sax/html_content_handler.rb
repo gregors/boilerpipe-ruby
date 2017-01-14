@@ -24,6 +24,7 @@ class HTMLContentHandler < Nokogiri::XML::SAX::Document
     @in_anchor_text = false
     @font_size_stack = []
     @title
+    @text_blocks = []
 	end
 
   def start_element(name, attrs = [])
@@ -95,8 +96,8 @@ class HTMLContentHandler < Nokogiri::XML::SAX::Document
 
   def flush_block
     @flush = false
-    if in_body == 0
-      @title = @token_buffer.strip if 'TITLE'.casecmp?(@last_start_tag)
+    if @in_body == 0
+      @title = @token_buffer.strip if 'TITLE'.casecmp(@last_start_tag)
       clear_buffers
       return
     end
@@ -161,6 +162,11 @@ class HTMLContentHandler < Nokogiri::XML::SAX::Document
    @block_tag_level -= 1
   end
 
+  def text_document
+    flush_block
+    ::Boilerpipe::Document::TextDocument.new(@title, @text_blocks)
+  end
+
 #public void flushBlock() {
 #    int numWords = 0;
 #    int numLinkedWords = 0;
@@ -174,6 +180,7 @@ class HTMLContentHandler < Nokogiri::XML::SAX::Document
   private
 
   def add_text_block(text_block)
+    @text_blocks << text_block
   end
 
   # append space if last character wasn't already one
