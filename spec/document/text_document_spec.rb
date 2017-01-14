@@ -37,8 +37,8 @@ module Boilerpipe
       expect(content).to eq 'one\ntwo\n'
     end
 
-    xit 'Returns detailed debugging information about the contained TextBlocks' do
-      expect(doc.debug_s).to eq "[0-0;tl=0; nw=0;nwl=1;ld=0.0]\tboilerplate,null\none\n[0-0;tl=0; nw=0;nwl=1;ld=0.0]\tboilerplate,null\ntwo"
+    it 'Returns detailed debugging information about the contained TextBlocks' do
+      expect(doc.debug_s).to eq "[0-0;tl=0; nw=0;nwl=1;ld=0.0]\tBOILERPLATE,null\none\n[0-0;tl=0; nw=0;nwl=1;ld=0.0]\tBOILERPLATE,null\ntwo"
     end
   end
 end
