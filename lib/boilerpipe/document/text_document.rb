@@ -4,7 +4,7 @@ module Boilerpipe
       attr_reader :text_blocks
       attr_accessor :title
 
-      def initialize(text_blocks, title=nil)
+      def initialize(title, text_blocks=[])
         @text_blocks = text_blocks
         @title = title
       end
