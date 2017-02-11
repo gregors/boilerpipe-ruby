@@ -1,8 +1,8 @@
 module Boilerpipe::SAX::TagActions
   class AnchorText
     # Marks this tag as "anchor" (this should usually only be set for the <A> tag). Anchor tags may not be nested.
-   # There is a bug in certain versions of NekoHTML which still allows nested tags. If boilerpipe
-   #* encounters such nestings, a SAXException is thrown.
+    # There is a bug in certain versions of NekoHTML which still allows nested tags. If boilerpipe
+    #* encounters such nestings, a SAXException is thrown.
     def start(handler, name, attrs)
       if handler.in_anchor_tag?
         handler.in_anchor_tag += 1
