@@ -3,6 +3,8 @@ require 'set'
 
 module Boilerpipe::SAX
   class HTMLContentHandler < Nokogiri::XML::SAX::Document
+    attr_reader :in_ignorable_element
+    attr_accessor :in_anchor_tag
     ANCHOR_TEXT_START = "$\ue00a<"
     ANCHOR_TEXT_END = ">\ue00a$"
 
@@ -20,7 +22,7 @@ module Boilerpipe::SAX
       @block_tag_level = -1
 
       @in_body = 0
-      @in_anchor = 0
+      @in_anchor_tag = 0
       @in_ignorable_element = 0
       @in_anchor_text = false
       @font_size_stack = []
@@ -168,6 +170,10 @@ module Boilerpipe::SAX
       ::Boilerpipe::Document::TextDocument.new(@title, @text_blocks)
     end
 
+    def token_buffer_size
+      @token_buffer.size
+    end
+
     #public void flushBlock() {
     #    int numWords = 0;
     #    int numLinkedWords = 0;
@@ -178,7 +184,18 @@ module Boilerpipe::SAX
     #    int numWordsCurrentLine = 0;
     #}
 
-    private
+    def increase_in_ignorable_element!
+      @in_ignorable_element += 1
+    end
+
+    def in_ignorable_element?
+      @in_ignorable_element > 0
+    end
+
+    def in_anchor_tag?
+      @in_anchor_tag > 0
+    end
+
 
     def add_text_block(text_block)
       @text_blocks << text_block
@@ -198,6 +215,11 @@ module Boilerpipe::SAX
       @text_buffer << text
       @token_buffer <<  text
     end
+
+    def append_token(token)
+      @token_buffer <<  token
+    end
+    private
 
     def clear_buffers
       @token_buffer.clear
