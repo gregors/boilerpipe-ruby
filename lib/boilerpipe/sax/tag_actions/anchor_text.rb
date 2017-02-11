@@ -18,13 +18,9 @@ module Boilerpipe::SAX::TagActions
 
     def end_tag(handler, name)
       handler.in_anchor_tag -= 1
-      unless handler.in_anchor_tag? || handler.in_ignorable_element?
-        handler.append_space
-        handler.append_token(Boilerpipe::SAX::HTMLContentHandler::ANCHOR_TEXT_END)
-        handler.append_space
-      end
-			false
-		end
+      append_anchor_text_end(handler) unless handler.in_anchor_tag? || handler.in_ignorable_element?
+      false
+    end
 
     def changes_tag_level
       true
@@ -33,6 +29,12 @@ module Boilerpipe::SAX::TagActions
     def append_anchor_text_start(handler)
       handler.append_space
       handler.append_token(Boilerpipe::SAX::HTMLContentHandler::ANCHOR_TEXT_START)
+      handler.append_space
+    end
+
+    def append_anchor_text_end(handler)
+      handler.append_space
+      handler.append_token(Boilerpipe::SAX::HTMLContentHandler::ANCHOR_TEXT_END)
       handler.append_space
     end
 
