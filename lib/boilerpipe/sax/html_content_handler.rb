@@ -4,7 +4,7 @@ require 'set'
 module Boilerpipe::SAX
   class HTMLContentHandler < Nokogiri::XML::SAX::Document
     attr_reader :in_ignorable_element
-    attr_accessor :in_anchor_tag
+    attr_accessor :in_anchor_tag, :token_buffer
     ANCHOR_TEXT_START = "$\ue00a<"
     ANCHOR_TEXT_END = ">\ue00a$"
 
