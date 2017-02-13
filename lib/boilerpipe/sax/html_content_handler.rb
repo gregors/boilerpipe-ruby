@@ -26,6 +26,7 @@ module Boilerpipe::SAX
       @in_ignorable_element = 0
       @in_anchor_text = false
       @font_size_stack = []
+      @last_start_tag = ''
       @title
       @text_blocks = []
     end
@@ -99,8 +100,8 @@ module Boilerpipe::SAX
 
     def flush_block
       @flush = false
-      if in_body == 0
-        @title = @token_buffer.strip if 'TITLE'.casecmp?(@last_start_tag)
+      if @in_body == 0
+        @title = @token_buffer.strip if 'TITLE'.casecmp(@last_start_tag)
         clear_buffers
         return
       end
@@ -186,6 +187,14 @@ module Boilerpipe::SAX
 
     def increase_in_ignorable_element!
       @in_ignorable_element += 1
+    end
+
+    def increase_in_body!
+      @in_body += 1
+    end
+
+    def decrease_in_body!
+      @in_body -= 1
     end
 
     def in_ignorable_element?
