@@ -45,6 +45,7 @@ class HTMLContentHandler < Nokogiri::XML::SAX::Document
   end
 
   def characters(text)
+    puts "characters: #{text}"
     @text_element_idx += 1
     flush_block if @flush
 
@@ -97,6 +98,7 @@ class HTMLContentHandler < Nokogiri::XML::SAX::Document
   def flush_block
     @flush = false
     if @in_body == 0
+      puts "flushing ......"
       @title = @token_buffer.strip if 'TITLE'.casecmp(@last_start_tag)
       clear_buffers
       return
@@ -180,6 +182,7 @@ class HTMLContentHandler < Nokogiri::XML::SAX::Document
   private
 
   def add_text_block(text_block)
+    puts "adding text block: #{text_block}"
     @text_blocks << text_block
   end
 
