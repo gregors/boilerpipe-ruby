@@ -228,6 +228,16 @@ module Boilerpipe::SAX
     def append_token(token)
       @token_buffer <<  token
     end
+
+    def add_label_action(label_action)
+      label_stack = @label_stacks.pop
+      if label_stack.nil?
+        label_stack = []
+        @label_stacks << label_stack
+      end
+      label_stack << label_action
+    end
+
     private
 
     def clear_buffers
