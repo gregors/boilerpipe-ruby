@@ -10,7 +10,7 @@ module Boilerpipe::SAX
 
     def initialize
       @label_stacks = []
-      @tag_actions = {}
+      @tag_actions = ::Boilerpipe::SAX::TagActionMap.tag_actions
       @tag_level = 0
       @sb_last_was_whitespace = false
       @current_contained_text_elements = Set.new
