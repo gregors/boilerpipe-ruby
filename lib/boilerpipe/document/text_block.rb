@@ -12,10 +12,9 @@ module Boilerpipe
                   :num_wrapped_lines, :offset_blocks_start, :offset_blocks_end, :text_density, :link_density, :labels
       attr_accessor :content
 
-      def initialize(text, contained_text_elements=nil, num_words=0, num_words_in_anchor_text=0, num_words_in_wrapped_lines=0, num_wrapped_lines=0, offset_blocks=0)
+      def initialize(text, num_words=0, num_words_in_anchor_text=0, num_words_in_wrapped_lines=0, num_wrapped_lines=0, offset_blocks=0)
         @labels = Set.new
         @text = text
-        @contained_text_elements = contained_text_elements
         @num_words = num_words
         @num_words_in_anchor_text = num_words_in_anchor_text
         @num_words_in_wrapped_lines = num_words_in_wrapped_lines
@@ -63,18 +62,13 @@ module Boilerpipe
         init_densities
         @is_content |= other.is_content?
 
-        if @contained_text_elements.nil?
-          @contained_text_elements = other.contained_text_elements.clone
-        else
-          @contained_text_elements.or(other.contained_text_elements)
-        end
         @null_full_text_words += other.num_full_text_words
 
         if other.labels
           if @labels.nil?
-            @labels = other.lables.clone
+            @labels = other.labels.clone
           else
-            @labels.merge(other.lables.clone)
+            @labels.merge(other.labels.clone)
           end
         end
 

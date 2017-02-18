@@ -13,10 +13,8 @@ module Boilerpipe::SAX
       @tag_actions = ::Boilerpipe::SAX::TagActionMap.tag_actions
       @tag_level = 0
       @sb_last_was_whitespace = false
-      @current_contained_text_elements = Set.new
       @text_buffer = ''
       @token_buffer = ''
-      @text_element_idx = 0
       @offset_blocks = 0
       @flush = false
       @block_tag_level = -1
@@ -49,7 +47,6 @@ module Boilerpipe::SAX
     end
 
     def characters(text)
-      @text_element_idx += 1
       flush_block if @flush
 
       return if @in_ignorable_element != 0
@@ -78,7 +75,6 @@ module Boilerpipe::SAX
       append_space if ended_with_whitespace
 
       @last_event = :CHARACTERS
-      @current_contained_text_elements << @text_element_idx
     end
 
     def end_element(name)
@@ -151,14 +147,12 @@ module Boilerpipe::SAX
         num_words_in_wrapped_lines = num_words - num_words_current_line
       end
 
-      text_block = TextBlock.new(@text_buffer,
-                                 @current_contained_text_elements,
+      text_block = ::Boilerpipe::Document::TextBlock.new(@text_buffer,
                                  num_words,
                                  num_linked_words,
                                  num_words_in_wrapped_lines,
                                  num_wrapped_lines, @offset_blocks)
 
-      @current_contained_text_elements = Set.new
       @offset_blocks += 1
       clear_buffers
       text_block.set_tag_level(block_tag_level)
