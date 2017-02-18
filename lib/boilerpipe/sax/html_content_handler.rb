@@ -30,7 +30,6 @@ module Boilerpipe::SAX
     end
 
     def start_element(name, attrs = [])
-      puts "start element #{name}"
       @label_stacks << nil
 
       tag_action = @tag_actions[name]
@@ -78,7 +77,6 @@ module Boilerpipe::SAX
     end
 
     def end_element(name)
-      puts "end element #{name}"
       tag_action = @tag_actions[name]
       if tag_action
         @flush = tag_action.end(self, name) | @flush
