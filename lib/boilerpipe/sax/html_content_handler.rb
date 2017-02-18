@@ -79,7 +79,7 @@ module Boilerpipe::SAX
     def end_element(name)
       tag_action = @tag_actions[name.upcase.intern]
       if tag_action
-        @flush = tag_action.end(self, name) | @flush
+        @flush = tag_action.end_tag(self, name) | @flush
       else
         @flush = true
       end
