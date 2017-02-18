@@ -175,6 +175,17 @@ module Boilerpipe::SAX
       @token_buffer.size
     end
 
+    VALID_WORD_CHARACTER = /[\p{L}\p{Nd}\p{Nl}\p{No}]/
+    # unicode regex - categories
+    # \p{L}   -- Letter
+    # \p{Nd}  -- a decimal digit
+    # \p{Nl}  -- a letterlike numeric character
+    # \p{No}  -- a numeric character of other type
+
+    def is_word?(word)
+       word =~ VALID_WORD_CHARACTER
+    end
+
     #public void flushBlock() {
     #    int numWords = 0;
     #    int numLinkedWords = 0;
