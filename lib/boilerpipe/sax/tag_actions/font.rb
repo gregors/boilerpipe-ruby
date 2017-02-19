@@ -22,7 +22,7 @@ module Boilerpipe::SAX::TagActions
       false
     end
 
-    def changes_tag_level
+    def changes_tag_level?
       false
     end
 

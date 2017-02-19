@@ -11,7 +11,7 @@ module Boilerpipe::SAX::TagActions
     end
   end
 
-  describe '#changes_tag_level' do
-    it 'returns true'
+  describe '#changes_tag_level?' do
+    it 'returns true?'
   end
 end

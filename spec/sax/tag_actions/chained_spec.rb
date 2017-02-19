@@ -34,11 +34,11 @@ module Boilerpipe::SAX::TagActions
       end
     end
 
-    describe '#changes_tag_level' do
+    describe '#changes_tag_level?' do
       it 'returns combined changes' do
-        expect(tag1).to receive(:changes_tag_level).and_return(false)
-        expect(tag2).to receive(:changes_tag_level).and_return(true)
-        expect(chainer.changes_tag_level).to be true
+        expect(tag1).to receive(:changes_tag_level?).and_return(false)
+        expect(tag2).to receive(:changes_tag_level?).and_return(true)
+        expect(chainer.changes_tag_level?).to be true
       end
     end
   end

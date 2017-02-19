@@ -41,9 +41,9 @@ module Boilerpipe::SAX::TagActions
       end
     end
 
-    describe '#changes_tag_level' do
+    describe '#changes_tag_level?' do
       it 'returns true' do
-        expect(subject.changes_tag_level).to be true
+        expect(subject.changes_tag_level?).to be true
       end
     end
   end

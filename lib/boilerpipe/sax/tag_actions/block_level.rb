@@ -10,7 +10,7 @@ module Boilerpipe::SAX::TagActions
       true
     end
 
-    def changes_tag_level
+    def changes_tag_level?
       true
     end
   end

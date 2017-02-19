@@ -12,9 +12,9 @@ module Boilerpipe::SAX::TagActions
         expect(subject.end_tag(nil, nil)).to be false
       end
     end
-    describe '#changes_tag_level' do
+    describe '#changes_tag_level?' do
       it 'returns false' do
-        expect(subject.changes_tag_level).to be false
+        expect(subject.changes_tag_level?).to be false
       end
     end
   end

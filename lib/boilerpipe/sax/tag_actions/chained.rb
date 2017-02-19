@@ -13,8 +13,8 @@ module Boilerpipe::SAX::TagActions
       @t1.end_tag(handler, name) | @t2.end_tag(handler, name)
     end
 
-    def changes_tag_level
-      @t1.changes_tag_level || @t2.changes_tag_level
+    def changes_tag_level?
+      @t1.changes_tag_level? || @t2.changes_tag_level?
     end
   end
 end
