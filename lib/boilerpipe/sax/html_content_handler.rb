@@ -110,7 +110,15 @@ module Boilerpipe::SAX
         return
       end
 
-      tokens = UnicodeTokenizer.tokenize(@token_buffer)
+      num_tokens = 0
+      num_words = 0
+      num_words_current_line = 0
+      num_words_in_wrapped_lines = 0
+      num_wrapped_lines = 0
+      num_linked_words = 0
+      current_line_length = 0
+      max_line_length = 80
+      tokens = ::Boilerpipe::UnicodeTokenizer.tokenize(@token_buffer)
       tokens.each do |token|
         if ANCHOR_TEXT_START == token
           @in_anchor_text = true
@@ -151,7 +159,7 @@ module Boilerpipe::SAX
 
       @offset_blocks += 1
       clear_buffers
-      text_block.set_tag_level(block_tag_level)
+      text_block.set_tag_level(@block_tag_level)
       add_text_block(text_block)
       @block_tag_level -= 1
     end
@@ -188,6 +196,10 @@ module Boilerpipe::SAX
 
     def increase_in_ignorable_element!
       @in_ignorable_element += 1
+    end
+
+    def decrease_in_ignorable_element!
+      @in_ignorable_element -= 1
     end
 
     def increase_in_body!
