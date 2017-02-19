@@ -10,7 +10,7 @@ module Boilerpipe::SAX::TagActions
 
       it 'adds anchor text start' do
         handler = Boilerpipe::SAX::HTMLContentHandler.new
-        expect{subject.start(handler, nil, nil)}.to change{handler.token_buffer_size}.from(0).to(4)
+        expect{subject.start(handler, nil, nil)}.to change{handler.token_buffer_size}.from(0).to(5)
       end
 
       it 'returns false' do
@@ -28,11 +28,11 @@ module Boilerpipe::SAX::TagActions
           handler = Boilerpipe::SAX::HTMLContentHandler.new
           expect{subject.start(handler, nil, nil)}.to change{handler.in_anchor_tag}.from(0).to(1)
           #puts handler.token_buffer
-          expect(handler.token_buffer_size).to eq(4)
+          expect(handler.token_buffer_size).to eq(5)
 
           subject.start(handler, nil, nil)
           #puts handler.token_buffer
-          expect(handler.token_buffer_size).to eq(4)
+          expect(handler.token_buffer_size).to eq(5)
         end
 
       end
@@ -48,7 +48,7 @@ module Boilerpipe::SAX::TagActions
         it 'adds end anchor text' do
           handler = Boilerpipe::SAX::HTMLContentHandler.new
           handler.in_anchor_tag = 1
-          expect{subject.end_tag(handler, nil)}.to change{handler.token_buffer_size}.from(0).to(4)
+          expect{subject.end_tag(handler, nil)}.to change{handler.token_buffer_size}.from(0).to(5)
         end
 
         context 'if in nested anchor tag' do
