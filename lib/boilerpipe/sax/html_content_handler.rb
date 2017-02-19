@@ -208,6 +208,12 @@ module Boilerpipe::SAX
 
 
     def add_text_block(text_block)
+      @label_stacks.each do |lb|
+        next unless lb
+        lb.each do |labels|
+          text_block.add_label(labels) if labels
+        end
+      end
       @text_blocks << text_block
     end
 
