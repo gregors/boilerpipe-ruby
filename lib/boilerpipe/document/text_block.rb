@@ -77,7 +77,11 @@ module Boilerpipe
 
       def to_s
         #"[" + offsetBlocksStart + "-" + offsetBlocksEnd + ";tl=" + tagLevel + "; nw=" + numWords + ";nwl=" + numWrappedLines + ";ld=" + linkDensity + "]\t" + (isContent ? "CONTENT" : "boilerplate") + "," + labels + "\n" + getText();
-        "[#{@offset_blocks_start}-#{@offset_blocks_end};tl=#{@tag_level}; nw=#{@num_words};nwl=#{@num_wrapped_lines};ld=#{@link_density}]\t#{is_content? ? 'CONTENT' : 'BOILERPLATE'},#{ @labels.empty? ? 'null' : @labels.to_s }\n#{text}"
+        labels = 'null'
+        if !@labels.empty?
+          labels ="[#{ @labels.to_a.join(',')}]"
+        end
+        "[#{@offset_blocks_start}-#{@offset_blocks_end};tl=#{@tag_level}; nw=#{@num_words};nwl=#{@num_wrapped_lines};ld=#{@link_density}]\t#{is_content? ? 'CONTENT' : 'BOILERPLATE'},#{labels}\n#{text}"
       end
 
       def clone
