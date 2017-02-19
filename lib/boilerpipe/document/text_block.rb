@@ -27,6 +27,10 @@ module Boilerpipe
         init_densities
       end
 
+     def set_tag_level(level)
+       @tag_level = level
+     end
+
       def is_content?
         @content
       end
