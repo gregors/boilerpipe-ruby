@@ -5,11 +5,13 @@ module Boilerpipe::Filters
       changes = false
       doc.text_blocks.each do |text_block|
         if text_block.num_words < 15
-          text = text_block.text.trim.downcase
+          text = text_block.text
           if text.length >= 8
-            text_block.labels << :INDICATES_END_OF_TEXT if finds_match?(text)
+            if finds_match?(text.downcase)
+              text_block.labels << :INDICATES_END_OF_TEXT
+              changes = true
+            end
             #seems weird that only this block sets changes to true - bug???
-            changes = true
           elsif text_block.link_density == 1.0
             text_block.labels << :INDICATES_END_OF_TEXT if text == 'comment'
           end
