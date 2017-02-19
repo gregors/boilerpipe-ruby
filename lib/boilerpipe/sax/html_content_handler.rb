@@ -143,7 +143,7 @@ module Boilerpipe::SAX
         num_words_in_wrapped_lines = num_words - num_words_current_line
       end
 
-      text_block = ::Boilerpipe::Document::TextBlock.new(@text_buffer,
+      text_block = ::Boilerpipe::Document::TextBlock.new(@text_buffer.strip,
                                  num_words,
                                  num_linked_words,
                                  num_words_in_wrapped_lines,
