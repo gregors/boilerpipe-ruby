@@ -231,7 +231,7 @@ module Boilerpipe::SAX
     end
 
     def add_label_action(label_action)
-      label_stack = @label_stacks.pop
+      label_stack = @label_stacks.last
       if label_stack.nil?
         label_stack = []
         @label_stacks << label_stack
@@ -242,8 +242,8 @@ module Boilerpipe::SAX
     private
 
     def clear_buffers
-      @token_buffer.clear
-      @text_buffer.clear
+      @token_buffer = ''
+      @text_buffer = ''
     end
   end
 end
