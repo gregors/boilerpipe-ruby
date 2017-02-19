@@ -100,15 +100,13 @@ module Boilerpipe::SAX
         return
       end
 
-      # clear out if empty  or just a space
+      # clear out if empty or just a space
       length = @token_buffer.size
       case length
       when 0
         return
       when 1
-        if @sb_last_was_whitespace
-          clear_buffers
-        end
+        clear_buffers if @sb_last_was_whitespace
         return
       end
 
