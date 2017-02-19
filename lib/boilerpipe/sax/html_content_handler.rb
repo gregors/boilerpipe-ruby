@@ -161,7 +161,7 @@ module Boilerpipe::SAX
       clear_buffers
       text_block.set_tag_level(@block_tag_level)
       add_text_block(text_block)
-      @block_tag_level -= 1
+      @block_tag_level = -1
     end
 
     def text_document
