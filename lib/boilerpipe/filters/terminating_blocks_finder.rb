@@ -3,18 +3,14 @@ module Boilerpipe::Filters
   class TerminatingBlocksFinder
     def self.process(doc)
       changes = false
-      doc.text_blocks.each do |text_block|
-        if text_block.num_words < 15
-          text = text_block.text
-          if text.length >= 8
-            if finds_match?(text.downcase)
-              text_block.labels << :INDICATES_END_OF_TEXT
-              changes = true
-            end
-            #seems weird that only this block sets changes to true - bug???
-          elsif text_block.link_density == 1.0
-            text_block.labels << :INDICATES_END_OF_TEXT if text == 'comment'
-          end
+      doc.text_blocks.each do |tb|
+        next unless tb.num_words < 15
+        if tb.text.length >= 8 && finds_match?(tb.text.downcase)
+          tb.labels << :INDICATES_END_OF_TEXT
+          #seems weird that only this block sets changes to true - bug???
+          changes = true
+        elsif tb.link_density == 1.0 && tb.text == 'comment'
+          tb.labels << :INDICATES_END_OF_TEXT
         end
       end
       changes
