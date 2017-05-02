@@ -9,7 +9,7 @@ module Boilerpipe
                                                                          #Integer.MAX_VALUE);
 
       attr_reader :text, :num_words, :num_words_in_wrapped_lines, :num_words_in_anchor_text,
-                  :num_wrapped_lines, :offset_blocks_start, :offset_blocks_end, :text_density, :link_density, :labels
+                  :num_wrapped_lines, :offset_blocks_start, :offset_blocks_end, :text_density, :link_density, :labels, :tag_level
       attr_accessor :content
 
       def initialize(text, num_words=0, num_words_in_anchor_text=0, num_words_in_wrapped_lines=0, num_wrapped_lines=0, offset_blocks=0)
