@@ -3,7 +3,44 @@ require 'spec_helper'
 module Boilerpipe::Filters
   describe ExpandTitleToContentFilter do
     describe '#process' do
-      it 'processes a text document'
+      let(:text_block1){ Boilerpipe::Document::TextBlock.new('one') }
+      let(:text_block2){ Boilerpipe::Document::TextBlock.new('two') }
+      let(:text_block3){ Boilerpipe::Document::TextBlock.new('three') }
+
+      before do
+        text_block1.add_label(:TITLE)
+        text_block1.add_label(:MIGHT_BE_CONTENT)
+        text_block1.content = false
+
+        text_block2.add_label(:MIGHT_BE_CONTENT)
+        text_block2.content = false
+
+        text_block3.content = true
+      end
+
+      context 'if a Title textblock has a subsequent Content textblock' do
+        let(:text_blocks){ [text_block1, text_block2, text_block3] }
+        let!(:doc){ Boilerpipe::Document::TextDocument.new('', text_blocks) }
+
+
+        it 'marks all textblocks in between title and know content as content if they might be content' do
+          ExpandTitleToContentFilter.new.process(doc)
+          expect(text_block1.content).to be true
+          expect(text_block2.content).to be true
+          expect(text_block3.content).to be true
+        end
+      end
+
+      context 'if a Title textblock doesnt have a subsequent Content textblock' do
+        let!(:doc){ Boilerpipe::Document::TextDocument.new('', [text_block1]) }
+
+        it 'doesnt mark textblocks as content' do
+          ExpandTitleToContentFilter.new.process(doc)
+          expect(text_block1.content).to be false
+          expect(text_block2.content).to be false
+        end
+      end
+
     end
   end
 end
