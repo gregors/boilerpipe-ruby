@@ -9,7 +9,7 @@ module Boilerpipe
                                                                          #Integer.MAX_VALUE);
 
       attr_reader :text, :num_words, :num_words_in_wrapped_lines, :num_words_in_anchor_text,
-                  :num_wrapped_lines, :offset_blocks_start, :offset_blocks_end, :text_density, :link_density, :labels, :tag_level
+                  :num_wrapped_lines, :offset_blocks_start, :offset_blocks_end, :text_density, :link_density, :labels, :tag_level, :num_full_text_words
       attr_accessor :content
 
       def initialize(text, num_words=0, num_words_in_anchor_text=0, num_words_in_wrapped_lines=0, num_wrapped_lines=0, offset_blocks=0)
@@ -19,6 +19,7 @@ module Boilerpipe
         @num_words_in_anchor_text = num_words_in_anchor_text
         @num_words_in_wrapped_lines = num_words_in_wrapped_lines
         @num_wrapped_lines = num_wrapped_lines
+        @num_full_text_words = 0
         @offset_blocks_start = offset_blocks
         @offset_blocks_end = offset_blocks
         @content = false
@@ -35,7 +36,7 @@ module Boilerpipe
         @content
       end
 
-      def is_noncontent?
+      def is_not_content?
         !is_content?
       end
 
@@ -56,7 +57,7 @@ module Boilerpipe
       end
 
       def merge_next(other)
-        @text = "#{@text}\n#{other}"
+        @text = "#{@text}\n#{other.text}"
         @num_words += other.num_words
         @num_words_in_anchor_text += other.num_words_in_anchor_text
         @num_words_in_wrapped_lines += other.num_words_in_wrapped_lines
@@ -66,7 +67,7 @@ module Boilerpipe
         init_densities
         @is_content |= other.is_content?
 
-        @null_full_text_words += other.num_full_text_words
+        @num_full_text_words += other.num_full_text_words
 
         if other.labels
           if @labels.nil?

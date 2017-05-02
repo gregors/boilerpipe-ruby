@@ -30,6 +30,10 @@ module Boilerpipe
         s
       end
 
+      def replace_text_blocks!(new_blocks)
+        @text_blocks = new_blocks
+      end
+
       def debug_s
         @text_blocks.map(&:to_s).join("\n")
       end
