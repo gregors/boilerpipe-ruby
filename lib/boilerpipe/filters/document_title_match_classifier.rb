@@ -3,14 +3,13 @@ require 'set'
 module Boilerpipe::Filters
   class DocumentTitleMatchClassifier
 
-    def initializer(title)
+    def initialize(title)
       @potential_titles = Set.new
       return if title.nil?
-
-      title.gsub!('\u00a0', ' ')
-        .gsub!("'", "")
-        .strip!
-        .downcase!
+      title = title.gsub('\u00a0', ' ')
+        .gsub("'", "")
+        .strip
+        .downcase
       @potential_titles << title
 
       p = longest_part(title, "[ ]*[\\|»|-][ ]*")
