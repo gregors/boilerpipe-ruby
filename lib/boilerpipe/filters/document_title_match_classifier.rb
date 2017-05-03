@@ -46,19 +46,19 @@ module Boilerpipe::Filters
 
       doc.text_blocks.each do |tb|
         text = tb.text
-        text.gsub!('\u00a0', ' ')
-          .gsub!("'", "")
-          .strip!.downcase!
+        text = text.gsub('\u00a0', ' ')
+          .gsub("'", "")
+          .strip.downcase
 
-        if @potential_titles.contains(text)
-          tb.add_label(DefaultLabels::TITLE)
+        if @potential_titles.member?(text)
+          tb.add_label(:TITLE)
           changes = true
           break
         end
 
         #text = PAT_REMOVE_CHARACTERS.matcher(text).gsub("").trim
-        if @potential_titles.contains(text)
-          tb.add_label(DefaultLabels::TITLE)
+        if @potential_titles.member?(text)
+          tb.add_label(:TITLE)
           changes = true
           break
         end
@@ -69,7 +69,7 @@ module Boilerpipe::Filters
 
     private
     def longest_part(title, regex)
-      parts = title.split(pattern)
+      parts = title.split(regex)
       return nil if parts.size == 1
 
       longest_num_words = 0
@@ -79,7 +79,7 @@ module Boilerpipe::Filters
         next if part.contains('.com')
 
         num_words = part.split("[\b ]+").size
-        if num_words > longest_num_words || part.size > lonngest_part.size
+        if num_words > longest_num_words || part.size > longest_part.size
           longest_num_words = num_words
           longest_part = part
         end
@@ -88,8 +88,8 @@ module Boilerpipe::Filters
       longest_part.empty? ? nil : longest_part.strip
     end
 
-    def add_potential_titles(potential_titles, title, pattern, min_words)
-      parts = title.split(pattern)
+    def add_potential_titles(title, regex, min_words)
+      parts = title.split(regex)
       return if parts.size == 1
 
       parts.each do  |part|
