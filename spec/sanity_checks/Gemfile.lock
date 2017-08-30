@@ -1,0 +1,53 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activemodel (4.2.9)
+      activesupport (= 4.2.9)
+      builder (~> 3.1)
+    activerecord (4.2.9)
+      activemodel (= 4.2.9)
+      activesupport (= 4.2.9)
+      arel (~> 6.0)
+    activerecord-jdbc-adapter (1.3.23)
+      activerecord (>= 2.2, < 5.0)
+    activerecord-jdbcsqlite3-adapter (1.3.23)
+      activerecord-jdbc-adapter (~> 1.3.23)
+      jdbc-sqlite3 (>= 3.7.2, < 3.9)
+    activesupport (4.2.9)
+      i18n (~> 0.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.3, >= 0.3.4)
+      tzinfo (~> 1.1)
+    arel (6.0.4)
+    boilerpipe-ruby (0.0.1)
+      nokogiri (= 1.6.6.2)
+    builder (3.2.3)
+    i18n (0.8.6)
+    jdbc-sqlite3 (3.8.11.2)
+    jruby-boilerpipe (0.0.2)
+    mini_portile (0.6.2)
+    minitest (5.10.3)
+    nokogiri (1.6.6.2)
+      mini_portile (~> 0.6.0)
+    rickshaw (0.4.0)
+    sqlite3 (1.3.13)
+    thread_safe (0.3.6)
+    thread_safe (0.3.6-java)
+    tzinfo (1.2.3)
+      thread_safe (~> 0.1)
+
+PLATFORMS
+  java
+  ruby
+
+DEPENDENCIES
+  activerecord (= 4.2.9)
+  activerecord-jdbcsqlite3-adapter
+  boilerpipe-ruby
+  jdbc-sqlite3
+  jruby-boilerpipe
+  rickshaw
+  sqlite3
+
+BUNDLED WITH
+   1.15.4

@@ -1,0 +1,16 @@
+# frozen_string_literal: true
+source "https://rubygems.org"
+
+ gem 'rickshaw'
+ gem 'activerecord', '4.2.9'
+
+ platforms :ruby do
+   gem 'sqlite3'
+   gem 'boilerpipe-ruby'
+ end
+
+ platforms :jruby do
+   gem 'jdbc-sqlite3'
+   gem 'activerecord-jdbcsqlite3-adapter'
+   gem 'jruby-boilerpipe'
+ end
