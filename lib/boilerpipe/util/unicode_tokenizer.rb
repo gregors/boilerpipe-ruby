@@ -2,9 +2,9 @@ module Boilerpipe
   class UnicodeTokenizer
     INVISIBLE_SEPARATOR = "\u2063"
     WORD_BOUNDARY = Regexp.new('\b')
-    NOT_WORD_BOUNDARY = Regexp.new("[\u2063]*([\\\"'\\.,\\!\\@\\-\\:\\;\\$\\?\\(\\)/])[\u2063]*")
+    NOT_WORD_BOUNDARY = Regexp.new("[\u2063]*([\\\"'\\.,\\!\\@\\-\\:\\;\\$\\?\\(\\)\/])[\u2063]*")
 
-    # replace word boundaries with 'invisible separator' 
+    # replace word boundaries with 'invisible separator'
     # strip invisible separators from non-word boundaries
     # replace spaces or invisible separators with a single space
     # trim
