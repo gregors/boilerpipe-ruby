@@ -25,6 +25,8 @@ module Boilerpipe::Filters
         text.include?('what you think...') ||
         text.include?('add your comment') ||
         text.include?('add comment') ||
+        #TODO add this and test
+        #text.include?('leave a reply') ||
         text.include?('reader views') ||
         text.include?('have your say') ||
         text.include?('reader comments') ||
