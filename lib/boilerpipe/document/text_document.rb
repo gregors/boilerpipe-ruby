@@ -37,6 +37,7 @@ module Boilerpipe
       def debug_s
         @text_blocks.map(&:to_s).join("\n")
       end
+      alias_method :debug_string, :debug_s
 
     end
   end
