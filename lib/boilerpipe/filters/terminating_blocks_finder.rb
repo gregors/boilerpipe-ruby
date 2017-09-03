@@ -17,19 +17,19 @@ module Boilerpipe::Filters
     end
 
     def self.finds_match?(text)
-       text.start_with?('comments') ||
-       text =~ /^\d+ (comments|users responded in)/ || # starts with number
-       text.start_with?('© reuters') ||
-       text.start_with?('please rate this') ||
-       text.start_with?('post a comment') ||
-       text.include?('what you think...') ||
-       text.include?('add your comment') ||
-       text.include?('add comment') ||
-       text.include?('reader views') ||
-       text.include?('have your say') ||
-       text.include?('reader comments') ||
-       text.include?('rätta artikeln') ||
-       text == 'thanks for your comments - this feedback is now closed'
+      text.start_with?('comments') ||
+        text =~ /^\d+ (comments|users responded in)/ || # starts with number
+        text.start_with?('© reuters') ||
+        text.start_with?('please rate this') ||
+        text.start_with?('post a comment') ||
+        text.include?('what you think...') ||
+        text.include?('add your comment') ||
+        text.include?('add comment') ||
+        text.include?('reader views') ||
+        text.include?('have your say') ||
+        text.include?('reader comments') ||
+        text.include?('rätta artikeln') ||
+        text == 'thanks for your comments - this feedback is now closed'
     end
   end
 end
