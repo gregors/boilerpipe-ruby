@@ -12,29 +12,29 @@ module Boilerpipe::Filters
         .downcase
       @potential_titles << title
 
-      p = longest_part(title, "[ ]*[\\|»|-][ ]*")
+      p = longest_part(title, /[ ]*[\\|»|-][ ]*/)
       @potential_titles << p if p
 
-      p = longest_part(title, "[ ]*[\\|»|:][ ]*")
+      p = longest_part(title, /[ ]*[\\|»|:][ ]*/)
       @potential_titles << p if p
 
-      p = longest_part(title, "[ ]*[\\|»|:\\(\\)][ ]*")
+      p = longest_part(title, /[ ]*[\\|»|:\\(\\)][ ]*/)
       @potential_titles << p if p
 
-      p = longest_part(title, "[ ]*[\\|»|:\\(\\)\\-][ ]*")
+      p = longest_part(title, /[ ]*[\\|»|:\\(\\)\\-][ ]*/)
       @potential_titles << p if p
 
-      p = longest_part(title, "[ ]*[\\|»|,|:\\(\\)\\-][ ]*")
+      p = longest_part(title, /[ ]*[\\|»|,|:\\(\\)\\-][ ]*/)
       @potential_titles << p if p
 
-      p = longest_part(title, "[ ]*[\\|»|,|:\\(\\)\\-\u00a0][ ]*")
+      p = longest_part(title, /[ ]*[\\|»|,|:\\(\\)\\-\u00a0][ ]*/)
       @potential_titles << p if p
 
-      add_potential_titles(title, "[ ]+[\\|][ ]+", 4)
-      add_potential_titles(title, "[ ]+[\\-][ ]+", 4)
+      add_potential_titles(title, /[ ]+[\\|][ ]+/, 4)
+      add_potential_titles(title, /[ ]+[\\-][ ]+/, 4)
 
-      @potential_titles << title.sub(" - [^\\-]+$", "")
-      @potential_titles << title.sub("^[^\\-]+ - ", "")
+      @potential_titles << title.sub(/ - [^\\-]+$/, '')
+      @potential_titles << title.sub(/^[^\\-]+ - /, '')
     end
 
     # regex?
@@ -47,7 +47,7 @@ module Boilerpipe::Filters
       doc.text_blocks.each do |tb|
         text = tb.text
         text = text.gsub('\u00a0', ' ')
-          .gsub("'", "")
+          .gsub("'", '')
           .strip.downcase
 
         if @potential_titles.member?(text)
@@ -78,7 +78,7 @@ module Boilerpipe::Filters
       parts.each do |part|
         next if part.contains('.com')
 
-        num_words = part.split("[\b ]+").size
+        num_words = part.split(/[\b ]+/).size
         if num_words > longest_num_words || part.size > longest_part.size
           longest_num_words = num_words
           longest_part = part
@@ -94,7 +94,7 @@ module Boilerpipe::Filters
 
       parts.each do  |part|
         next if part.contains('.com')
-        num_words = p.split("[\b ]+").size
+        num_words = p.split(/[\b ]+/).size
         @potential_titles << if num_words >= min_words
         end
       end
