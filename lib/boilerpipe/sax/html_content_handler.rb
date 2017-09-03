@@ -3,7 +3,8 @@ require 'set'
 
 module Boilerpipe::SAX
   class HTMLContentHandler < Nokogiri::XML::SAX::Document
-    attr_reader :in_ignorable_element
+    attr_reader :in_ignorable_element, :label_stacks
+
     attr_accessor :in_anchor_tag, :token_buffer ,:font_size_stack
     ANCHOR_TEXT_START = "$\ue00a<"
     ANCHOR_TEXT_END = ">\ue00a$"
@@ -118,6 +119,7 @@ module Boilerpipe::SAX
       num_linked_words = 0
       current_line_length = 0
       max_line_length = 80
+
       tokens = ::Boilerpipe::UnicodeTokenizer.tokenize(@token_buffer)
       tokens.each do |token|
         if ANCHOR_TEXT_START == token
@@ -131,6 +133,7 @@ module Boilerpipe::SAX
           num_linked_words += 1 if @in_anchor_text
           token_length = token.size
           current_line_length += token_length + 1
+
           if current_line_length > max_line_length
             num_wrapped_lines += 1
             current_line_length = token_length
@@ -252,6 +255,7 @@ module Boilerpipe::SAX
       label_stack = @label_stacks.last
       if label_stack.nil?
         label_stack = []
+        @label_stacks.pop
         @label_stacks << label_stack
       end
       label_stack << label_action
