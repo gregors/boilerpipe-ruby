@@ -1,15 +1,47 @@
 # encoding: utf-8
 require 'set'
 
-module Boilerpipe::Filters
-  class DocumentTitleMatchClassifier
-    # we create a list of potential titles
+    # we create a list of potential titles from the page title
     # then we look at every text block and if the text block
     # contains a potential title - we set that text block label as :TITLE
+
+module Boilerpipe::Filters
+  class DocumentTitleMatchClassifier
     attr_reader :potential_titles
 
     def initialize(title)
       @potential_titles = Set.new
+      generate_potential_titles(title)
+    end
+
+    def process(doc)
+      return doc if @potential_titles.empty?
+
+      doc.text_blocks.each do |tb|
+        text = tb.text.gsub('\u00a0', ' ')
+          .gsub("'", '')
+          .strip.downcase
+
+        if @potential_titles.member? text
+          tb.add_label :TITLE
+          break
+        end
+
+        remove_characters = /[?!.-:]+/
+        text = text.gsub(remove_characters, '').strip
+
+        if @potential_titles.member? text
+          tb.add_label :TITLE
+          break
+        end
+      end
+
+      doc
+    end
+
+    private
+
+    def generate_potential_titles(title)
       return if title.nil?
 
       title = title.gsub('\u00a0', ' ')
@@ -45,34 +77,6 @@ module Boilerpipe::Filters
       @potential_titles << title.sub(/ - [^-]+$/, '') # remove right of -
       @potential_titles << title.sub(/^[^-]+ - /, '') # remove left of -
     end
-
-
-    def process(doc)
-      return doc if @potential_titles.empty?
-
-      doc.text_blocks.each do |tb|
-        text = tb.text.gsub('\u00a0', ' ')
-          .gsub("'", '')
-          .strip.downcase
-
-        if @potential_titles.member? text
-          tb.add_label :TITLE
-          break
-        end
-
-        remove_characters = /[?!.-:]+/
-        text = text.gsub(remove_characters, '').strip
-
-        if @potential_titles.member? text
-          tb.add_label :TITLE
-          break
-        end
-      end
-
-      doc
-    end
-
-    private
 
     def longest_part(title, regex)
       parts = title.split regex
