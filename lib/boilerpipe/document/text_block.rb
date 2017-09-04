@@ -3,13 +3,13 @@ require 'set'
 module Boilerpipe
   module Document
     class TextBlock
-       #private static final BitSet EMPTY_BITSET = new BitSet();
-         #public static final TextBlock EMPTY_START = new TextBlock("", EMPTY_BITSET, 0, 0, 0, 0, -1);
-           #public static final TextBlock EMPTY_END = new TextBlock("", EMPTY_BITSET, 0, 0, 0, 0,
-                                                                         #Integer.MAX_VALUE);
+
+       #EMPTY_END = TextBlock.new('', 0, 0, 0, 0, 999999999999999999999999999)
 
       attr_reader :text, :num_words, :num_words_in_wrapped_lines, :num_words_in_anchor_text,
-                  :num_wrapped_lines, :offset_blocks_start, :offset_blocks_end, :text_density, :link_density, :labels, :tag_level, :num_full_text_words
+                  :num_wrapped_lines, :offset_blocks_start, :offset_blocks_end, :text_density,
+                  :link_density, :labels, :tag_level, :num_full_text_words
+
       attr_accessor :content
 
       def initialize(text, num_words=0, num_words_in_anchor_text=0, num_words_in_wrapped_lines=0, num_wrapped_lines=0, offset_blocks=0)
@@ -26,6 +26,10 @@ module Boilerpipe
         @tag_level = 0
 
         init_densities
+      end
+
+      def self.empty_start
+        new('', 0, 0, 0, 0, -1)
       end
 
      def set_tag_level(level)
