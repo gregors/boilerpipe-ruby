@@ -3,7 +3,7 @@ require 'set'
 
 module Boilerpipe::SAX
   class HTMLContentHandler < Nokogiri::XML::SAX::Document
-    attr_reader :in_ignorable_element, :label_stacks
+    attr_reader :in_ignorable_element, :label_stacks, :last_start_tag
 
     attr_accessor :in_anchor_tag, :token_buffer ,:font_size_stack
     ANCHOR_TEXT_START = "$\ue00a<"
@@ -32,8 +32,9 @@ module Boilerpipe::SAX
 
     def start_element(name, attrs = [])
       @label_stacks << nil
+      name = name.upcase.intern
 
-      tag_action = @tag_actions[name.upcase.intern]
+      tag_action = @tag_actions[name]
       if tag_action
         @tag_level += 1 if tag_action.changes_tag_level?
         @flush = tag_action.start(self, name, attrs) | @flush

@@ -8,6 +8,15 @@ module Boilerpipe::SAX
     end
 
     describe '#start_element' do
+      it 'saves the last tag element' do
+        subject.start_element 'div'
+        expect(subject.last_start_tag).to eq :DIV
+      end
+
+      it 'converts the tag name into a symbol' do
+        subject.start_element 'title'
+        expect(subject.last_start_tag).to eq :TITLE
+      end
     end
 
     describe '#characters' do
