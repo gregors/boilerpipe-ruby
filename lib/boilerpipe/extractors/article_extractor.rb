@@ -8,7 +8,7 @@ module Boilerpipe::Extractors
       filters::TerminatingBlocksFinder.process doc
       filters::DocumentTitleMatchClassifier.new(title).process doc
       filters::NumWordsRulesClassifier.process doc
-
+      filters::IgnoreBlocksAfterContentFilter.process doc
       doc.content
     end
   end
