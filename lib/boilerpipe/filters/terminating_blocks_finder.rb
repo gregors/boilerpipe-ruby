@@ -1,19 +1,18 @@
 # encoding: utf-8
+
 module Boilerpipe::Filters
   class TerminatingBlocksFinder
     def self.process(doc)
-      changes = false
       doc.text_blocks.each do |tb|
         next unless tb.num_words < 15
         if tb.text.length >= 8 && finds_match?(tb.text.downcase)
           tb.labels << :INDICATES_END_OF_TEXT
-          #seems weird that only this block sets changes to true - bug???
-          changes = true
         elsif tb.link_density == 1.0 && tb.text == 'comment'
           tb.labels << :INDICATES_END_OF_TEXT
         end
       end
-      changes
+
+      doc
     end
 
     def self.finds_match?(text)
