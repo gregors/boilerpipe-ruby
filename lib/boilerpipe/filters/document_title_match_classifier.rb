@@ -1,84 +1,90 @@
 # encoding: utf-8
 require 'set'
+
 module Boilerpipe::Filters
   class DocumentTitleMatchClassifier
+    # we create a list of potential titles
+    # then we look at every text block and if the text block
+    # contains a potential title - we set that text block label as :TITLE
+    attr_reader :potential_titles
 
     def initialize(title)
       @potential_titles = Set.new
       return if title.nil?
+
       title = title.gsub('\u00a0', ' ')
-        .gsub("'", "")
+        .gsub("'", '')
         .strip
         .downcase
+
       @potential_titles << title
 
-      p = longest_part(title, /[ ]*[\\|»|-][ ]*/)
+      # unnecessary
+      #p = longest_part(title, /[ ]*[|»-][ ]*/)
+      #@potential_titles << p if p
+
+      #p = longest_part(title, /[ ]*[|»:][ ]*/)
+      #@potential_titles << p if p
+
+      #p = longest_part(title, /[ ]*[|»:()][ ]*/)
+      #@potential_titles << p if p
+
+      #p = longest_part(title, /[ ]*[|»:()-][ ]*/)
+      #@potential_titles << p if p
+
+      p = longest_part(title, /[ ]*[|»,:()-][ ]*/)
       @potential_titles << p if p
 
-      p = longest_part(title, /[ ]*[\\|»|:][ ]*/)
-      @potential_titles << p if p
+      # we replace \u00a0 so why check for it?
+      #p = longest_part(title, /[ ]*[|»,:()-\u00a0][ ]*/)
+      #@potential_titles << p if p
 
-      p = longest_part(title, /[ ]*[\\|»|:\\(\\)][ ]*/)
-      @potential_titles << p if p
+      add_potential_titles(title, /[ ]+[|][ ]+/, 4)
+      add_potential_titles(title, /[ ]+[-][ ]+/, 4)
 
-      p = longest_part(title, /[ ]*[\\|»|:\\(\\)\\-][ ]*/)
-      @potential_titles << p if p
-
-      p = longest_part(title, /[ ]*[\\|»|,|:\\(\\)\\-][ ]*/)
-      @potential_titles << p if p
-
-      p = longest_part(title, /[ ]*[\\|»|,|:\\(\\)\\-\u00a0][ ]*/)
-      @potential_titles << p if p
-
-      add_potential_titles(title, /[ ]+[\\|][ ]+/, 4)
-      add_potential_titles(title, /[ ]+[\\-][ ]+/, 4)
-
-      @potential_titles << title.sub(/ - [^\\-]+$/, '')
-      @potential_titles << title.sub(/^[^\\-]+ - /, '')
+      @potential_titles << title.sub(/ - [^-]+$/, '') # remove right of -
+      @potential_titles << title.sub(/^[^-]+ - /, '') # remove left of -
     end
 
-    # regex?
-    #PAT_REMOVE_CHARACTERS = Pattern.compile("[\\?\\!\\.\\-\\:]+");
 
     def process(doc)
-      return false if @potential_titles.empty?
-      changes = false
+      return doc if @potential_titles.empty?
 
       doc.text_blocks.each do |tb|
-        text = tb.text
-        text = text.gsub('\u00a0', ' ')
+        text = tb.text.gsub('\u00a0', ' ')
           .gsub("'", '')
           .strip.downcase
 
-        if @potential_titles.member?(text)
-          tb.add_label(:TITLE)
-          changes = true
+        if @potential_titles.member? text
+          tb.add_label :TITLE
           break
         end
 
-        #text = PAT_REMOVE_CHARACTERS.matcher(text).gsub("").trim
-        if @potential_titles.member?(text)
-          tb.add_label(:TITLE)
-          changes = true
+        remove_characters = /[?!.-:]+/
+        text = text.gsub(remove_characters, '').strip
+
+        if @potential_titles.member? text
+          tb.add_label :TITLE
           break
         end
-
       end
-      changes
+
+      doc
     end
 
     private
+
     def longest_part(title, regex)
-      parts = title.split(regex)
+      parts = title.split regex
       return nil if parts.size == 1
 
       longest_num_words = 0
       longest_part = ''
 
       parts.each do |part|
-        next if part.contains('.com')
+        next if part =~ /[.]com/
+        num_words = number_of_words(part)
 
-        num_words = part.split(/[\b ]+/).size
         if num_words > longest_num_words || part.size > longest_part.size
           longest_num_words = num_words
           longest_part = part
@@ -89,15 +95,20 @@ module Boilerpipe::Filters
     end
 
     def add_potential_titles(title, regex, min_words)
-      parts = title.split(regex)
+      parts = title.split regex
       return if parts.size == 1
 
-      parts.each do  |part|
-        next if part.contains('.com')
-        num_words = p.split(/[\b ]+/).size
-        @potential_titles << if num_words >= min_words
-        end
+      parts.each do |part|
+        next if part =~ /[.]com/
+        num_words = number_of_words(part)
+
+        @potential_titles << part if num_words >= min_words
       end
     end
+
+    def number_of_words(s)
+      s.split(/[\b ]+/).size
+    end
+
   end
 end
