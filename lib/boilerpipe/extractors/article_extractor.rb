@@ -9,6 +9,7 @@ module Boilerpipe::Extractors
       filters::DocumentTitleMatchClassifier.new(title).process doc
       filters::NumWordsRulesClassifier.process doc
       filters::IgnoreBlocksAfterContentFilter.process doc
+      filters::TrailingHeadlineToBoilerplateFilter.process doc
       doc.content
     end
   end
