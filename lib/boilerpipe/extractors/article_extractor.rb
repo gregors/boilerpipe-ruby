@@ -10,6 +10,7 @@ module Boilerpipe::Extractors
       filters::NumWordsRulesClassifier.process doc
       filters::IgnoreBlocksAfterContentFilter.process doc
       filters::TrailingHeadlineToBoilerplateFilter.process doc
+      filters::BlockProximityFusion::MAX_DISTANCE_1.process doc
       doc.content
     end
   end

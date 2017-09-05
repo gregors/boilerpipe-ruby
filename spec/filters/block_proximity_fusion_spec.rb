@@ -16,8 +16,10 @@ module Boilerpipe::Filters
     describe '#process' do
       context 'where blocks exceed distance' do
         it 'doesnt change blocks' do
+          expect(doc.text_blocks.size).to eq 3
          filter = BlockProximityFusion.new(1, true, false)
-         expect(filter.process(doc)).to be false
+         filter.process(doc)
+         expect(doc.text_blocks.size).to eq 3
         end
       end
 
@@ -38,7 +40,9 @@ module Boilerpipe::Filters
 
         it 'Changes the Text Document' do
           filter = BlockProximityFusion.new(1, false, false)
-          expect(filter.process(doc)).to be true
+          expect(doc.text_blocks.size).to be 3
+          filter.process(doc)
+          expect(doc.text_blocks.size).to be 2 
         end
       end
 
@@ -69,8 +73,10 @@ module Boilerpipe::Filters
           text_block3.set_tag_level(3)
         end
         it 'doesnt change blocks' do
-         filter = BlockProximityFusion.new(1, false, true)
-         expect(filter.process(doc)).to be false
+          expect(doc.text_blocks.size).to be 3
+          filter = BlockProximityFusion.new(1, false, true)
+          filter.process(doc)
+          expect(doc.text_blocks.size).to be 3
         end
       end
     end
