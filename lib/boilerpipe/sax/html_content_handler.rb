@@ -79,7 +79,8 @@ module Boilerpipe::SAX
     end
 
     def end_element(name)
-      tag_action = @tag_actions[name.upcase.intern]
+      name = name.upcase.intern
+      tag_action = @tag_actions[name]
       if tag_action
         @flush = tag_action.end_tag(self, name) | @flush
       else
@@ -90,7 +91,7 @@ module Boilerpipe::SAX
       flush_block if @flush
 
       @last_event = :END_TAG
-      @last_end_tag = name.upcase.intern
+      @last_end_tag = name
       @label_stacks.pop
     end
 
