@@ -1,6 +1,7 @@
 module Boilerpipe::SAX
   class TagActionMap
     def self.tag_actions
+      labels = ::Boilerpipe::Labels
       {
         STYLE: TagActions::IgnorableElement.new,
         SCRIPT: TagActions::IgnorableElement.new,
@@ -38,10 +39,11 @@ module Boilerpipe::SAX
         NOSCRIPT: TagActions::IgnorableElement.new,
 
         # New in 1.3
-        LI: TagActions::BlockTagLabel.new(::Boilerpipe::Labels::LabelAction.new(:LI)),
-        H1: TagActions::BlockTagLabel.new(::Boilerpipe::Labels::LabelAction.new([:H1, :HEADING])),
-        H2: TagActions::BlockTagLabel.new(::Boilerpipe::Labels::LabelAction.new([:H2, :HEADING])),
-        H3: TagActions::BlockTagLabel.new(::Boilerpipe::Labels::LabelAction.new([:H3, :HEADING]))
+
+        LI: TagActions::BlockTagLabel.new(labels::LabelAction.new([:LI])),
+        H1: TagActions::BlockTagLabel.new(labels::LabelAction.new([:H1, :HEADING])),
+        H2: TagActions::BlockTagLabel.new(labels::LabelAction.new([:H2, :HEADING])),
+        H3: TagActions::BlockTagLabel.new(labels::LabelAction.new([:H3, :HEADING]))
       }
     end
   end
