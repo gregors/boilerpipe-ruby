@@ -49,7 +49,9 @@ module Boilerpipe
       end
 
       def add_labels(labels)
-        @labels.merge(labels)
+        labels.each do |label|
+          add_label(label)
+        end
       end
 
       def has_label?(label)
