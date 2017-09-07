@@ -1,4 +1,3 @@
-# encoding: utf-8
 
     # Fuses adjacent blocks if their distance (in blocks) does not exceed a certain limit. This
     # probably makes sense only in cases where an upstream filter already has removed some blocks.
@@ -30,36 +29,33 @@ module Boilerpipe::Filters
 
       return false if prev_block.nil?
 
-      offset = text_blocks.index(prev_block)
+      offset = text_blocks.index(prev_block) + 1
       blocks = text_blocks[offset..-1]
 
       blocks_to_remove = []
 
-      combined = blocks.delete_if do |tb|
-        prev_block = tb unless tb.is_content?
-        next unless tb.is_content?
+      blocks.each do |tb|
+        if tb.is_not_content?
+          prev_block = tb
+          next
+        end
 
-        diff_blocks = blocks.index(tb) - blocks.index(prev_block)
-        next if diff_blocks == 0
-
-        ok = true
+        diff_blocks = tb.offset_blocks_start - prev_block.offset_blocks_end - 1
         if diff_blocks <= @max_blocks_distance
+          ok = true
           ok = false if (prev_block.is_not_content? || tb.is_not_content?) && @content_only
           ok = false if ok && prev_block.tag_level != tb.tag_level && @same_tag_level_only
+
+          if  ok
+            prev_block.merge_next(tb)
+            blocks_to_remove << tb
+          else
+            prev_block = tb
+          end
         end
 
-        # return logic for delete_if
-        if ok
-          prev_block.merge_next(tb)
-          blocks_to_remove << tb
-          true # delete current node due to merge
-        else
-          prev_block = tb
-          false # don't delete current node
-        end
       end
-
-      doc.replace_text_blocks!(combined)
+      doc.replace_text_blocks!( text_blocks - blocks_to_remove )
       doc
     end
 
