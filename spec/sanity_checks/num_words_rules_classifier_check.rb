@@ -1,7 +1,10 @@
 require 'boilerpipe'
 
 #id = 1024
-(1).upto(1024) do |id|
+#files = (1.2024).to_a
+files = [2]
+
+files.each do |id|
   file_contents = File.read("scraped/#{id}")
   doc = Boilerpipe::SAX::BoilerpipeHTMLParser.parse(file_contents)
   Boilerpipe::Filters::NumWordsRulesClassifier.process(doc)
@@ -10,7 +13,8 @@ require 'boilerpipe'
   tbs =  doc.text_blocks
 #  puts tbs.size
   tb = tbs.select{|tb| tb.is_content? }
+  total = tbs.size
   if tb.size > 0
-    puts "size: #{tb.size} has title id: #{id}"
+    puts "text block with content: #{tb.size} out of #{total} has file id: #{id}"
   end
 end
