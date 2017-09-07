@@ -5,6 +5,7 @@ module Boilerpipe::Filters
       let(:text_block){ Boilerpipe::Document::TextBlock }
       let(:text_block1){ text_block.new('one', 3, 0, 0, 1, 0) }
       let(:text_block2){ text_block.new('largest', 7, 0, 0, 1, 0).tap{|t| t.content = true } }
+      let(:text_block3){ text_block.new('3'*150, 150, 0, 0, 1, 0) }
 
       let(:text_blocks){ [text_block1, text_block2, text_block3] }
       let!(:doc){ Boilerpipe::Document::TextDocument.new('', text_blocks) }
