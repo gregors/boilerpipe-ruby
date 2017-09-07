@@ -32,9 +32,10 @@ module Boilerpipe::SAX
 
     def start_element(name, attrs = [])
       @label_stacks << nil
-      name = name.upcase.intern
+      tag = name.upcase.intern
 
-      tag_action = @tag_actions[name]
+
+      tag_action = @tag_actions[tag]
       if tag_action
         @tag_level += 1 if tag_action.changes_tag_level?
         @flush = tag_action.start(self, name, attrs) | @flush
@@ -44,7 +45,7 @@ module Boilerpipe::SAX
       end
 
       @last_event = :START_TAG
-      @last_start_tag = name
+      @last_start_tag = tag
     end
 
     def characters(text)
@@ -79,8 +80,8 @@ module Boilerpipe::SAX
     end
 
     def end_element(name)
-      name = name.upcase.intern
-      tag_action = @tag_actions[name]
+      tag = name.upcase.intern
+      tag_action = @tag_actions[tag]
       if tag_action
         @flush = tag_action.end_tag(self, name) | @flush
       else
@@ -91,7 +92,7 @@ module Boilerpipe::SAX
       flush_block if @flush
 
       @last_event = :END_TAG
-      @last_end_tag = name
+      @last_end_tag = tag
       @label_stacks.pop
     end
 
