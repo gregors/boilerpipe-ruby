@@ -96,6 +96,7 @@ module Boilerpipe
       end
 
       def clone
+        throw NotImplementedError
       end
 
       private
