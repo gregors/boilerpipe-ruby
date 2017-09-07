@@ -71,7 +71,7 @@ module Boilerpipe
         @offset_blocks_start = [@offset_blocks_start , other.offset_blocks_start].min
         @offset_blocks_end = [@offset_blocks_end , other.offset_blocks_end].max
         init_densities
-        @is_content |= other.is_content?
+        @content |= other.is_content?
 
         @num_full_text_words += other.num_full_text_words
 
