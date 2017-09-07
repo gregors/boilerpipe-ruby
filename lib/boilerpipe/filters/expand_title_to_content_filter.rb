@@ -1,45 +1,42 @@
-# encoding: utf-8
+
+# Marks all TextBlocks "content" which are between the headline and the part that has
+# already been marked content, if they are marked MIGHT_BE_CONTENT.
+# This filter is quite specific to the news domain.
+# used downstream of KeepLargetBlockFilter since that's what sets MIGHT_BE_CONTENT
+
+
 module Boilerpipe::Filters
   class ExpandTitleToContentFilter
-     # Marks all TextBlocks "content" which are between the headline and the part that has
-     # already been marked content, if they are marked MIGHT_BE_CONTENT.
-     # This filter is quite specific to the news domain.
+    def self.process(doc)
+      tbs = doc.text_blocks
 
-    def process(doc)
-      changes = false
+      #     slower and more ruby-like
+      #     comeback and let's do some benchmarking
+      #     titles = tbs.select{ |tb| tb.has_label?(:TITLE) }
+      #     title = tbs.index(titles.last)
+      #     content_start = tbs.find_index(&:is_content?)
+
       i = 0
-      title = -1
-      content_start = -1
+      title = nil
+      content_start = nil
 
-      # find first title and content tbs
-      doc.text_blocks.each do |tb|
-        title = i if found_first_title?(content_start, tb)
-        content_start = i if found_first_content?(content_start, tb)
+      tbs.each do |tb|
+        title = i if content_start.nil? && tb.has_label?(:TITLE)
+        content_start = i if content_start.nil? && tb.is_content?
         i += 1
       end
 
-      return false if no_title_with_subsequent_content?(content_start, title)
+      return doc if no_title_with_subsequent_content?(content_start, title)
 
-      doc.text_blocks.each do |tb|
-        if tb.has_label?(:MIGHT_BE_CONTENT)
-          tb.content = true
-          changes = true
-        end
+      tbs.slice(title...content_start).each do |tb|
+        tb.content = true if tb.has_label?(:MIGHT_BE_CONTENT)
       end
 
-      changes
+      doc
     end
 
-    def found_first_title?(content_start, tb)
-        content_start == -1 && tb.has_label?(:TITLE)
-    end
-
-    def found_first_content?(content_start, tb)
-        content_start == -1 && tb.is_content?
-    end
-
-    def no_title_with_subsequent_content?(content_start, title)
-      content_start <= title || title == -1
+    def self.no_title_with_subsequent_content?(content_start, title)
+      title.nil? || content_start.nil? || content_start <= title
     end
 
   end

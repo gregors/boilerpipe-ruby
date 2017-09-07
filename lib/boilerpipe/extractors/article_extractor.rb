@@ -20,6 +20,9 @@ module Boilerpipe::Extractors
 
       filters::KeepLargestBlockFilter::INSTANCE_EXPAND_TO_SAME_TAGLEVEL_MIN_WORDS.process doc
 
+      filters::ExpandTitleToContentFilter.process doc
+
+      #
       doc.content
     end
   end
