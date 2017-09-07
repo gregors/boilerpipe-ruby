@@ -15,6 +15,7 @@ module Boilerpipe::Extractors
       filters::IgnoreBlocksAfterContentFilter.process doc
       filters::TrailingHeadlineToBoilerplateFilter.process doc
       filters::BlockProximityFusion::MAX_DISTANCE_1.process doc
+      filters::BoilerplateBlockFilter::INSTANCE_KEEP_TITLE.process doc
       doc.content
     end
   end
