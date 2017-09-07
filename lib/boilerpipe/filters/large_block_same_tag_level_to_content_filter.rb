@@ -14,8 +14,8 @@ module Boilerpipe::Filters
         tb.is_content? && tb.has_label?(:VERY_LIKELY_CONTENT)
       end
 
+      return doc if largest.nil?
       tag_level = largest.tag_level
-      return doc if tag_level.nil?
 
       doc.text_blocks.each do |tb|
         next if tb.is_content?
