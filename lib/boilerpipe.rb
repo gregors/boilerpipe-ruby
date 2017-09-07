@@ -30,12 +30,3 @@ require 'boilerpipe/sax/tag_actions/block_level'
 require 'boilerpipe/sax/tag_actions/font'
 require 'boilerpipe/sax/tag_actions/inline_tag_label'
 require 'boilerpipe/sax/tag_actions/block_tag_label'
-
-module Boilerpipe
-  class ArticleExtractor
-   def self.text(contents)
-     doc = ::Boilerpipe::SAX::BoilerpipeHTMLParser.parse(contents)
-     ::Boilerpipe::Extractors::ArticleExtractor.process(doc)
-   end
-  end
-end

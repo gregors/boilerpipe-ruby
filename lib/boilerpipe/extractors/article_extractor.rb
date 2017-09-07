@@ -1,5 +1,9 @@
 module Boilerpipe::Extractors
   class ArticleExtractor
+    def self.text(contents)
+      doc = ::Boilerpipe::SAX::BoilerpipeHTMLParser.parse(contents)
+      ::Boilerpipe::Extractors::ArticleExtractor.process(doc)
+    end
 
     def self.process(doc)
       title = doc.title
