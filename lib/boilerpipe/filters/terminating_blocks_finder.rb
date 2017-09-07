@@ -1,5 +1,10 @@
 # encoding: utf-8
 
+# Finds blocks which are potentially indicating the end of an article
+# text and marks them with INDICATES_END_OF_TEXT. This can be used
+# in conjunction with a downstream IgnoreBlocksAfterContentFilter.
+
+
 module Boilerpipe::Filters
   class TerminatingBlocksFinder
     def self.process(doc)

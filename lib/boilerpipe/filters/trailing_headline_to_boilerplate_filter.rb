@@ -1,4 +1,7 @@
-# encoding: utf-8
+
+# Marks trailing headlines TextBlocks that have the label :#HEADING
+# as boilerplate. Trailing means they are marked content and are
+# below any other content block.
 
 module Boilerpipe::Filters
   class TrailingHeadlineToBoilerplateFilter

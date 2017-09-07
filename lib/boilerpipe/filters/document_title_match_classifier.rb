@@ -1,6 +1,9 @@
 # encoding: utf-8
 require 'set'
 
+ # Marks TextBlocks which contain parts of the HTML <TITLE> tag, using
+ # some heuristics which are quite specific to the news domain.
+
     # we create a list of potential titles from the page title
     # then we look at every text block and if the text block
     # contains a potential title - we set that text block label as :TITLE

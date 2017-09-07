@@ -1,5 +1,3 @@
-# encoding: utf-8
-
  # Marks all blocks as "non-content" that occur after blocks that have been
  # marked INDICATES_END_OF_TEXT. These marks are ignored unless a minimum
  # number of words in content blocks occur before this mark (default: 60).
