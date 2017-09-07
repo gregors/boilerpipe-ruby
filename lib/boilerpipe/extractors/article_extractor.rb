@@ -22,6 +22,8 @@ module Boilerpipe::Extractors
 
       filters::ExpandTitleToContentFilter.process doc
 
+      filters::LargeBlockSameTagLevelToContentFilter.process doc
+
       #
       doc.content
     end
