@@ -4,8 +4,9 @@ module Boilerpipe::Filters
   describe ListAtEndFilter do
     describe '#process' do
       context 'when a text block is the last LI tag in a list' do
-        let(:text_block1){ Boilerpipe::Document::TextBlock.new('one') }
-        let(:text_block2){ Boilerpipe::Document::TextBlock.new('two') }
+        let(:text_block){ Boilerpipe::Document::TextBlock }
+        let(:text_block1){ text_block.new('one') }
+        let(:text_block2){ text_block.new('two') }
         let(:text_blocks){ [text_block1, text_block2] }
 
         let!(:doc){ Boilerpipe::Document::TextDocument.new('', text_blocks) }
@@ -22,22 +23,13 @@ module Boilerpipe::Filters
           end
 
           it 'sets text block to content' do
-            ListAtEndFilter.new.process(doc)
+            expect(text_block2.content).to be false
+            ListAtEndFilter.process doc
             expect(text_block2.content).to be true
           end
-
-          it 'returns changes to true' do
-            expect(ListAtEndFilter.new.process(doc)).to be true
-          end
         end
       end
 
-      context 'when a text block doesnt change' do
-        let(:empty_doc){ Boilerpipe::Document::TextDocument.new('', []) }
-        it 'returns changes to false' do
-            expect(ListAtEndFilter.new.process(empty_doc)).to be false
-        end
-      end
     end
   end
 end

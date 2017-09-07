@@ -24,6 +24,9 @@ module Boilerpipe::Extractors
 
       filters::LargeBlockSameTagLevelToContentFilter.process doc
 
+      # Marks nested list-item blocks after the end of the main content as content.
+      filters::ListAtEndFilter.process doc
+
       #
       doc.content
     end
