@@ -18,6 +18,8 @@ module Boilerpipe::Extractors
       filters::BoilerplateBlockFilter::INSTANCE_KEEP_TITLE.process doc
       filters::BlockProximityFusion::MAX_DISTANCE_1_CONTENT_ONLY_SAME_TAGLEVEL.process doc
 
+      filters::KeepLargestBlockFilter::INSTANCE_EXPAND_TO_SAME_TAGLEVEL_MIN_WORDS.process doc
+
       doc.content
     end
   end
