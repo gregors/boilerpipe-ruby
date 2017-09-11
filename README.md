@@ -46,7 +46,7 @@ Or install it yourself as:
     > content = open('https://blog.carbonfive.com/2017/08/28/always-squash-and-rebase-your-git-commits/').read; true;
     > output = Boilerpipe::Extractors::ArticleExtractor.text(content).slice(0..40)
      => "Always Squash and Rebase your Git Commits" 
-    > output = Boilerpipe::Extractors::DefaultExtrator.text(content).slice(0..40)
+    > output = Boilerpipe::Extractors::DefaultExtractor.text(content).slice(0..40)
      => "Posted on\nWhat is the squash rebase workf"
 
 ## Development
