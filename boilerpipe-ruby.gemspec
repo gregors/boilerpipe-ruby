@@ -8,6 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Boilerpipe::VERSION
   spec.authors       = ['Gregory Ostermayr']
   spec.email         = ['<gregory.ostermayr@gmail.com>']
+  spec.license       = 'Apache 2.0'
 
   spec.summary       = %q{A pure ruby implemenation of the boilerpipe algorithm}
   spec.description   = %q{A pure ruby implementation of the boilerpipe algorithm}
