@@ -3,6 +3,7 @@ module Boilerpipe::Extractors
     def self.text(contents)
       doc = ::Boilerpipe::SAX::BoilerpipeHTMLParser.parse(contents)
       ::Boilerpipe::Extractors::ArticleExtractor.process(doc)
+      doc.content
     end
 
     def self.process(doc)
@@ -46,7 +47,7 @@ module Boilerpipe::Extractors
       # Marks nested list-item blocks after the end of the main content as content.
       filters::ListAtEndFilter.process doc
 
-      doc.content
+      doc
     end
   end
 end
