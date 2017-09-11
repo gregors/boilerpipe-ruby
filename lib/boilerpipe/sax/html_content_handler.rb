@@ -248,11 +248,11 @@ module Boilerpipe::SAX
     def append_text(text)
       @sb_last_was_whitespace = false
       @text_buffer << text
-      @token_buffer <<  text
+      @token_buffer << text
     end
 
     def append_token(token)
-      @token_buffer <<  token
+      @token_buffer << token
     end
 
     def add_label_action(label_action)
