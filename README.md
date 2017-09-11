@@ -18,6 +18,8 @@ Presently the follow Extractors are implemented
 * [ ] LargestContentExtractor
 * [ ] KeepEverythingExtractor
 
+[![CircleCI](https://circleci.com/gh/gregors/boilerpipe-ruby/tree/master.svg?style=shield)](https://circleci.com/gh/gregors/boilerpipe-ruby/tree/master)
+
 ## Installation
 
 Add this line to your application's Gemfile:
