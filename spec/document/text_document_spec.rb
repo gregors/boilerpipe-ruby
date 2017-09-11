@@ -25,13 +25,13 @@ module Boilerpipe
     it 'Returns the content' do
       text_blocks.each{|tb| tb.content = true}
       content = doc.content
-      expect(content).to eq 'one\ntwo\n'
+      expect(content).to eq "one\ntwo\n"
     end
 
     it 'Returns the content, non-content or both' do
       text_blocks.first.content = true
       content = doc.text(true, true)
-      expect(content).to eq 'one\ntwo\n'
+      expect(content).to eq "one\ntwo\n"
     end
 
     it 'Returns detailed debugging information about the contained TextBlocks' do
