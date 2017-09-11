@@ -20,11 +20,11 @@ module Boilerpipe
           when true
             next unless include_content
             s << text_block.text
-            s << '\n'
+            s << "\n"
           when false
             next unless include_noncontent
            s << text_block.text
-           s << '\n'
+           s << "\n"
           end
         end
         s
