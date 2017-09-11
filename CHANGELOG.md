@@ -1,3 +1,9 @@
+# 0.2.0 / 2017-09-11
+
+* Add Default Extractor
+* Tweak dependency to use Nokogiri 1.6.6.2 or newer
+* Add Apache 2.0 license to reflect original work by Christian Kohlschütter
+
 # 0.1.1 / 2017-09-11
 
 * bugfix new line character escaping bug
