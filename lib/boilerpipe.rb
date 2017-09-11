@@ -6,6 +6,7 @@ require 'boilerpipe/document/text_document'
 require 'boilerpipe/document/text_block'
 
 require 'boilerpipe/extractors/article_extractor'
+require 'boilerpipe/extractors/default_extractor'
 
 require 'boilerpipe/filters/block_proximity_fusion'
 require 'boilerpipe/filters/boilerplate_block_filter'
