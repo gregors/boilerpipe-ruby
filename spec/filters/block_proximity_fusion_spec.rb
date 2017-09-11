@@ -19,7 +19,7 @@ module Boilerpipe::Filters
     describe '#process' do
       context 'where blocks exceed distance' do
         it 'doesnt change blocks' do
-          expect(doc.text_blocks.size).to eq 4
+         expect(doc.text_blocks.size).to eq 4
          filter = BlockProximityFusion.new(1, true, false)
          filter.process(doc)
          expect(doc.text_blocks.size).to eq 4

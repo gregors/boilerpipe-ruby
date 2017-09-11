@@ -12,7 +12,7 @@ module Boilerpipe
 
       attr_accessor :content
 
-      def initialize(text, num_words=0, num_words_in_anchor_text=0, num_words_in_wrapped_lines=0, num_wrapped_lines=0, offset_blocks=0)
+      def initialize(text, num_words=0, num_words_in_anchor_text=0, num_words_in_wrapped_lines=0, num_wrapped_lines=1, offset_blocks=0)
         @labels = Set.new
         @text = text
         @num_words = num_words
