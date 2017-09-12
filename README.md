@@ -10,7 +10,9 @@ I saw other gems making use of boilerpipe via the [free api](http://boilerpipe-w
 
 This solution works great if you're using Jruby but I wanted a pure ruby solution to use on MRI. Open vim - start coding...
 
-I've only got the ArticleExtractor working but the others should be following quickly as the ArticleExtractor definitley has the most code behind it...
+# TLDR
+
+Just use either ArticleExtractor, DefaultExtractor or KeepEverythingExtractor - try out the others when you feel like experimenting...
 
 Presently the follow Extractors are implemented
 * [x] ArticleExtractor
@@ -20,7 +22,7 @@ Presently the follow Extractors are implemented
 * [x] KeepEverythingExtractor
 * [ ] KeepEverythingWithMinKWordsExtractor
 * [x] LargestContentExtractor
-* [ ] NumWordsRulesExtractor
+* [x] NumWordsRulesExtractor
 
 [![CircleCI](https://circleci.com/gh/gregors/boilerpipe-ruby/tree/master.svg?style=shield)](https://circleci.com/gh/gregors/boilerpipe-ruby/tree/master)
 

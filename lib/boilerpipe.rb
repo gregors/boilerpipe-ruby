@@ -9,6 +9,7 @@ require 'boilerpipe/extractors/article_extractor'
 require 'boilerpipe/extractors/default_extractor'
 require 'boilerpipe/extractors/keep_everything_extractor'
 require 'boilerpipe/extractors/largest_content_extractor'
+require 'boilerpipe/extractors/num_words_rules_extractor'
 
 require 'boilerpipe/filters/block_proximity_fusion'
 require 'boilerpipe/filters/boilerplate_block_filter'
