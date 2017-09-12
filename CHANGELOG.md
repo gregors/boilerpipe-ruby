@@ -1,3 +1,7 @@
+# 0.3.0 / 2017-09-12
+
+* Add LargestContent Extractor
+
 # 0.2.0 / 2017-09-11
 
 * Add Default Extractor
