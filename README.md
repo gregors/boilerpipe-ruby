@@ -16,7 +16,7 @@ Presently the follow Extractors are implemented
 * [x] ArticleExtractor
 * [x] DefaultExtractor
 * [x] LargestContentExtractor
-* [ ] KeepEverythingExtractor
+* [x] KeepEverythingExtractor
 
 [![CircleCI](https://circleci.com/gh/gregors/boilerpipe-ruby/tree/master.svg?style=shield)](https://circleci.com/gh/gregors/boilerpipe-ruby/tree/master)
 
@@ -45,14 +45,17 @@ Or install it yourself as:
       => true
     > content = open('https://blog.carbonfive.com/2017/08/28/always-squash-and-rebase-your-git-commits/').read; true;
     
-    > output = Boilerpipe::Extractors::ArticleExtractor.text(content).slice(0..40)
+    > Boilerpipe::Extractors::ArticleExtractor.text(content).slice(0..40)
      => "Always Squash and Rebase your Git Commits" 
     
-    > output = Boilerpipe::Extractors::DefaultExtractor.text(content).slice(0..40)
+    > Boilerpipe::Extractors::DefaultExtractor.text(content).slice(0..40)
      => "Posted on\nWhat is the squash rebase workf"
     
-    > output = Boilerpipe::Extractors::LargestContentExtractor.text(content).slice(0, 40)
+    > Boilerpipe::Extractors::LargestContentExtractor.text(content).slice(0, 40)
      => "git push origin master\nWhy should you ad"
+    
+    > Boilerpipe::Extractors::KeepEverythingExtractor.text(content).slice(0..40)
+     => "Toggle Navigation\nCarbon Five\nAbout\nWork\n"
 
 ## Development
 
