@@ -14,9 +14,13 @@ I've only got the ArticleExtractor working but the others should be following qu
 
 Presently the follow Extractors are implemented
 * [x] ArticleExtractor
+* [ ] ArticleSentenceExtractor
+* [ ] CanolaExtractor
 * [x] DefaultExtractor
-* [x] LargestContentExtractor
 * [x] KeepEverythingExtractor
+* [ ] KeepEverythingWithMinKWordsExtractor
+* [x] LargestContentExtractor
+* [ ] NumWordsRulesExtractor
 
 [![CircleCI](https://circleci.com/gh/gregors/boilerpipe-ruby/tree/master.svg?style=shield)](https://circleci.com/gh/gregors/boilerpipe-ruby/tree/master)
 
