@@ -26,6 +26,8 @@ Presently the follow Extractors are implemented
 
 [![CircleCI](https://circleci.com/gh/gregors/boilerpipe-ruby/tree/master.svg?style=shield)](https://circleci.com/gh/gregors/boilerpipe-ruby/tree/master)
 
+[![Gem Version](https://badge.fury.io/rb/boilerpipe-ruby.svg)](https://badge.fury.io/rb/boilerpipe-ruby)
+
 ## Installation
 
 Add this line to your application's Gemfile:
