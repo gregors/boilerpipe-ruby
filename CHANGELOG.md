@@ -1,3 +1,5 @@
+* Add KeepEverythingWithMinKWords Extractor
+
 # 0.3.0 / 2017-09-12
 
 * Add LargestContent Extractor

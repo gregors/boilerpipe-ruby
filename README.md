@@ -20,7 +20,7 @@ Presently the follow Extractors are implemented
 * [x] CanolaExtractor
 * [x] DefaultExtractor
 * [x] KeepEverythingExtractor
-* [ ] KeepEverythingWithMinKWordsExtractor
+* [x] KeepEverythingWithMinKWordsExtractor
 * [x] LargestContentExtractor
 * [x] NumWordsRulesExtractor
 
