@@ -4,11 +4,11 @@ module Boilerpipe::SAX
     def self.parse(text)
 
       #script bug - delete script tags
-      text  = text.gsub(/\<script>.+?<\/script>/i, '')
+      text.gsub!(/\<script>.+?<\/script>/i, '')
 
       # nokogiri uses libxml for mri and nekohtml for jruby
       # mri doesn't remove &nbsp; when missing the semicolon
-      text = text.gsub(/(&nbsp) /, '\1; ')
+      text.gsub!(/(&nbsp) /, '\1; ')
 
 
       # use nokogiri to fix any bad tags, errors - keep experimenting with this
