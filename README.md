@@ -16,7 +16,7 @@ Just use either ArticleExtractor, DefaultExtractor or KeepEverythingExtractor - 
 
 Presently the follow Extractors are implemented
 * [x] ArticleExtractor
-* [ ] ArticleSentenceExtractor
+* [x] ArticleSentenceExtractor
 * [x] CanolaExtractor
 * [x] DefaultExtractor
 * [x] KeepEverythingExtractor
