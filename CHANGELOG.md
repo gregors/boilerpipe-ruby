@@ -1,3 +1,5 @@
+# 0.4.0 / 2017-09-15
+
 * Add KeepEverythingWithMinKWords Extractor
 * Add ArticleSentence Extractor
 
