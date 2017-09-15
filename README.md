@@ -1,5 +1,8 @@
 # Boilerpipe
 
+[![CircleCI](https://circleci.com/gh/gregors/boilerpipe-ruby/tree/master.svg?style=shield)](https://circleci.com/gh/gregors/boilerpipe-ruby/tree/master)
+[![Gem Version](https://badge.fury.io/rb/boilerpipe-ruby.svg)](https://badge.fury.io/rb/boilerpipe-ruby)
+
 A pure ruby implemenation of the boilerpipe algorithm.
 
 This is a text extraction utility first written by Christian Kohlshutter - [presentation](http://videolectures.net/wsdm2010_kohlschutter_bdu/)
@@ -24,9 +27,6 @@ Presently the follow Extractors are implemented
 * [x] LargestContentExtractor
 * [x] NumWordsRulesExtractor
 
-[![CircleCI](https://circleci.com/gh/gregors/boilerpipe-ruby/tree/master.svg?style=shield)](https://circleci.com/gh/gregors/boilerpipe-ruby/tree/master)
-
-[![Gem Version](https://badge.fury.io/rb/boilerpipe-ruby.svg)](https://badge.fury.io/rb/boilerpipe-ruby)
 
 ## Installation
 
