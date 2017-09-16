@@ -30,11 +30,11 @@ module Boilerpipe::SAX::TagActions
       prev_size = font_size_stack.reverse_each.find{|s| s != nil}
       prev_size = 3 if prev_size.nil?
 
-      size = if rel == '+'
-               prev_size + val
-             else
-               prev_size - val
-             end
+      if rel == '+'
+        prev_size + val
+      else
+        prev_size - val
+      end
     end
   end
 end

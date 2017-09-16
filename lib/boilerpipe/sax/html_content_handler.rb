@@ -26,7 +26,7 @@ module Boilerpipe::SAX
       @in_anchor_text = false
       @font_size_stack = []
       @last_start_tag = ''
-      @title
+      @title = nil
       @text_blocks = []
     end
 
