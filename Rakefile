@@ -1,10 +1,11 @@
 require "bundler/gem_tasks"
 require "rspec/core/rake_task"
 
+Dir['lib/tasks/**/*.rake'].each { |f| load f }
+
 RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
-
 
 desc 'Downloads forked boilerpipe jar from Gregors github for sanity checks'
 task :download_boilerpipe_jar do
