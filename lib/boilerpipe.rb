@@ -1,3 +1,12 @@
+# 3rd party dependencies
+require 'nokogiri'
+
+
+# ruby libraries
+require 'set'
+
+
+# boilerpipe library
 require 'boilerpipe/version'
 
 require 'boilerpipe/util/unicode_tokenizer'

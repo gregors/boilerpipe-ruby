@@ -1,4 +1,3 @@
-require 'nokogiri'
 module Boilerpipe::SAX
   class BoilerpipeHTMLParser
     def self.parse(text)

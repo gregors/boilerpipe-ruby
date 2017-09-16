@@ -1,5 +1,3 @@
-require 'set'
-
 module Boilerpipe
   module Document
     class TextBlock
