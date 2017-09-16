@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Boilerpipe::Filters
-  describe TrailingHeadlineToBoilerplateFilter do 
+  describe TrailingHeadlineToBoilerplateFilter do
     let(:text) { 'What a great day! This is great! Yes! Ha ha' }
     let(:tb) { Boilerpipe::Document::TextBlock.new text }
     let(:doc) { Boilerpipe::Document::TextDocument.new '', [tb] }

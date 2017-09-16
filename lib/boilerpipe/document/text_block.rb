@@ -12,7 +12,12 @@ module Boilerpipe
 
       attr_accessor :content
 
-      def initialize(text, num_words=0, num_words_in_anchor_text=0, num_words_in_wrapped_lines=0, num_wrapped_lines=1, offset_blocks=0)
+      def initialize(text,
+                     num_words=0,
+                     num_words_in_anchor_text=0,
+                     num_words_in_wrapped_lines=0,
+                     num_wrapped_lines=1,
+                     offset_blocks=0)
         @labels = Set.new
         @text = text
         @num_words = num_words
@@ -87,12 +92,17 @@ module Boilerpipe
       end
 
       def to_s
-        #"[" + offsetBlocksStart + "-" + offsetBlocksEnd + ";tl=" + tagLevel + "; nw=" + numWords + ";nwl=" + numWrappedLines + ";ld=" + linkDensity + "]\t" + (isContent ? "CONTENT" : "boilerplate") + "," + labels + "\n" + getText();
+        #"[" + offsetBlocksStart + "-" + offsetBlocksEnd + ";tl=" + tagLevel +
+        #  "; nw=" + numWords + ";nwl=" + numWrappedLines + ";ld=" +
+        #  linkDensity + "]\t" + (isContent ? "CONTENT" : "boilerplate") + "," +
+        #  labels + "\n" + getText();
         labels = 'null'
         if !@labels.empty?
           labels ="[#{ @labels.to_a.join(',')}]"
         end
-        "[#{@offset_blocks_start}-#{@offset_blocks_end};tl=#{@tag_level}; nw=#{@num_words};nwl=#{@num_wrapped_lines};ld=#{@link_density}]\t#{is_content? ? 'CONTENT' : 'BOILERPLATE'},#{labels}\n#{text}"
+        "[#{@offset_blocks_start}-#{@offset_blocks_end};tl=#{@tag_level}; " +
+          "nw=#{@num_words};nwl=#{@num_wrapped_lines};ld=#{@link_density}]" +
+          "\t#{is_content? ? 'CONTENT' : 'BOILERPLATE'},#{labels}\n#{text}"
       end
 
       def clone
