@@ -6,5 +6,6 @@ task :default => []
 Rake::Task[:default].clear_prerequisites
 
 task :default => [
+  :cane,
   :spec,
 ]

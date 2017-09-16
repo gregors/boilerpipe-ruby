@@ -1,0 +1,30 @@
+--color
+--no-doc
+--style-measure 120
+--abc-max 9
+--abc-glob {Rakefile,Gemfile,*.gemspec,{lib,spec}/**/*.{rb,rake}}
+--style-glob {Rakefile,Gemfile,*.gemspec,{lib,spec}/**/*.{rb,rake}}
+
+--abc-exclude SAX::HTMLContentHandler#flush_block                              34
+--abc-exclude SAX::TagActionMap.tag_actions                                    34
+--abc-exclude Boilerpipe::Document::TextBlock#merge_next                       24
+--abc-exclude Filters::BlockProximityFusion#process                            23
+--abc-exclude Filters::SplitParagraphBlocksFilter.process                      17
+--abc-exclude SAX::HTMLContentHandler#initialize                               17
+--abc-exclude Filters::ExpandTitleToContentFilter.process                      15
+--abc-exclude Filters::TerminatingBlocksFinder.process                         15
+--abc-exclude Filters::LargeBlockSameTagLevelToContentFilter.process           14
+--abc-exclude Filters::KeepLargestBlockFilter#process                          14
+--abc-exclude Filters::CanolaClassifier.classify                               13
+--abc-exclude Filters::SimpleBlockFusionProcessor.process                      12
+--abc-exclude Filters::DocumentTitleMatchClassifier#longest_part               12
+--abc-exclude Filters::DocumentTitleMatchClassifier#process                    12
+--abc-exclude Filters::ListAtEndFilter.process                                 12
+--abc-exclude Filters::DensityRulesClassifier.classify                         12
+--abc-exclude Filters::TerminatingBlocksFinder.finds_match?                    12
+--abc-exclude Boilerpipe::Document::TextBlock#initialize                       11
+--abc-exclude Filters::DocumentTitleMatchClassifier#generate_potential_titles  11
+--abc-exclude Filters::NumWordsRulesClassifier.classify                        11
+--abc-exclude SAX::HTMLContentHandler#end_element                              10
+
+--style-exclude lib/tasks/download_boilerpipe_jar.rake

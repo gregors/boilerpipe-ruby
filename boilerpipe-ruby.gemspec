@@ -23,5 +23,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rickshaw', '~> 0.4.0'
+  spec.add_development_dependency 'cane', '~> 3.0.0'
   spec.add_runtime_dependency 'nokogiri', '>= 1.6.6.2'
 end
