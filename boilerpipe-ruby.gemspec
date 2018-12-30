@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.email         = ['<gregory.ostermayr@gmail.com>']
   spec.license       = 'Apache 2.0'
 
-  spec.summary       = %q{A pure ruby implemenation of the boilerpipe algorithm}
-  spec.description   = %q{A pure ruby implementation of the boilerpipe algorithm}
+  spec.summary       = %q{A pure ruby implementation of the boilerpipe web content extraction algorithm}
+  spec.description   = %q{A pure ruby implementation of the boilerpipe web content extraction algorithm}
   spec.homepage      = 'https://github.com/gregors/boilerpipe-ruby'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
