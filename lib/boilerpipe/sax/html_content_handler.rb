@@ -1,6 +1,3 @@
-require 'nokogiri'
-require 'set'
-
 module Boilerpipe::SAX
   class HTMLContentHandler < Nokogiri::XML::SAX::Document
     attr_reader :in_ignorable_element, :label_stacks, :last_start_tag

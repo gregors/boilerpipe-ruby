@@ -1,4 +1,3 @@
-require 'nokogiri'
 module Boilerpipe::SAX
   class BoilerpipeHTMLParser
     def self.parse(text)
@@ -10,10 +9,8 @@ module Boilerpipe::SAX
       # mri doesn't remove &nbsp; when missing the semicolon
       text.gsub!(/(&nbsp) /, '\1; ')
 
-
       # use nokogiri to fix any bad tags, errors - keep experimenting with this
       text = Nokogiri::HTML(text).to_html
-
 
       handler = HTMLContentHandler.new
       noko_parser = Nokogiri::HTML::SAX::Parser.new(handler)

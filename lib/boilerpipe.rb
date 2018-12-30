@@ -1,3 +1,6 @@
+require 'nokogiri'
+require 'set'
+
 require 'boilerpipe/version'
 
 require 'boilerpipe/util/unicode_tokenizer'

@@ -1,5 +1,4 @@
 # encoding: utf-8
-require 'set'
 
  # Marks TextBlocks which contain parts of the HTML <TITLE> tag, using
  # some heuristics which are quite specific to the news domain.
