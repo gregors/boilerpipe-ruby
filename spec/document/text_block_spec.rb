@@ -9,7 +9,10 @@ module Boilerpipe
           expect(subject.text).to eq 'hello'
         end
 
+        # used in image extraction / highligher
+        # not yet implemented
         it 'bit set of containedTextElements'
+
         it 'sets number of words' do
           expect(subject.num_words).to eq 0
         end
