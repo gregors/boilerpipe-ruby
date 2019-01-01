@@ -42,7 +42,11 @@ module Boilerpipe
     end
 
     describe '#merge_next' do
-      it 'merges another TextBlock'
+      it 'merges another TextBlock' do
+        another_block = Document::TextBlock.new 'good-bye'
+        subject.merge_next(another_block)
+        expect(subject.text).to eq "hello\ngood-bye"
+      end
     end
 
     describe '#add_label' do
