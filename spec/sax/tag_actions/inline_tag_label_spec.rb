@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Boilerpipe::SAX::TagActions
   describe InlineTagLabel do
-    let(:subject){ InlineTagLabel.new(nil) }
+    let(:subject) { InlineTagLabel.new(nil) }
     let(:handler) { ::Boilerpipe::SAX::HTMLContentHandler.new }
 
     describe '.new' do

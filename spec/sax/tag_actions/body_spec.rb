@@ -5,12 +5,12 @@ module Boilerpipe::SAX::TagActions
     describe '#start' do
       it 'increase in_body count' do
         handler = Boilerpipe::SAX::HTMLContentHandler.new
-        expect{subject.start(handler, nil, nil)}.to change{handler.instance_variable_get(:@in_body)}.from(0).to(1)
+        expect { subject.start(handler, nil, nil) }.to change { handler.instance_variable_get(:@in_body) }.from(0).to(1)
       end
 
       it 'flushes block' do
         handler = Boilerpipe::SAX::HTMLContentHandler.new
-        handler.instance_variable_set(:@text_buffer, "stuff")
+        handler.instance_variable_set(:@text_buffer, 'stuff')
         subject.start(handler, nil, nil)
         expect(handler.instance_variable_get(:@text_buffer)).to eq ''
       end
@@ -25,12 +25,12 @@ module Boilerpipe::SAX::TagActions
       it 'decreases in_body count' do
         handler = Boilerpipe::SAX::HTMLContentHandler.new
         handler.instance_variable_set(:@in_body, 1)
-        expect{subject.end_tag(handler, nil)}.to change{handler.instance_variable_get(:@in_body)}.from(1).to(0)
+        expect { subject.end_tag(handler, nil) }.to change { handler.instance_variable_get(:@in_body) }.from(1).to(0)
       end
 
       it 'flushes block' do
         handler = Boilerpipe::SAX::HTMLContentHandler.new
-        handler.instance_variable_set(:@text_buffer, "stuff")
+        handler.instance_variable_set(:@text_buffer, 'stuff')
         subject.end_tag(handler, nil)
         expect(handler.instance_variable_get(:@text_buffer)).to eq ''
       end

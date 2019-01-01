@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 module Boilerpipe::SAX::TagActions
-  describe  Chained do
-    let(:tag1){ double('tag1')}
-    let(:tag2){ double('tag2')}
+  describe Chained do
+    let(:tag1) { double('tag1') }
+    let(:tag2) { double('tag2') }
 
     let(:chainer) do
       Chained.new(tag1, tag2)
@@ -21,7 +21,7 @@ module Boilerpipe::SAX::TagActions
         expect(tag1).to receive(:start)
         expect(tag2).to receive(:start)
         handler = double('handler')
-        chainer.start(handler,nil, nil)
+        chainer.start(handler, nil, nil)
       end
     end
 
@@ -30,7 +30,7 @@ module Boilerpipe::SAX::TagActions
         expect(tag1).to receive(:end_tag)
         expect(tag2).to receive(:end_tag)
         handler = double('handler')
-        chainer.end_tag(handler,nil)
+        chainer.end_tag(handler, nil)
       end
     end
 

@@ -1,7 +1,7 @@
 require 'boilerpipe'
 
-#id = 2
-(1).upto(1024) do |id|
+# id = 2
+1.upto(1024) do |id|
   file_contents = File.read("scraped/#{id}")
   doc = Boilerpipe::SAX::BoilerpipeHTMLParser.parse(file_contents)
 
@@ -11,6 +11,6 @@ require 'boilerpipe'
 
   post_count = doc.text_blocks.size
 
-  #puts doc.debug_string
+  # puts doc.debug_string
   puts "id: #{id} #{pre_count}  #{post_count}"
 end

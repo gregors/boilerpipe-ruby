@@ -1,6 +1,5 @@
 module Boilerpipe::Extractors
   class NumWordsRulesExtractor
-
     def self.text(contents)
       doc = ::Boilerpipe::SAX::BoilerpipeHTMLParser.parse(contents)
       ::Boilerpipe::Extractors::NumWordsRulesExtractor.process doc

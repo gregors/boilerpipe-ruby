@@ -79,7 +79,5 @@ module Boilerpipe::SAX
         end
       end
     end
-
-
   end
 end

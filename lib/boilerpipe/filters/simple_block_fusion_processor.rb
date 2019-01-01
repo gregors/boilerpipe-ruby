@@ -1,4 +1,4 @@
- # Merges two subsequent blocks if their text densities are equal.
+# Merges two subsequent blocks if their text densities are equal.
 
 module Boilerpipe::Filters
   class SimpleBlockFusionProcessor
@@ -17,7 +17,7 @@ module Boilerpipe::Filters
         end
       end
 
-      doc.replace_text_blocks!( tbs - blocks_to_remove )
+      doc.replace_text_blocks!(tbs - blocks_to_remove)
       doc
     end
   end

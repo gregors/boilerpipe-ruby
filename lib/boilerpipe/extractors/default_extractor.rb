@@ -1,6 +1,5 @@
 module Boilerpipe::Extractors
   class DefaultExtractor
-
     def self.text(contents)
       doc = ::Boilerpipe::SAX::BoilerpipeHTMLParser.parse(contents)
       ::Boilerpipe::Extractors::DefaultExtractor.process doc

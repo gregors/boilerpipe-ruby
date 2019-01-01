@@ -11,7 +11,7 @@ module Boilerpipe::Filters
       doc.text_blocks.each do |tb|
         if tb.is_content? && tb.has_label?(:VERY_LIKELY_CONTENT)
           tag_level = tb.tag_level
-        elsif (tb.tag_level > tag_level && tb.has_label?(:MIGHT_BE_CONTENT) && tb.has_label?(:LI) && tb.link_density == 0)
+        elsif tb.tag_level > tag_level && tb.has_label?(:MIGHT_BE_CONTENT) && tb.has_label?(:LI) && tb.link_density == 0
           tb.content = true
         else
           tag_level = MAX
@@ -20,6 +20,5 @@ module Boilerpipe::Filters
 
       doc
     end
-
   end
 end

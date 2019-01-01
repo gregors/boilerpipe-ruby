@@ -1,6 +1,6 @@
 require 'boilerpipe'
 
-(1).upto(1024) do |id|
+1.upto(1024) do |id|
   file_contents = File.read("scraped/#{id}")
   doc = Boilerpipe::SAX::BoilerpipeHTMLParser.parse(file_contents)
 

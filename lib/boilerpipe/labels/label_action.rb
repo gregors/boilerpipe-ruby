@@ -2,7 +2,7 @@ module Boilerpipe::Labels
   class LabelAction
     attr_reader :labels
 
-    def initialize(labels=[])
+    def initialize(labels = [])
       @labels = labels
     end
 

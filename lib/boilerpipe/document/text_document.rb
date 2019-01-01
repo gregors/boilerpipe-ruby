@@ -19,12 +19,14 @@ module Boilerpipe
           case text_block.is_content?
           when true
             next unless include_content
+
             s << text_block.text
             s << "\n"
           when false
             next unless include_noncontent
-           s << text_block.text
-           s << "\n"
+
+            s << text_block.text
+            s << "\n"
           end
         end
         s
@@ -38,7 +40,6 @@ module Boilerpipe
         @text_blocks.map(&:to_s).join("\n")
       end
       alias_method :debug_string, :debug_s
-
     end
   end
 end

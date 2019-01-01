@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Boilerpipe
   describe Document::TextDocument do
-    let(:text_blocks) { [ Document::TextBlock.new('one'), Document::TextBlock.new('two')] }
+    let(:text_blocks) { [Document::TextBlock.new('one'), Document::TextBlock.new('two')] }
     let(:doc) { Document::TextDocument.new('my title', text_blocks) }
 
     it 'Creates a new Text document with given TextBlocks and given title' do
@@ -23,7 +23,7 @@ module Boilerpipe
     end
 
     it 'Returns the content' do
-      text_blocks.each{|tb| tb.content = true}
+      text_blocks.each { |tb| tb.content = true }
       content = doc.content
       expect(content).to eq "one\ntwo\n"
     end

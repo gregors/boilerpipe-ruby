@@ -1,11 +1,8 @@
-
-    # Fuses adjacent blocks if their distance (in blocks) does not exceed a certain limit. This
-    # probably makes sense only in cases where an upstream filter already has removed some blocks.
+# Fuses adjacent blocks if their distance (in blocks) does not exceed a certain limit. This
+# probably makes sense only in cases where an upstream filter already has removed some blocks.
 
 module Boilerpipe::Filters
   class BlockProximityFusion
-
-
     def initialize(max_blocks_distance, content_only, same_tag_level_only)
       @max_blocks_distance = max_blocks_distance
       @content_only = content_only
@@ -13,8 +10,8 @@ module Boilerpipe::Filters
     end
 
     MAX_DISTANCE_1 = BlockProximityFusion.new(1, false, false)
-    MAX_DISTANCE_1_SAME_TAGLEVEL = BlockProximityFusion.new( 1, false, true)
-    MAX_DISTANCE_1_CONTENT_ONLY = BlockProximityFusion.new( 1, true, false)
+    MAX_DISTANCE_1_SAME_TAGLEVEL = BlockProximityFusion.new(1, false, true)
+    MAX_DISTANCE_1_CONTENT_ONLY = BlockProximityFusion.new(1, true, false)
     MAX_DISTANCE_1_CONTENT_ONLY_SAME_TAGLEVEL = BlockProximityFusion.new(1, true, true)
 
     def process(doc)
@@ -22,7 +19,7 @@ module Boilerpipe::Filters
       return false if text_blocks.size < 2
 
       prev_block = if @content_only
-                     text_blocks.find{ |tb| tb.is_content? }
+                     text_blocks.find { |tb| tb.is_content? }
                    else
                      text_blocks.first
                    end
@@ -46,18 +43,16 @@ module Boilerpipe::Filters
           ok = false if (prev_block.is_not_content? || tb.is_not_content?) && @content_only
           ok = false if ok && prev_block.tag_level != tb.tag_level && @same_tag_level_only
 
-          if  ok
+          if ok
             prev_block.merge_next(tb)
             blocks_to_remove << tb
           else
             prev_block = tb
           end
         end
-
       end
-      doc.replace_text_blocks!( text_blocks - blocks_to_remove )
+      doc.replace_text_blocks!(text_blocks - blocks_to_remove)
       doc
     end
-
   end
 end

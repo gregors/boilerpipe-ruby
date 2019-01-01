@@ -8,7 +8,6 @@ module Boilerpipe::Filters
     describe '.new' do
       context 'takes a string with a title' do
         it 'makes potential titles' do
-
           expected = [
             'extracting text for fun and profit - greg',
             'extracting text for fun and profit',

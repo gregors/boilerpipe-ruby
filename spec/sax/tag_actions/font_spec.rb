@@ -11,14 +11,14 @@ module Boilerpipe::SAX::TagActions
         it 'sets absolute' do
           handler = ::Boilerpipe::SAX::HTMLContentHandler.new
           handler.font_size_stack.clear
-          subject.start(handler, nil, {'size' => '4'})
+          subject.start(handler, nil, { 'size' => '4' })
           expect(handler.font_size_stack).to eq [4]
         end
 
         it 'sets relative' do
           handler = ::Boilerpipe::SAX::HTMLContentHandler.new
           handler.font_size_stack.clear
-          subject.start(handler, nil, {'size' => '+4'})
+          subject.start(handler, nil, { 'size' => '+4' })
           expect(handler.font_size_stack).to eq [7]
         end
 
@@ -27,14 +27,14 @@ module Boilerpipe::SAX::TagActions
           handler.font_size_stack.clear
           handler.font_size_stack << 1
           handler.font_size_stack << nil
-          subject.start(handler, nil, {'size' => '+4'})
+          subject.start(handler, nil, { 'size' => '+4' })
           expect(handler.font_size_stack).to eq [1, nil, 5]
         end
 
         it 'adds size to font stack' do
           handler = ::Boilerpipe::SAX::HTMLContentHandler.new
           handler.font_size_stack.clear
-          subject.start(handler, nil, {'size' => '3'})
+          subject.start(handler, nil, { 'size' => '3' })
           expect(handler.font_size_stack).to eq [3]
         end
       end

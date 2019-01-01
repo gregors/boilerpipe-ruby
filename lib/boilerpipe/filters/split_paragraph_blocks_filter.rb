@@ -1,4 +1,3 @@
-
 # Splits TextBlocks at paragraph boundaries.
 #
 # NOTE: This is not fully supported (i.e., it will break highlighting support via
@@ -8,7 +7,6 @@
 
 module Boilerpipe::Filters
   class SplitParagraphBlocksFilter
-
     def self.process(doc)
       tbs = doc.text_blocks
       new_blocks = []
@@ -35,6 +33,5 @@ module Boilerpipe::Filters
       doc.replace_text_blocks!(new_blocks) if changes
       doc
     end
-
   end
 end

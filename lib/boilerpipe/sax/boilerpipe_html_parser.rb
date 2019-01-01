@@ -1,8 +1,7 @@
 module Boilerpipe::SAX
   class BoilerpipeHTMLParser
     def self.parse(text)
-
-      #script bug - delete script tags
+      # script bug - delete script tags
       text.gsub!(/\<script>.+?<\/script>/i, '')
 
       # nokogiri uses libxml for mri and nekohtml for jruby

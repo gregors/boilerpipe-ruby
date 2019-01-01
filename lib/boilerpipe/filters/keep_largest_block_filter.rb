@@ -1,4 +1,3 @@
-
 # Keeps the largest TextBlock only (by the number of words). In case of
 # more than one block with the same number of words, the first block is chosen.
 # All discarded blocks are marked "not content" and flagged as :MIGHT_BE_CONTENT.
@@ -8,7 +7,6 @@
 
 module Boilerpipe::Filters
   class KeepLargestBlockFilter
-
     def initialize(expand_to_same_level_text, min_words)
       @expand_to_same_level_text = expand_to_same_level_text
       @min_words = min_words
@@ -43,7 +41,7 @@ module Boilerpipe::Filters
         expand_tag_level(tbs[0...n].reverse, level, @min_words)
 
         # expand blocks to the right
-        expand_tag_level(tbs[n+1..-1], level, @min_words)
+        expand_tag_level(tbs[n + 1..-1], level, @min_words)
       end
     end
 
@@ -57,6 +55,5 @@ module Boilerpipe::Filters
         end
       end
     end
-
   end
 end

@@ -1,9 +1,7 @@
-
 # Marks all TextBlocks "content" which are between the headline and the part that has
 # already been marked content, if they are marked MIGHT_BE_CONTENT.
 # This filter is quite specific to the news domain.
 # used downstream of KeepLargetBlockFilter since that's what sets MIGHT_BE_CONTENT
-
 
 module Boilerpipe::Filters
   class ExpandTitleToContentFilter
@@ -38,6 +36,5 @@ module Boilerpipe::Filters
     def self.no_title_with_subsequent_content?(content_start, title)
       title.nil? || content_start.nil? || content_start <= title
     end
-
   end
 end

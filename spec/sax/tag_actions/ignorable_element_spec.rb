@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Boilerpipe::SAX::TagActions
-  describe  IgnorableElement do
+  describe IgnorableElement do
     describe '#start' do
       it 'increase in_anchor count'
     end

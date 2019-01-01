@@ -1,11 +1,9 @@
-# encoding: utf-8
+# Marks TextBlocks which contain parts of the HTML <TITLE> tag, using
+# some heuristics which are quite specific to the news domain.
 
- # Marks TextBlocks which contain parts of the HTML <TITLE> tag, using
- # some heuristics which are quite specific to the news domain.
-
-    # we create a list of potential titles from the page title
-    # then we look at every text block and if the text block
-    # contains a potential title - we set that text block label as :TITLE
+# we create a list of potential titles from the page title
+# then we look at every text block and if the text block
+# contains a potential title - we set that text block label as :TITLE
 
 module Boilerpipe::Filters
   class DocumentTitleMatchClassifier
@@ -54,24 +52,24 @@ module Boilerpipe::Filters
       @potential_titles << title
 
       # unnecessary
-      #p = longest_part(title, /[ ]*[|»-][ ]*/)
-      #@potential_titles << p if p
+      # p = longest_part(title, /[ ]*[|»-][ ]*/)
+      # @potential_titles << p if p
 
-      #p = longest_part(title, /[ ]*[|»:][ ]*/)
-      #@potential_titles << p if p
+      # p = longest_part(title, /[ ]*[|»:][ ]*/)
+      # @potential_titles << p if p
 
-      #p = longest_part(title, /[ ]*[|»:()][ ]*/)
-      #@potential_titles << p if p
+      # p = longest_part(title, /[ ]*[|»:()][ ]*/)
+      # @potential_titles << p if p
 
-      #p = longest_part(title, /[ ]*[|»:()-][ ]*/)
-      #@potential_titles << p if p
+      # p = longest_part(title, /[ ]*[|»:()-][ ]*/)
+      # @potential_titles << p if p
 
       p = longest_part(title, /[ ]*[|»,:()-][ ]*/)
       @potential_titles << p if p
 
       # we replace \u00a0 so why check for it?
-      #p = longest_part(title, /[ ]*[|»,:()-\u00a0][ ]*/)
-      #@potential_titles << p if p
+      # p = longest_part(title, /[ ]*[|»,:()-\u00a0][ ]*/)
+      # @potential_titles << p if p
 
       add_potential_titles(title, /[ ]+[|][ ]+/, 4)
       add_potential_titles(title, /[ ]+[-][ ]+/, 4)
@@ -89,6 +87,7 @@ module Boilerpipe::Filters
 
       parts.each do |part|
         next if part =~ /[.]com/
+
         num_words = number_of_words(part)
 
         if num_words > longest_num_words || part.size > longest_part.size
@@ -106,6 +105,7 @@ module Boilerpipe::Filters
 
       parts.each do |part|
         next if part =~ /[.]com/
+
         num_words = number_of_words(part)
 
         @potential_titles << part if num_words >= min_words
@@ -115,6 +115,5 @@ module Boilerpipe::Filters
     def number_of_words(s)
       s.split(/[\b ]+/).size
     end
-
   end
 end

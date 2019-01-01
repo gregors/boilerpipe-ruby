@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 #  Classifies TextBlocks as content/not-content through rules that have been determined
 #  using the C4.8 machine learning algorithm, as described in the paper
 #  "Boilerplate Detection using Shallow Text Features" (WSDM 2010), particularly
@@ -7,7 +5,6 @@
 
 module Boilerpipe::Filters
   class NumWordsRulesClassifier
-
     def self.process(doc)
       empty = Boilerpipe::Document::TextBlock.empty_start
       text_blocks = [empty] + doc.text_blocks + [empty]
@@ -37,6 +34,5 @@ module Boilerpipe::Filters
 
       false
     end
-
   end
 end

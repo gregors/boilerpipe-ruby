@@ -5,9 +5,8 @@
 
 module Boilerpipe::Filters
   class DensityRulesClassifier
-
     def self.process(doc)
-      #return doc if doc.text_blocks.size < 2
+      # return doc if doc.text_blocks.size < 2
 
       empty = Boilerpipe::Document::TextBlock.empty_start
       text_blocks = [empty] + doc.text_blocks + [empty]
@@ -26,12 +25,14 @@ module Boilerpipe::Filters
       if prev.link_density <= 0.555556
         if current.text_density <= 9
           return true if nxt.text_density > 10
+
           return prev.text_density <= 4 ? false : true
         else
           return nxt.text_density == 0 ? false : true
         end
       else
         return false if nxt.text_density <= 11
+
         true
       end
     end

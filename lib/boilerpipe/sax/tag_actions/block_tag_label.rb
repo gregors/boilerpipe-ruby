@@ -1,6 +1,6 @@
 module Boilerpipe::SAX::TagActions
-# for block-level elements, which triggers some LabelAction on
-# the generated TextBlock.
+  # for block-level elements, which triggers some LabelAction on
+  # the generated TextBlock.
   class BlockTagLabel
     def initialize(label_action)
       @label_action = label_action

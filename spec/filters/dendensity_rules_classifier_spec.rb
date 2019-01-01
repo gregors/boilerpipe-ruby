@@ -14,7 +14,6 @@ module Boilerpipe::Filters
           ]
         end
 
-
         it 'labels the text block as content' do
           DensityRulesClassifier.process(doc)
           expect(doc.text_blocks.first.is_content?).to be true

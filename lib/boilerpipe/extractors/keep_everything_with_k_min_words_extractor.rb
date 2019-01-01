@@ -1,4 +1,3 @@
-
 # A full-text extractor which extracts the largest text component of a page.
 # For news articles, it may perform better than the DefaultExtractor, but
 # usually worse than ArticleExtractor.

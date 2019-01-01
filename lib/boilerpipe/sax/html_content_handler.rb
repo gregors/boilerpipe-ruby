@@ -2,7 +2,7 @@ module Boilerpipe::SAX
   class HTMLContentHandler < Nokogiri::XML::SAX::Document
     attr_reader :in_ignorable_element, :label_stacks, :last_start_tag
 
-    attr_accessor :in_anchor_tag, :token_buffer ,:font_size_stack
+    attr_accessor :in_anchor_tag, :token_buffer, :font_size_stack
     ANCHOR_TEXT_START = "$\ue00a<"
     ANCHOR_TEXT_END = ">\ue00a$"
 
@@ -31,7 +31,6 @@ module Boilerpipe::SAX
       @label_stacks << nil
       tag = name.upcase.intern
 
-
       tag_action = @tag_actions[tag]
       if tag_action
         @tag_level += 1 if tag_action.changes_tag_level?
@@ -55,8 +54,8 @@ module Boilerpipe::SAX
       text.gsub!(/\s+/, ' ')
 
       # trim whitespace
-      started_with_whitespace = text  =~ /^\s/
-      ended_with_whitespace = text  =~ /\s$/
+      started_with_whitespace = text =~ /^\s/
+      ended_with_whitespace = text =~ /\s$/
       text.strip!
 
       #  add a single space if the block was only whitespace
@@ -155,10 +154,10 @@ module Boilerpipe::SAX
       end
 
       text_block = ::Boilerpipe::Document::TextBlock.new(@text_buffer.strip,
-                                 num_words,
-                                 num_linked_words,
-                                 num_words_in_wrapped_lines,
-                                 num_wrapped_lines, @offset_blocks)
+                                                         num_words,
+                                                         num_linked_words,
+                                                         num_words_in_wrapped_lines,
+                                                         num_wrapped_lines, @offset_blocks)
 
       @offset_blocks += 1
       clear_buffers
@@ -184,10 +183,10 @@ module Boilerpipe::SAX
     # \p{No}  -- a numeric character of other type
 
     def is_word?(word)
-       word =~ VALID_WORD_CHARACTER
+      word =~ VALID_WORD_CHARACTER
     end
 
-    #public void flushBlock() {
+    # public void flushBlock() {
     #    int numWords = 0;
     #    int numLinkedWords = 0;
     #    int numWrappedLines = 0;
@@ -195,7 +194,7 @@ module Boilerpipe::SAX
     #    final int maxLineLength = 80;
     #    int numTokens = 0;
     #    int numWordsCurrentLine = 0;
-    #}
+    # }
 
     def increase_in_ignorable_element!
       @in_ignorable_element += 1
@@ -221,7 +220,6 @@ module Boilerpipe::SAX
       @in_anchor_tag > 0
     end
 
-
     def add_text_block(text_block)
       @label_stacks.each do |stack|
         next unless stack
@@ -236,6 +234,7 @@ module Boilerpipe::SAX
     # append space if last character wasn't already one
     def append_space
       return if @sb_last_was_whitespace
+
       @sb_last_was_whitespace = true
 
       @text_buffer << ' '

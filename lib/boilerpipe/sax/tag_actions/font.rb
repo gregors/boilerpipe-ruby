@@ -10,7 +10,7 @@ module Boilerpipe::SAX::TagActions
         rel = m[1]
         val = m[2].to_i # absolute
         size = rel.empty? ? val : relative(handler.font_size_stack, rel, val)
-        handler.font_size_stack <<  size
+        handler.font_size_stack << size
       else
         handler.font_size_stack << nil
       end
@@ -27,7 +27,7 @@ module Boilerpipe::SAX::TagActions
     end
 
     def relative(font_size_stack, rel, val)
-      prev_size = font_size_stack.reverse_each.find{|s| s != nil}
+      prev_size = font_size_stack.reverse_each.find { |s| !s.nil? }
       prev_size = 3 if prev_size.nil?
 
       size = if rel == '+'

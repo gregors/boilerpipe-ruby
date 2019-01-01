@@ -1,6 +1,6 @@
 module Boilerpipe::SAX::TagActions
-   # Marks this tag the body element (this should usually only
-   # be set for the <BODY> tag).
+  # Marks this tag the body element (this should usually only
+  # be set for the <BODY> tag).
   class Body
     def start(handler, name, attrs)
       handler.flush_block

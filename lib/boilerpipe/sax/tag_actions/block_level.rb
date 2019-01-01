@@ -1,6 +1,6 @@
 module Boilerpipe::SAX::TagActions
-     # Explicitly marks this tag a simple "block-level" element,
-     # which always generates whitespace
+  # Explicitly marks this tag a simple "block-level" element,
+  # which always generates whitespace
   class BlockLevel
     def start(handler, name, attrs)
       true

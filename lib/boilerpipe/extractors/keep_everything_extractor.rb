@@ -1,4 +1,4 @@
- # Marks all blocks as content.
+# Marks all blocks as content.
 
 module Boilerpipe::Extractors
   class KeepEverythingExtractor

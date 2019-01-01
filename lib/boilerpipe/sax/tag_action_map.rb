@@ -48,4 +48,3 @@ module Boilerpipe::SAX
     end
   end
 end
-

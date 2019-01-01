@@ -9,7 +9,7 @@ file_path = '../fixtures/parsing-big-xml-files-with-nokogiri.html'
 file_contents = File.read(file_path)
 
 # parse html and return text document
-#puts 'java version'
+# puts 'java version'
 @parser = BoilerpipeHTMLParser.new
 @string_reader = StringReader.new(file_contents)
 @is = InputSource.new(@string_reader)

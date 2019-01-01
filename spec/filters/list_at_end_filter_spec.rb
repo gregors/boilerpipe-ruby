@@ -4,12 +4,12 @@ module Boilerpipe::Filters
   describe ListAtEndFilter do
     describe '#process' do
       context 'when a text block is the last LI tag in a list' do
-        let(:text_block){ Boilerpipe::Document::TextBlock }
-        let(:text_block1){ text_block.new('one') }
-        let(:text_block2){ text_block.new('two') }
-        let(:text_blocks){ [text_block1, text_block2] }
+        let(:text_block) { Boilerpipe::Document::TextBlock }
+        let(:text_block1) { text_block.new('one') }
+        let(:text_block2) { text_block.new('two') }
+        let(:text_blocks) { [text_block1, text_block2] }
 
-        let!(:doc){ Boilerpipe::Document::TextDocument.new('', text_blocks) }
+        let!(:doc) { Boilerpipe::Document::TextDocument.new('', text_blocks) }
 
         context 'it might be content and has a higher tag level then its predecessors and has no link density' do
           before do
@@ -29,7 +29,6 @@ module Boilerpipe::Filters
           end
         end
       end
-
     end
   end
 end

@@ -1,8 +1,7 @@
 module Boilerpipe
   module Document
     class TextBlock
-
-       #EMPTY_END = TextBlock.new('', 0, 0, 0, 0, 999999999999999999999999999)
+      # EMPTY_END = TextBlock.new('', 0, 0, 0, 0, 999999999999999999999999999)
 
       attr_reader :text, :num_words, :num_words_in_wrapped_lines, :num_words_in_anchor_text,
                   :num_wrapped_lines, :offset_blocks_start, :offset_blocks_end, :text_density,
@@ -10,7 +9,7 @@ module Boilerpipe
 
       attr_accessor :content
 
-      def initialize(text, num_words=0, num_words_in_anchor_text=0, num_words_in_wrapped_lines=0, num_wrapped_lines=1, offset_blocks=0)
+      def initialize(text, num_words = 0, num_words_in_anchor_text = 0, num_words_in_wrapped_lines = 0, num_wrapped_lines = 1, offset_blocks = 0)
         @labels = Set.new
         @text = text
         @num_words = num_words
@@ -30,9 +29,9 @@ module Boilerpipe
         new('', 0, 0, 0, 0, -1)
       end
 
-     def set_tag_level(level)
-       @tag_level = level
-     end
+      def set_tag_level(level)
+        @tag_level = level
+      end
 
       def is_content?
         @content
@@ -66,8 +65,8 @@ module Boilerpipe
         @num_words_in_anchor_text += other.num_words_in_anchor_text
         @num_words_in_wrapped_lines += other.num_words_in_wrapped_lines
         @num_wrapped_lines += other.num_wrapped_lines
-        @offset_blocks_start = [@offset_blocks_start , other.offset_blocks_start].min
-        @offset_blocks_end = [@offset_blocks_end , other.offset_blocks_end].max
+        @offset_blocks_start = [@offset_blocks_start, other.offset_blocks_start].min
+        @offset_blocks_end = [@offset_blocks_end, other.offset_blocks_end].max
         init_densities
         @content |= other.is_content?
 
@@ -85,10 +84,10 @@ module Boilerpipe
       end
 
       def to_s
-        #"[" + offsetBlocksStart + "-" + offsetBlocksEnd + ";tl=" + tagLevel + "; nw=" + numWords + ";nwl=" + numWrappedLines + ";ld=" + linkDensity + "]\t" + (isContent ? "CONTENT" : "boilerplate") + "," + labels + "\n" + getText();
+        # "[" + offsetBlocksStart + "-" + offsetBlocksEnd + ";tl=" + tagLevel + "; nw=" + numWords + ";nwl=" + numWrappedLines + ";ld=" + linkDensity + "]\t" + (isContent ? "CONTENT" : "boilerplate") + "," + labels + "\n" + getText();
         labels = 'null'
         if !@labels.empty?
-          labels ="[#{ @labels.to_a.join(',')}]"
+          labels = "[#{@labels.to_a.join(',')}]"
         end
         "[#{@offset_blocks_start}-#{@offset_blocks_end};tl=#{@tag_level}; nw=#{@num_words};nwl=#{@num_wrapped_lines};ld=#{@link_density}]\t#{is_content? ? 'CONTENT' : 'BOILERPLATE'},#{labels}\n#{text}"
       end
@@ -98,6 +97,7 @@ module Boilerpipe
       end
 
       private
+
       def init_densities
         if @num_words_in_wrapped_lines == 0
           @num_words_in_wrapped_lines = @num_words

@@ -11,20 +11,20 @@ file_path = './spec/fixtures/parsing-big-xml-files-with-nokogiri.html'
 file_contents = File.read(file_path)
 
 # parse html and return text document
-#puts 'java version'
+# puts 'java version'
 @parser = BoilerpipeHTMLParser.new
 @string_reader = StringReader.new(file_contents)
 @is = InputSource.new(@string_reader)
 @parser.parse(@is);
 @doc = @parser.to_text_document
 @tbf = TerminatingBlocksFinder.new
-#text_block = TextBlock.new("reader views reader")
-#@doc.text_blocks.last.merge_next(text_block)
+# text_block = TextBlock.new("reader views reader")
+# @doc.text_blocks.last.merge_next(text_block)
 puts "terminating blocks finder: #{@tbf.process(@doc)}"
 puts "number of text blocks: #{@doc.text_blocks.size}"
 end_of_text_count = 0
 @doc.text_blocks.each do |tb|
-  end_of_text_count +=1 if tb.has_label? "de.l3s.boilerpipe/INDICATES_END_OF_TEXT"
+  end_of_text_count += 1 if tb.has_label? 'de.l3s.boilerpipe/INDICATES_END_OF_TEXT'
 end
 puts "end of text count: #{end_of_text_count}"
 

@@ -47,14 +47,14 @@ module Boilerpipe
 
     describe '#add_label' do
       it 'adds a label' do
-        expect{subject.add_label('another label')}.to change{subject.labels.size}.by(1)
+        expect { subject.add_label('another label') }.to change { subject.labels.size }.by(1)
       end
     end
 
     describe '#add_labels' do
       it 'adds a set of labels' do
-        labels = Set.new([1,2,3])
-        expect{subject.add_labels(labels)}.to change{subject.labels.size}.by(3)
+        labels = Set.new([1, 2, 3])
+        expect { subject.add_labels(labels) }.to change { subject.labels.size }.by(3)
       end
     end
 

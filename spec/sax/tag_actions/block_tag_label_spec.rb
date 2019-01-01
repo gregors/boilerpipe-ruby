@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Boilerpipe::SAX::TagActions
   describe BlockTagLabel do
-    let(:subject){ BlockTagLabel.new(nil) }
+    let(:subject) { BlockTagLabel.new(nil) }
     let(:handler) { ::Boilerpipe::SAX::HTMLContentHandler.new }
 
     describe '.new' do

@@ -1,9 +1,7 @@
-
- # Removes TextBlocks which have explicitly been marked as "not content".
+# Removes TextBlocks which have explicitly been marked as "not content".
 
 module Boilerpipe::Filters
   class BoilerplateBlockFilter
-
     def initialize(label)
       @label_to_keep = label
     end
@@ -21,6 +19,5 @@ module Boilerpipe::Filters
       doc.replace_text_blocks!(combined)
       doc
     end
-
   end
 end

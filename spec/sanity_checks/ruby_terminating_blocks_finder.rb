@@ -3,7 +3,7 @@ require 'boilerpipe'
 file_path = './spec/fixtures/parsing-big-xml-files-with-nokogiri.html'
 file_contents = File.read(file_path)
 
-#puts 'ruby version'
+# puts 'ruby version'
 
 @ruby_doc = Boilerpipe::SAX::BoilerpipeHTMLParser.parse(file_contents)
 @tbf = Boilerpipe::Filters::TerminatingBlocksFinder
