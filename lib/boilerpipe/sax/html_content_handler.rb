@@ -47,7 +47,7 @@ module Boilerpipe::SAX
     def characters(text)
       flush_block if @flush
 
-      return if @in_ignorable_element != 0
+      return if in_ignorable_element?
       return if text.empty?
 
       # replace all whitespace with simple space
@@ -200,6 +200,7 @@ module Boilerpipe::SAX
       @in_ignorable_element += 1
     end
 
+    # should we prevent less than zero here?
     def decrease_in_ignorable_element!
       @in_ignorable_element -= 1
     end
