@@ -1,0 +1,7 @@
+.git
+.gitignore
+ log/*
+ tmp/*
+ *.swp
+ *.swo
+ Gemfile.lock
