@@ -9,9 +9,11 @@ module Boilerpipe::SAX::TagActions
     describe '#end_tag' do
       it 'decreases in_anchor count'
     end
-  end
 
-  describe '#changes_tag_level?' do
-    it 'returns true?'
+    describe '#changes_tag_level?' do
+      it 'returns true?' do
+        expect(subject.changes_tag_level?).to be_truthy
+      end
+    end
   end
 end
