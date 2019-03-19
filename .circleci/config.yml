@@ -21,7 +21,7 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "./vendor/bundle/Gemfile.lock" }}
+          - v1-dependencies-{{ checksum "Gemfile.lock" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
@@ -29,12 +29,12 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            bundle install --jobs=4 --retry=3 --path vendor/bundle
+            bundle install --jobs=4 --retry=3
 
       - save_cache:
           paths:
-            - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "./vendor/bundle/Gemfile.lock" }}
+            - .
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
       # run tests!
       - run:
