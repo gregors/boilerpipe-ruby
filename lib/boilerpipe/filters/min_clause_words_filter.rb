@@ -13,13 +13,12 @@ module Boilerpipe::Filters
         next if tb.is_not_content?
 
         clause_delimiter = /[\p{L}\d \u00a0]+[\,.:;!?]+(?:[ \n\r]+|$)/
+        hasClause = false
         tb.text.scan(clause_delimiter).each do |possible_clause|
-          if is_clause? possible_clause
-            break
-          else
-            tb.content = false
-          end
+          hasClause |= is_clause? possible_clause
         end
+
+        tb.content = false unless hasClause
       end
 
       doc
