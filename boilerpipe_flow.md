@@ -1,3 +1,4 @@
+```
 raw html
    |
    |
@@ -36,3 +37,4 @@ text blocks    text blocks  text blocks
      text document
           |
   outputs extracted text
+  ```

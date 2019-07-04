@@ -13,6 +13,8 @@ I saw other gems making use of boilerpipe via the [free api](http://boilerpipe-w
 
 This solution works great if you're using Jruby but I wanted a pure ruby solution to use on MRI. Open vim - start coding...
 
+Here's a high level [diagram](boilerpipe_flow.md) of how the system works.
+
 # TLDR
 
 Just use either ArticleExtractor, DefaultExtractor or KeepEverythingExtractor - try out the others when you feel like experimenting...
@@ -71,14 +73,12 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
-### Running on Docker
+### Running Tests on Docker
 
 The default run command will run the tests
 
     docker build -t boilerpipe .
     docker run -it --rm boilerpipe
-
-
 
 ## Contributing
 
