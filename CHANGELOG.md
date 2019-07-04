@@ -1,3 +1,16 @@
+# 0.4.1 / 2019-07-04
+
+* Fix bug in min_clause_words_filter ( used in article_sentence_extractor )
+* Allow tests to run in Docker
+* Update circle to continue to work
+* Add architecture flow
+* Code formatting
+* Add min words filter specs
+* Add label action specs
+* Add missing test case to ignorable element spec
+* Add merge_next case to text block spec
+* Dry up includes
+
 # 0.4.0 / 2017-09-15
 
 * Add KeepEverythingWithMinKWords Extractor
