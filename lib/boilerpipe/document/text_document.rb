@@ -19,16 +19,14 @@ module Boilerpipe
           case text_block.is_content?
           when true
             next unless include_content
-
-            s << text_block.text
-            s << "\n"
           when false
             next unless include_noncontent
-
-            s << text_block.text
-            s << "\n"
           end
+
+          s << text_block.text
+          s << "\n"
         end
+
         s
       end
 
