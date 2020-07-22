@@ -1,3 +1,11 @@
+# 0.4.3 / 2020-07-18
+
+* update deps
+
+# 0.4.2 / 2020-03-11
+
+* update deps
+
 # 0.4.1 / 2019-07-04
 
 * Fix bug in min_clause_words_filter ( used in article_sentence_extractor )
@@ -35,4 +43,4 @@
 
 # 0.1.0 / 2017-09-08
 
-* Add Article Extractor 
+* Add Article Extractor
