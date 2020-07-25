@@ -40,7 +40,7 @@ module Boilerpipe::Filters
         diff_blocks = tb.offset_blocks_start - prev_block.offset_blocks_end - 1
         if diff_blocks <= @max_blocks_distance
           ok = true
-          ok = false if (prev_block.is_not_content? || tb.is_not_content?) && @content_only
+          ok = false if prev_block.is_not_content? && @content_only
           ok = false if ok && prev_block.tag_level != tb.tag_level && @same_tag_level_only
 
           if ok
