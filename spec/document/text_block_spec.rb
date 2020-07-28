@@ -50,6 +50,12 @@ module Boilerpipe
         subject.merge_next(another_block)
         expect(subject.text).to eq "hello\ngood-bye"
       end
+
+      it 'num words gets combined' do
+        another_block = Document::TextBlock.new('good-bye', 1)
+        subject.merge_next(another_block)
+        expect(subject.num_words).to eq 1
+      end
     end
 
     describe '#add_label' do
