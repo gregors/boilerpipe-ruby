@@ -5,7 +5,7 @@ module Boilerpipe
 
       attr_reader :text, :num_words, :num_words_in_wrapped_lines, :num_words_in_anchor_text,
                   :num_wrapped_lines, :offset_blocks_start, :offset_blocks_end, :text_density,
-                  :link_density, :labels, :tag_level, :num_full_text_words
+                  :link_density, :labels, :tag_level
 
       attr_accessor :content
 
@@ -16,7 +16,6 @@ module Boilerpipe
         @num_words_in_anchor_text = num_words_in_anchor_text
         @num_words_in_wrapped_lines = num_words_in_wrapped_lines
         @num_wrapped_lines = num_wrapped_lines
-        @num_full_text_words = 0
         @offset_blocks_start = offset_blocks
         @offset_blocks_end = offset_blocks
         @content = false
@@ -69,8 +68,6 @@ module Boilerpipe
         @offset_blocks_end = [@offset_blocks_end, other.offset_blocks_end].max
         init_densities
         @content |= other.is_content?
-
-        @num_full_text_words += other.num_full_text_words
 
         if other.labels
           if @labels.nil?
