@@ -75,6 +75,13 @@ module Boilerpipe
         subject.merge_next(another_block)
         expect(subject.num_wrapped_lines).to eq 2
       end
+
+      it 'offset_block_start uses the earlier start' do
+        block = Document::TextBlock.new('one', 1, 1, 1, 1, 5)
+        another_block = Document::TextBlock.new('two', 1, 1, 1, 1, 3)
+        block.merge_next(another_block)
+        expect(block.offset_blocks_start).to eq 3
+      end
     end
 
     describe '#add_label' do
