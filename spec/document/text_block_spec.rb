@@ -82,6 +82,13 @@ module Boilerpipe
         block.merge_next(another_block)
         expect(block.offset_blocks_start).to eq 3
       end
+
+      it 'offset_block_end uses the later end' do
+        block = Document::TextBlock.new('one', 1, 1, 1, 1, 5)
+        another_block = Document::TextBlock.new('two', 1, 1, 1, 1, 3)
+        block.merge_next(another_block)
+        expect(block.offset_blocks_end).to eq 5
+      end
     end
 
     describe '#add_label' do
