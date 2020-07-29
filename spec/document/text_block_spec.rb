@@ -121,6 +121,18 @@ module Boilerpipe
 
         expect(block.content).to eq true
       end
+
+      it 'merges labels' do
+        block = Document::TextBlock.new('one')
+        block.add_label('boom')
+
+        another_block = Document::TextBlock.new('two')
+        another_block.add_label('pow')
+
+        block.merge_next(another_block)
+
+        expect(block.labels).to eq Set.new(['boom', 'pow'])
+      end
     end
 
     describe '#add_label' do
