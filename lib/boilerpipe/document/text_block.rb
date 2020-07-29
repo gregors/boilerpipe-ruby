@@ -66,8 +66,8 @@ module Boilerpipe
         @num_wrapped_lines += other.num_wrapped_lines
         @offset_blocks_start = [@offset_blocks_start, other.offset_blocks_start].min
         @offset_blocks_end = [@offset_blocks_end, other.offset_blocks_end].max
-        init_densities
         @content |= other.is_content?
+        init_densities
 
         if other.labels
           if @labels.nil?
