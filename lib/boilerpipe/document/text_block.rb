@@ -69,13 +69,7 @@ module Boilerpipe
         @content |= other.is_content?
         init_densities
 
-        if other.labels
-          if @labels.nil?
-            @labels = other.labels.clone
-          else
-            @labels.merge(other.labels.clone)
-          end
-        end
+        @labels.merge(other.labels.clone)
 
         @tag_level = [@tag_level, other.tag_level].min
       end
