@@ -109,6 +109,18 @@ module Boilerpipe
         expect(block.num_words_in_wrapped_lines).to eq 20
         expect(block.num_wrapped_lines).to eq 2
       end
+
+      it 'if one is content the merged block is content' do
+        block = Document::TextBlock.new('one')
+        block.content = false
+
+        another_block = Document::TextBlock.new('two')
+        another_block.content = true
+
+        block.merge_next(another_block)
+
+        expect(block.content).to eq true
+      end
     end
 
     describe '#add_label' do
