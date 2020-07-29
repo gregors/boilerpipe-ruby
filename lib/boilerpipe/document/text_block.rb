@@ -25,7 +25,7 @@ module Boilerpipe
       end
 
       def self.empty_start
-        new('', 0, 0, 0, 0, -1)
+        new('', 0, 0, 0, 1, -1)
       end
 
       def set_tag_level(level)
@@ -98,7 +98,6 @@ module Boilerpipe
       def init_densities
         if @num_words_in_wrapped_lines == 0
           @num_words_in_wrapped_lines = @num_words
-          @num_wrapped_lines = 1
         end
         @text_density = @num_words_in_wrapped_lines / @num_wrapped_lines.to_f
         @link_density = @num_words == 0 ? 0.0 : @num_words_in_anchor_text / @num_words.to_f

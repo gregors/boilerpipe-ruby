@@ -6,10 +6,10 @@ module Boilerpipe::Filters
     let!(:doc) { Boilerpipe::Document::TextDocument.new('', text_blocks) }
 
     context 'where blocks have same text density' do
-      let(:text_block1) { Boilerpipe::Document::TextBlock.new('one',   0, 0, 0, 0, 0) }
-      let(:text_block2) { Boilerpipe::Document::TextBlock.new('two',   0, 0, 0, 0, 1) }
-      let(:text_block3) { Boilerpipe::Document::TextBlock.new('three', 0, 0, 0, 0, 2) }
-      let(:text_block4) { Boilerpipe::Document::TextBlock.new('four',  0, 0, 0, 0, 3) }
+      let(:text_block1) { Boilerpipe::Document::TextBlock.new('one',   0, 0, 0, 1, 0) }
+      let(:text_block2) { Boilerpipe::Document::TextBlock.new('two',   0, 0, 0, 1, 1) }
+      let(:text_block3) { Boilerpipe::Document::TextBlock.new('three', 0, 0, 0, 1, 2) }
+      let(:text_block4) { Boilerpipe::Document::TextBlock.new('four',  0, 0, 0, 1, 3) }
       it 'the blocks are merged' do
         expect(doc.text_blocks.size).to eq 4
         SimpleBlockFusionProcessor.process(doc)

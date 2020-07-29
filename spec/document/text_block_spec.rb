@@ -99,6 +99,16 @@ module Boilerpipe
         expect(block.text_density).to eq 4.0
         expect(block.link_density).to eq 0.5
       end
+
+      it 'resets wrapped lines' do
+        block = Document::TextBlock.new('one', 10)
+        another_block = Document::TextBlock.new('two', 10)
+
+        block.merge_next(another_block)
+
+        expect(block.num_words_in_wrapped_lines).to eq 20
+        expect(block.num_wrapped_lines).to eq 2
+      end
     end
 
     describe '#add_label' do
