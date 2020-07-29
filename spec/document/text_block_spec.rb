@@ -89,6 +89,16 @@ module Boilerpipe
         block.merge_next(another_block)
         expect(block.offset_blocks_end).to eq 5
       end
+
+      it 'recomputes densities' do
+        block = Document::TextBlock.new('one', 10, 5, 10, 2, 5)
+        another_block = Document::TextBlock.new('two', 10, 5, 10, 3, 3)
+
+        block.merge_next(another_block)
+
+        expect(block.text_density).to eq 4.0
+        expect(block.link_density).to eq 0.5
+      end
     end
 
     describe '#add_label' do
