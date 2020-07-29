@@ -133,6 +133,18 @@ module Boilerpipe
 
         expect(block.labels).to eq Set.new(['boom', 'pow'])
       end
+
+      it 'sets the tag level to the minimum of the two blocks' do
+        block = Document::TextBlock.new('one')
+        block.set_tag_level(2)
+
+        another_block = Document::TextBlock.new('two')
+        another_block.set_tag_level(1)
+
+        block.merge_next(another_block)
+
+        expect(block.tag_level).to eq 1
+      end
     end
 
     describe '#add_label' do

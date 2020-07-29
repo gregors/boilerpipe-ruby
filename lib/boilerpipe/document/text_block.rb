@@ -68,9 +68,9 @@ module Boilerpipe
         @offset_blocks_end = [@offset_blocks_end, other.offset_blocks_end].max
         @content |= other.is_content?
         @labels.merge(other.labels.clone)
-        init_densities
-
         @tag_level = [@tag_level, other.tag_level].min
+
+        init_densities
       end
 
       def to_s
