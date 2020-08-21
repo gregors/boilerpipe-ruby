@@ -7,7 +7,7 @@ module Boilerpipe::SAX
     ANCHOR_TEXT_END = ">\ue00a$"
 
     def initialize
-      @label_stacks = []
+      @label_stacks = [[]]
       @tag_actions = ::Boilerpipe::SAX::TagActionMap.tag_actions
       @tag_level = 0
       @text_buffer = ''
@@ -27,7 +27,7 @@ module Boilerpipe::SAX
     end
 
     def start_element(name, attrs = [])
-      @label_stacks << nil
+      @label_stacks << []
       tag = name.upcase.intern
 
       tag_action = @tag_actions[tag]
@@ -161,6 +161,7 @@ module Boilerpipe::SAX
       @offset_blocks += 1
       clear_buffers
       text_block.set_tag_level(@block_tag_level)
+      classify_text_block_with_labels(text_block)
       add_text_block(text_block)
       @block_tag_level = -1
     end
@@ -210,14 +211,16 @@ module Boilerpipe::SAX
       @in_anchor_tag > 0
     end
 
-    def add_text_block(text_block)
-      @label_stacks.each do |stack|
-        next unless stack
-
-        stack.each do |label_action|
-          text_block.add_label(label_action.labels) if label_action
-        end
+    def classify_text_block_with_labels(text_block)
+      @label_stacks
+        .flatten
+        .filter{|stack| stack}
+        .each do |label_action|
+          text_block.add_label(label_action.labels)
       end
+    end
+
+    def add_text_block(text_block)
       @text_blocks << text_block
     end
 
@@ -242,11 +245,6 @@ module Boilerpipe::SAX
 
     def add_label_action(label_action)
       label_stack = @label_stacks.last
-      if label_stack.nil?
-        label_stack = []
-        @label_stacks.pop
-        @label_stacks << label_stack
-      end
       label_stack << label_action
     end
 
