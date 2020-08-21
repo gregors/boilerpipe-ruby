@@ -192,16 +192,6 @@ module Boilerpipe::SAX
       word =~ VALID_WORD_CHARACTER
     end
 
-    # public void flushBlock() {
-    #    int numWords = 0;
-    #    int numLinkedWords = 0;
-    #    int numWrappedLines = 0;
-    #    int currentLineLength = -1; // don't count the first space
-    #    final int maxLineLength = 80;
-    #    int numTokens = 0;
-    #    int numWordsCurrentLine = 0;
-    # }
-
     def increase_in_ignorable_element!
       @in_ignorable_element += 1
     end
