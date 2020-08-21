@@ -10,7 +10,6 @@ module Boilerpipe::SAX
       @label_stacks = []
       @tag_actions = ::Boilerpipe::SAX::TagActionMap.tag_actions
       @tag_level = 0
-      @sb_last_was_whitespace = false
       @text_buffer = ''
       @token_buffer = ''
       @offset_blocks = 0
@@ -61,7 +60,6 @@ module Boilerpipe::SAX
       #  add a single space if the block was only whitespace
       if text.empty?
         append_space
-        @last_event = :WHITESPACE
         return
       end
 
@@ -72,7 +70,6 @@ module Boilerpipe::SAX
       append_text(text)
       append_space if ended_with_whitespace
 
-      @last_event = :CHARACTERS
     end
 
     def end_element(name)
@@ -112,7 +109,7 @@ module Boilerpipe::SAX
       when 0
         return
       when 1
-        clear_buffers if @sb_last_was_whitespace
+        clear_buffers if @last_event == :WHITESPACE
         return
       end
 
@@ -230,16 +227,15 @@ module Boilerpipe::SAX
 
     # append space if last character wasn't already one
     def append_space
-      return if @sb_last_was_whitespace
-
-      @sb_last_was_whitespace = true
+      return if @last_event == :WHITESPACE
+      @last_event = :WHITESPACE
 
       @text_buffer << ' '
       @token_buffer << ' '
     end
 
     def append_text(text)
-      @sb_last_was_whitespace = false
+      @last_event = :CHARACTERS
       @text_buffer << text
       @token_buffer << text
     end
