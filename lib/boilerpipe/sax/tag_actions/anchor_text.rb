@@ -29,13 +29,11 @@ module Boilerpipe::SAX::TagActions
     def append_anchor_text_start(handler)
       handler.append_space
       handler.append_token(Boilerpipe::SAX::HTMLContentHandler::ANCHOR_TEXT_START)
-      handler.append_token(' ')
     end
 
     def append_anchor_text_end(handler)
       handler.append_space
       handler.append_token(Boilerpipe::SAX::HTMLContentHandler::ANCHOR_TEXT_END)
-      handler.append_token(' ')
     end
 
     def nested_achor_tag_error_recovering(handler, name)
