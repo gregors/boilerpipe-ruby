@@ -113,7 +113,6 @@ module Boilerpipe::SAX
         return
       end
 
-      num_tokens = 0
       num_words = 0
       num_words_current_line = 0
       num_words_in_wrapped_lines = 0
@@ -129,7 +128,6 @@ module Boilerpipe::SAX
         elsif ANCHOR_TEXT_END == token
           @in_anchor_text = false
         elsif is_word?(token)
-          num_tokens += 1
           num_words += 1
           num_words_current_line += 1
           num_linked_words += 1 if @in_anchor_text
@@ -141,12 +139,10 @@ module Boilerpipe::SAX
             current_line_length = token_length
             num_words_current_line = 1
           end
-        else
-          num_tokens += 1
         end
       end
 
-      return if num_tokens == 0
+      return if tokens.empty?
 
       num_words_in_wrapped_lines = 0
       if num_wrapped_lines == 0
