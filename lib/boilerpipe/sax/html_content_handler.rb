@@ -156,7 +156,8 @@ module Boilerpipe::SAX
                                                          num_words,
                                                          num_linked_words,
                                                          num_words_in_wrapped_lines,
-                                                         num_wrapped_lines, @offset_blocks)
+                                                         num_wrapped_lines,
+                                                         @offset_blocks)
 
       @offset_blocks += 1
       clear_buffers
