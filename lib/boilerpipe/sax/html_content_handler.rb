@@ -31,6 +31,7 @@ module Boilerpipe::SAX
       tag = name.upcase.intern
 
       tag_action = @tag_actions[tag]
+      org = @tag_level
       if tag_action
         @tag_level += 1 if tag_action.changes_tag_level?
         @flush = tag_action.start(self, name, attrs) | @flush
@@ -38,6 +39,7 @@ module Boilerpipe::SAX
         @tag_level += 1
         @flush = true
       end
+      puts "before: #{org}, after: #{@tag_level}"
 
       @last_event = :START_TAG
       @last_start_tag = tag
@@ -64,7 +66,11 @@ module Boilerpipe::SAX
       end
 
       # set block levels
-      @block_tag_level = @tag_level if @block_tag_level == -1
+      if @block_tag_level == -1
+        puts "-1 setting block level tag_level: #{@tag_level}"
+       @block_tag_level = @tag_level
+      end
+      puts "block_tag_level: #{@block_tag_level}"
 
       append_space if started_with_whitespace
       append_text(text)

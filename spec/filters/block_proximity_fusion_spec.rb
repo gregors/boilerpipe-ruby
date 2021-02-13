@@ -2,10 +2,10 @@ require 'spec_helper'
 
 module Boilerpipe::Filters
   describe BlockProximityFusion do
-    let(:text_block1) { Boilerpipe::Document::TextBlock.new('one',   0, 0, 0, 0, 0) }
-    let(:text_block2) { Boilerpipe::Document::TextBlock.new('two',   0, 0, 0, 0, 1) }
-    let(:text_block3) { Boilerpipe::Document::TextBlock.new('three', 0, 0, 0, 0, 2) }
-    let(:text_block4) { Boilerpipe::Document::TextBlock.new('four',  0, 0, 0, 0, 3) }
+    let(:text_block1) { Boilerpipe::Document::TextBlock.new('one',   0, 0, 0, 1, 0) }
+    let(:text_block2) { Boilerpipe::Document::TextBlock.new('two',   0, 0, 0, 1, 1) }
+    let(:text_block3) { Boilerpipe::Document::TextBlock.new('three', 0, 0, 0, 1, 2) }
+    let(:text_block4) { Boilerpipe::Document::TextBlock.new('four',  0, 0, 0, 1, 3) }
 
     let(:text_blocks) { [text_block1, text_block2, text_block3, text_block4] }
     let!(:doc) { Boilerpipe::Document::TextDocument.new('', text_blocks) }
@@ -18,6 +18,7 @@ module Boilerpipe::Filters
 
     describe '#process' do
       context 'where blocks exceed distance' do
+        # only_content: true, same_tag_level: false
         it 'doesnt change blocks' do
           expect(doc.text_blocks.size).to eq 4
           filter = BlockProximityFusion.new(1, true, false)
@@ -27,10 +28,15 @@ module Boilerpipe::Filters
       end
 
       context 'where blocks do not exceed distance' do
+        # only_content: false, same_tag_level: false
         it 'Fuses adjacent blocks' do
+          puts doc.text_blocks.map(&:text).inspect
+          puts doc.debug_s
           expect(doc.text_blocks.last.text.size).to eq 4
           filter = BlockProximityFusion.new(1, false, false)
           filter.process(doc)
+          puts doc.text_blocks.map(&:text).inspect
+          puts doc.debug_s
           expect(doc.text_blocks.last.text).to eq "three\nfour"
         end
 
