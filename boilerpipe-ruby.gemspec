@@ -22,6 +22,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'rake', '>= 12.3.3'
   spec.add_development_dependency 'rickshaw', '~> 0.5.0'
-  spec.add_development_dependency 'rspec', '~> 3.9'
+  spec.add_development_dependency 'rspec', '~> 3.10'
   spec.add_runtime_dependency 'nokogiri', '~> 1.10'
 end

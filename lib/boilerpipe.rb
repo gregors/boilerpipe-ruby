@@ -40,6 +40,7 @@ require 'boilerpipe/filters/trailing_headline_to_boilerplate_filter'
 require 'boilerpipe/labels/default'
 require 'boilerpipe/labels/label_action'
 
+require 'boilerpipe/sax/preprocessor'
 require 'boilerpipe/sax/html_content_handler'
 require 'boilerpipe/sax/boilerpipe_html_parser'
 require 'boilerpipe/sax/tag_action_map'

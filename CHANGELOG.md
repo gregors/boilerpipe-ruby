@@ -1,3 +1,6 @@
+# 0.4.4 / 2021-02-13
+* Do a better job of stripping out script tags
+
 # 0.4.3 / 2020-07-18
 
 * update deps
