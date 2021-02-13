@@ -1,16 +1,11 @@
 module Boilerpipe::SAX
   class BoilerpipeHTMLParser
     def self.parse(text)
-      # script bug - delete script tags
-      text.gsub!(/\<script>.+?<\/script>/i, '')
-
-      # nokogiri uses libxml for mri and nekohtml for jruby
-      # mri doesn't remove &nbsp; when missing the semicolon
-      text.gsub!(/(&nbsp) /, '\1; ')
+      # strip out tags that cause issues
+      text = Preprocessor.strip(text)
 
       # use nokogiri to fix any bad tags, errors - keep experimenting with this
       text = Nokogiri::HTML(text).to_html
-
       handler = HTMLContentHandler.new
       noko_parser = Nokogiri::HTML::SAX::Parser.new(handler)
       noko_parser.parse(text)
