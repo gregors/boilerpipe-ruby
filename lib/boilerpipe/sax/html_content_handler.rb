@@ -17,7 +17,7 @@ module Boilerpipe::SAX
       @flush = false
       @block_tag_level = -1
 
-      @in_body = 0
+      @in_body_tag = 0
       @in_anchor_tag = 0
       @in_ignorable_element = 0
       @in_anchor_text = false
@@ -92,9 +92,15 @@ module Boilerpipe::SAX
       @label_stacks.pop
     end
 
+    def not_in_body_tag?
+      @in_body_tag == 0
+    end
+
     def flush_block
       @flush = false
-      if @in_body == 0
+
+      # set title
+      if not_in_body_tag?
         @title = @token_buffer.strip if :TITLE == @last_start_tag
         clear_buffers
         return
@@ -205,12 +211,12 @@ module Boilerpipe::SAX
       @in_ignorable_element -= 1
     end
 
-    def increase_in_body!
-      @in_body += 1
+    def enter_body_tag!
+      @in_body_tag += 1
     end
 
-    def decrease_in_body!
-      @in_body -= 1
+    def exit_body_tag!
+      @in_body_tag -= 1
     end
 
     def in_ignorable_element?

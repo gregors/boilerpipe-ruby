@@ -43,10 +43,10 @@ module Boilerpipe::SAX
     describe '#decrease_in_ignorable_element!' do
     end
 
-    describe '#increase_in_body!' do
+    describe '#enter_body_tag!' do
     end
 
-    describe '#decrease_in_body!' do
+    describe '#exit_body_tag!' do
     end
 
     describe '#in_ignorable_element?' do
