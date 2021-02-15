@@ -50,6 +50,101 @@ module Boilerpipe
         subject.merge_next(another_block)
         expect(subject.text).to eq "hello\ngood-bye"
       end
+
+      it 'num words gets combined' do
+        another_block = Document::TextBlock.new('good-bye', 1)
+        subject.merge_next(another_block)
+        expect(subject.num_words).to eq 1
+      end
+
+      it 'num_words_in_anchor_text gets combined' do
+        another_block = Document::TextBlock.new('good-bye', 1, 1)
+        subject.merge_next(another_block)
+        expect(subject.num_words_in_anchor_text).to eq 1
+      end
+
+      it 'num_words_in_wrapped_lines gets combined' do
+        another_block = Document::TextBlock.new('good-bye', 1, 1, 1)
+        subject.merge_next(another_block)
+        expect(subject.num_words_in_wrapped_lines).to eq 1
+      end
+
+      it 'num_wrapped_lines gets combined' do
+        # one by default
+        another_block = Document::TextBlock.new('good-bye', 1, 1, 1)
+        subject.merge_next(another_block)
+        expect(subject.num_wrapped_lines).to eq 2
+      end
+
+      it 'offset_block_start uses the earlier start' do
+        block = Document::TextBlock.new('one', 1, 1, 1, 1, 5)
+        another_block = Document::TextBlock.new('two', 1, 1, 1, 1, 3)
+        block.merge_next(another_block)
+        expect(block.offset_blocks_start).to eq 3
+      end
+
+      it 'offset_block_end uses the later end' do
+        block = Document::TextBlock.new('one', 1, 1, 1, 1, 5)
+        another_block = Document::TextBlock.new('two', 1, 1, 1, 1, 3)
+        block.merge_next(another_block)
+        expect(block.offset_blocks_end).to eq 5
+      end
+
+      it 'recomputes densities' do
+        block = Document::TextBlock.new('one', 10, 5, 10, 2, 5)
+        another_block = Document::TextBlock.new('two', 10, 5, 10, 3, 3)
+
+        block.merge_next(another_block)
+
+        expect(block.text_density).to eq 4.0
+        expect(block.link_density).to eq 0.5
+      end
+
+      it 'resets wrapped lines' do
+        block = Document::TextBlock.new('one', 10)
+        another_block = Document::TextBlock.new('two', 10)
+
+        block.merge_next(another_block)
+
+        expect(block.num_words_in_wrapped_lines).to eq 20
+        expect(block.num_wrapped_lines).to eq 2
+      end
+
+      it 'if one is content the merged block is content' do
+        block = Document::TextBlock.new('one')
+        block.content = false
+
+        another_block = Document::TextBlock.new('two')
+        another_block.content = true
+
+        block.merge_next(another_block)
+
+        expect(block.content).to eq true
+      end
+
+      it 'merges labels' do
+        block = Document::TextBlock.new('one')
+        block.add_label('boom')
+
+        another_block = Document::TextBlock.new('two')
+        another_block.add_label('pow')
+
+        block.merge_next(another_block)
+
+        expect(block.labels).to eq Set.new(['boom', 'pow'])
+      end
+
+      it 'sets the tag level to the minimum of the two blocks' do
+        block = Document::TextBlock.new('one')
+        block.set_tag_level(2)
+
+        another_block = Document::TextBlock.new('two')
+        another_block.set_tag_level(1)
+
+        block.merge_next(another_block)
+
+        expect(block.tag_level).to eq 1
+      end
     end
 
     describe '#add_label' do

@@ -7,10 +7,9 @@ module Boilerpipe::SAX
     ANCHOR_TEXT_END = ">\ue00a$"
 
     def initialize
-      @label_stacks = []
+      @label_stacks = [[]]
       @tag_actions = ::Boilerpipe::SAX::TagActionMap.tag_actions
       @tag_level = 0
-      @sb_last_was_whitespace = false
       @text_buffer = ''
       @token_buffer = ''
       @offset_blocks = 0
@@ -28,10 +27,11 @@ module Boilerpipe::SAX
     end
 
     def start_element(name, attrs = [])
-      @label_stacks << nil
+      @label_stacks << []
       tag = name.upcase.intern
 
       tag_action = @tag_actions[tag]
+      org = @tag_level
       if tag_action
         @tag_level += 1 if tag_action.changes_tag_level?
         @flush = tag_action.start(self, name, attrs) | @flush
@@ -39,6 +39,7 @@ module Boilerpipe::SAX
         @tag_level += 1
         @flush = true
       end
+      puts "before: #{org}, after: #{@tag_level}"
 
       @last_event = :START_TAG
       @last_start_tag = tag
@@ -61,18 +62,20 @@ module Boilerpipe::SAX
       #  add a single space if the block was only whitespace
       if text.empty?
         append_space
-        @last_event = :WHITESPACE
         return
       end
 
       # set block levels
-      @block_tag_level = @tag_level if @block_tag_level == -1
+      if @block_tag_level == -1
+        puts "-1 setting block level tag_level: #{@tag_level}"
+       @block_tag_level = @tag_level
+      end
+      puts "block_tag_level: #{@block_tag_level}"
 
       append_space if started_with_whitespace
       append_text(text)
       append_space if ended_with_whitespace
 
-      @last_event = :CHARACTERS
     end
 
     def end_element(name)
@@ -112,11 +115,10 @@ module Boilerpipe::SAX
       when 0
         return
       when 1
-        clear_buffers if @sb_last_was_whitespace
+        clear_buffers if @last_event == :WHITESPACE
         return
       end
 
-      num_tokens = 0
       num_words = 0
       num_words_current_line = 0
       num_words_in_wrapped_lines = 0
@@ -132,7 +134,6 @@ module Boilerpipe::SAX
         elsif ANCHOR_TEXT_END == token
           @in_anchor_text = false
         elsif is_word?(token)
-          num_tokens += 1
           num_words += 1
           num_words_current_line += 1
           num_linked_words += 1 if @in_anchor_text
@@ -144,12 +145,10 @@ module Boilerpipe::SAX
             current_line_length = token_length
             num_words_current_line = 1
           end
-        else
-          num_tokens += 1
         end
       end
 
-      return if num_tokens == 0
+      return if tokens.empty?
 
       num_words_in_wrapped_lines = 0
       if num_wrapped_lines == 0
@@ -163,11 +162,13 @@ module Boilerpipe::SAX
                                                          num_words,
                                                          num_linked_words,
                                                          num_words_in_wrapped_lines,
-                                                         num_wrapped_lines, @offset_blocks)
+                                                         num_wrapped_lines,
+                                                         @offset_blocks)
 
       @offset_blocks += 1
       clear_buffers
       text_block.set_tag_level(@block_tag_level)
+      classify_text_block_with_labels(text_block)
       add_text_block(text_block)
       @block_tag_level = -1
     end
@@ -191,16 +192,6 @@ module Boilerpipe::SAX
     def is_word?(word)
       word =~ VALID_WORD_CHARACTER
     end
-
-    # public void flushBlock() {
-    #    int numWords = 0;
-    #    int numLinkedWords = 0;
-    #    int numWrappedLines = 0;
-    #    int currentLineLength = -1; // don't count the first space
-    #    final int maxLineLength = 80;
-    #    int numTokens = 0;
-    #    int numWordsCurrentLine = 0;
-    # }
 
     def increase_in_ignorable_element!
       @in_ignorable_element += 1
@@ -227,29 +218,30 @@ module Boilerpipe::SAX
       @in_anchor_tag > 0
     end
 
-    def add_text_block(text_block)
-      @label_stacks.each do |stack|
-        next unless stack
-
-        stack.each do |label_action|
-          text_block.add_label(label_action.labels) if label_action
-        end
+    def classify_text_block_with_labels(text_block)
+      @label_stacks
+        .flatten
+        .filter{|stack| stack}
+        .each do |label_action|
+          text_block.add_label(label_action.labels)
       end
+    end
+
+    def add_text_block(text_block)
       @text_blocks << text_block
     end
 
     # append space if last character wasn't already one
     def append_space
-      return if @sb_last_was_whitespace
-
-      @sb_last_was_whitespace = true
+      return if @last_event == :WHITESPACE
+      @last_event = :WHITESPACE
 
       @text_buffer << ' '
       @token_buffer << ' '
     end
 
     def append_text(text)
-      @sb_last_was_whitespace = false
+      @last_event = :CHARACTERS
       @text_buffer << text
       @token_buffer << text
     end
@@ -260,11 +252,6 @@ module Boilerpipe::SAX
 
     def add_label_action(label_action)
       label_stack = @label_stacks.last
-      if label_stack.nil?
-        label_stack = []
-        @label_stacks.pop
-        @label_stacks << label_stack
-      end
       label_stack << label_action
     end
 

@@ -5,7 +5,7 @@ module Boilerpipe
 
       attr_reader :text, :num_words, :num_words_in_wrapped_lines, :num_words_in_anchor_text,
                   :num_wrapped_lines, :offset_blocks_start, :offset_blocks_end, :text_density,
-                  :link_density, :labels, :tag_level, :num_full_text_words
+                  :link_density, :labels, :tag_level
 
       attr_accessor :content
 
@@ -16,7 +16,6 @@ module Boilerpipe
         @num_words_in_anchor_text = num_words_in_anchor_text
         @num_words_in_wrapped_lines = num_words_in_wrapped_lines
         @num_wrapped_lines = num_wrapped_lines
-        @num_full_text_words = 0
         @offset_blocks_start = offset_blocks
         @offset_blocks_end = offset_blocks
         @content = false
@@ -26,7 +25,7 @@ module Boilerpipe
       end
 
       def self.empty_start
-        new('', 0, 0, 0, 0, -1)
+        new('', 0, 0, 0, 1, -1)
       end
 
       def set_tag_level(level)
@@ -67,29 +66,23 @@ module Boilerpipe
         @num_wrapped_lines += other.num_wrapped_lines
         @offset_blocks_start = [@offset_blocks_start, other.offset_blocks_start].min
         @offset_blocks_end = [@offset_blocks_end, other.offset_blocks_end].max
-        init_densities
         @content |= other.is_content?
-
-        @num_full_text_words += other.num_full_text_words
-
-        if other.labels
-          if @labels.nil?
-            @labels = other.labels.clone
-          else
-            @labels.merge(other.labels.clone)
-          end
-        end
-
+        @labels.merge(other.labels.clone)
         @tag_level = [@tag_level, other.tag_level].min
+
+        init_densities
       end
 
       def to_s
-        # "[" + offsetBlocksStart + "-" + offsetBlocksEnd + ";tl=" + tagLevel + "; nw=" + numWords + ";nwl=" + numWrappedLines + ";ld=" + linkDensity + "]\t" + (isContent ? "CONTENT" : "boilerplate") + "," + labels + "\n" + getText();
-        labels = 'null'
-        if !@labels.empty?
-          labels = "[#{@labels.to_a.join(',')}]"
+        "[#{@offset_blocks_start}-#{@offset_blocks_end};tl=#{@tag_level}; nw=#{@num_words};nwl=#{@num_wrapped_lines};ld=#{@link_density}]\t#{is_content? ? 'CONTENT' : 'BOILERPLATE'},#{labels_to_s}\n#{text}"
+      end
+
+      def labels_to_s
+        if @labels.empty?
+          'null'
+        else
+          "[#{@labels.to_a.join(',')}]"
         end
-        "[#{@offset_blocks_start}-#{@offset_blocks_end};tl=#{@tag_level}; nw=#{@num_words};nwl=#{@num_wrapped_lines};ld=#{@link_density}]\t#{is_content? ? 'CONTENT' : 'BOILERPLATE'},#{labels}\n#{text}"
       end
 
       def clone
@@ -101,7 +94,6 @@ module Boilerpipe
       def init_densities
         if @num_words_in_wrapped_lines == 0
           @num_words_in_wrapped_lines = @num_words
-          @num_wrapped_lines = 1
         end
         @text_density = @num_words_in_wrapped_lines / @num_wrapped_lines.to_f
         @link_density = @num_words == 0 ? 0.0 : @num_words_in_anchor_text / @num_words.to_f

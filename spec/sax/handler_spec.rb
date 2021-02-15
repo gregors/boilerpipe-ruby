@@ -26,6 +26,14 @@ module Boilerpipe::SAX
     end
 
     describe '#flush_block' do
+      it 'resets flush'
+      it 'sets title with last text from TITLE tag'
+      it 'clears out text_buffer'
+      it 'clears out token_buffer'
+      it 'determins line and word counts'
+      it 'creates text block'
+      it 'classifies text block with labels'
+      it 'adds text block to document'
     end
 
     describe '#text_document' do
@@ -68,14 +76,14 @@ module Boilerpipe::SAX
     end
 
     describe '#add_label_action' do
-      context 'with a nil as the last element in the label stacks' do
+      context 'with an array as the last element in the label stacks' do
         before { subject.start_element('boom') }
 
-        it 'removes that nil' do
-          expect(subject.label_stacks.first).to eq nil
+        it 'adds the label' do
+          expect(subject.label_stacks.last).to eq []
           subject.add_label_action(:boom)
-          expect(subject.label_stacks.first).to eq [:boom]
-          expect(subject.label_stacks.size).to eq 1
+          expect(subject.label_stacks.last).to eq [:boom]
+          expect(subject.label_stacks.size).to eq 2
         end
       end
     end
