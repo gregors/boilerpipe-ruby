@@ -18,12 +18,7 @@ module Boilerpipe::Filters
       text_blocks = doc.text_blocks
       return false if text_blocks.size < 2
 
-      prev_block = if @content_only
-                     text_blocks.find { |tb| tb.is_content? }
-                   else
-                     text_blocks.first
-                   end
-
+      prev_block = text_blocks.first
       return false if prev_block.nil?
 
       offset = text_blocks.index(prev_block) + 1
