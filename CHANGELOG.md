@@ -1,3 +1,6 @@
+# 0.5.0 / 2021-02-15
+* internal refactoring for clarity
+
 # 0.4.4 / 2021-02-13
 * Do a better job of stripping out script tags
 
