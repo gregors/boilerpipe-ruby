@@ -36,8 +36,8 @@ module Boilerpipe::Filters
         next if diff_blocks > @max_blocks_distance
 
         ok = true
-        ok = false if prev_block.is_not_content? && @content_only
-        ok = false if ok && prev_block.tag_level != tb.tag_level && @same_tag_level_only
+        ok = false if @content_only && prev_block.is_not_content?
+        ok = false if ok && @same_tag_level_only && prev_block.tag_level != tb.tag_level
 
         if ok
           prev_block.merge_next(tb)
