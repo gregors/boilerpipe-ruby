@@ -1,6 +1,6 @@
 # Boilerpipe
 
-[![CircleCI](https://circleci.com/gh/gregors/boilerpipe-ruby/tree/master.svg?style=shield)](https://circleci.com/gh/gregors/boilerpipe-ruby/tree/master)
+[![CircleCI](https://circleci.com/gh/gregors/boilerpipe-ruby/tree/main.svg?style=shield)](https://circleci.com/gh/gregors/boilerpipe-ruby/tree/main)
 [![Gem Version](https://badge.fury.io/rb/boilerpipe-ruby.svg)](https://badge.fury.io/rb/boilerpipe-ruby)
 
 A pure ruby implemenation of the boilerpipe algorithm.
