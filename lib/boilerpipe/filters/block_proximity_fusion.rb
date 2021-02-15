@@ -33,19 +33,20 @@ module Boilerpipe::Filters
         end
 
         diff_blocks = tb.offset_blocks_start - prev_block.offset_blocks_end - 1
-        if diff_blocks <= @max_blocks_distance
-          ok = true
-          ok = false if prev_block.is_not_content? && @content_only
-          ok = false if ok && prev_block.tag_level != tb.tag_level && @same_tag_level_only
+        next if diff_blocks > @max_blocks_distance
 
-          if ok
-            prev_block.merge_next(tb)
-            blocks_to_remove << tb
-          else
-            prev_block = tb
-          end
+        ok = true
+        ok = false if prev_block.is_not_content? && @content_only
+        ok = false if ok && prev_block.tag_level != tb.tag_level && @same_tag_level_only
+
+        if ok
+          prev_block.merge_next(tb)
+          blocks_to_remove << tb
+        else
+          prev_block = tb
         end
       end
+
       doc.replace_text_blocks!(text_blocks - blocks_to_remove)
       doc
     end
