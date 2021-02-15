@@ -8,33 +8,23 @@ module Boilerpipe::Filters
     def self.process(doc)
       tbs = doc.text_blocks
 
-      #     slower and more ruby-like
-      #     comeback and let's do some benchmarking
-      #     titles = tbs.select{ |tb| tb.has_label?(:TITLE) }
-      #     title = tbs.index(titles.last)
-      #     content_start = tbs.find_index(&:is_content?)
+      title = tbs.select{ |tb| tb.has_label?(:TITLE) }.last
+      title_idx = tbs.index(title)
 
-      i = 0
-      title = nil
-      content_start = nil
+      content_start = tbs.find_index(&:is_content?)
 
-      tbs.each do |tb|
-        title = i if content_start.nil? && tb.has_label?(:TITLE)
-        content_start = i if content_start.nil? && tb.is_content?
-        i += 1
-      end
+      return doc if no_title_with_subsequent_content?(content_start, title_idx)
 
-      return doc if no_title_with_subsequent_content?(content_start, title)
-
-      tbs.slice(title...content_start).each do |tb|
-        tb.content = true if tb.has_label?(:MIGHT_BE_CONTENT)
-      end
+      tbs.slice(title_idx...content_start)
+        .select{ |tb| tb.has_label?(:MIGHT_BE_CONTENT) }
+        .each{ |tb| tb.content = true }
 
       doc
     end
 
-    def self.no_title_with_subsequent_content?(content_start, title)
-      title.nil? || content_start.nil? || content_start <= title
+    def self.no_title_with_subsequent_content?(content_start, title_idx)
+      # title has to start before content
+      title_idx.nil? || content_start.nil? || title_idx >= content_start
     end
   end
 end

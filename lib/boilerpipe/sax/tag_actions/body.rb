@@ -4,13 +4,13 @@ module Boilerpipe::SAX::TagActions
   class Body
     def start(handler, name, attrs)
       handler.flush_block
-      handler.increase_in_body!
+      handler.enter_body_tag!
       false
     end
 
     def end_tag(handler, name)
       handler.flush_block
-      handler.decrease_in_body!
+      handler.exit_body_tag!
       false
     end
 

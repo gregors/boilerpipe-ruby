@@ -3,9 +3,9 @@ require 'spec_helper'
 module Boilerpipe::SAX::TagActions
   describe Body do
     describe '#start' do
-      it 'increase in_body count' do
+      it 'increase in_body_tag count' do
         handler = Boilerpipe::SAX::HTMLContentHandler.new
-        expect { subject.start(handler, nil, nil) }.to change { handler.instance_variable_get(:@in_body) }.from(0).to(1)
+        expect { subject.start(handler, nil, nil) }.to change { handler.instance_variable_get(:@in_body_tag) }.from(0).to(1)
       end
 
       it 'flushes block' do
@@ -22,10 +22,10 @@ module Boilerpipe::SAX::TagActions
     end
 
     describe '#end_tag' do
-      it 'decreases in_body count' do
+      it 'decreases in_body_tag count' do
         handler = Boilerpipe::SAX::HTMLContentHandler.new
-        handler.instance_variable_set(:@in_body, 1)
-        expect { subject.end_tag(handler, nil) }.to change { handler.instance_variable_get(:@in_body) }.from(1).to(0)
+        handler.instance_variable_set(:@in_body_tag, 1)
+        expect { subject.end_tag(handler, nil) }.to change { handler.instance_variable_get(:@in_body_tag) }.from(1).to(0)
       end
 
       it 'flushes block' do
