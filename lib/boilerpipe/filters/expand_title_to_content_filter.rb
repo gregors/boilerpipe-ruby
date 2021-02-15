@@ -8,7 +8,7 @@ module Boilerpipe::Filters
     def self.process(doc)
       tbs = doc.text_blocks
 
-      title = tbs.filter{ |tb| tb.has_label?(:TITLE) }.last
+      title = tbs.select{ |tb| tb.has_label?(:TITLE) }.last
       title_idx = tbs.index(title)
 
       content_start = tbs.find_index(&:is_content?)
@@ -16,7 +16,7 @@ module Boilerpipe::Filters
       return doc if no_title_with_subsequent_content?(content_start, title_idx)
 
       tbs.slice(title_idx...content_start)
-        .filter{ |tb| tb.has_label?(:MIGHT_BE_CONTENT) }
+        .select{ |tb| tb.has_label?(:MIGHT_BE_CONTENT) }
         .each{ |tb| tb.content = true }
 
       doc
