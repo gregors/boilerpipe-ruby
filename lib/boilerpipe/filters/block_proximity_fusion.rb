@@ -32,15 +32,15 @@ module Boilerpipe::Filters
       blocks_to_remove = []
 
       blocks.each do |tb|
-        if tb.is_not_content?
-          prev_block = tb
-          next
-        end
-
+#        if tb.is_not_content?
+#          prev_block = tb
+#          next
+#        end
+#
         block_distance = tb.offset_blocks_start - prev_block.offset_blocks_end - 1
 
         ok = block_distance <= @max_blocks_distance
-        ok = false if ok && @content_only && prev_block.is_not_content?
+        ok = false if ok && @content_only && (prev_block.is_not_content? || tb.is_not_content?)
         ok = false if ok && @same_tag_level_only && prev_block.tag_level != tb.tag_level
 
         if ok
