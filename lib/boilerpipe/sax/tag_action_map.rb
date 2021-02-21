@@ -3,13 +3,13 @@ module Boilerpipe::SAX
     def self.tag_actions
       labels = ::Boilerpipe::Labels
       {
-        STYLE: TagActions::IgnorableElement.new,
-        SCRIPT: TagActions::IgnorableElement.new,
+        APPLET: TagActions::IgnorableElement.new,
+        EMBED: TagActions::IgnorableElement.new,
+        LINK: TagActions::IgnorableElement.new,
         OPTION: TagActions::IgnorableElement.new,
         OBJECT: TagActions::IgnorableElement.new,
-        EMBED: TagActions::IgnorableElement.new,
-        APPLET: TagActions::IgnorableElement.new,
-        LINK: TagActions::IgnorableElement.new,
+        SCRIPT: TagActions::IgnorableElement.new,
+        STYLE: TagActions::IgnorableElement.new,
 
         A: TagActions::AnchorText.new,
         BODY: TagActions::Body.new,
